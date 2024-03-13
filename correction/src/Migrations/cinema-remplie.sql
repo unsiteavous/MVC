@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : dim. 10 mars 2024 à 12:19
+-- Généré le : mer. 13 mars 2024 à 17:33
 -- Version du serveur : 5.7.40
 -- Version de PHP : 8.2.10
 
@@ -18,17 +18,17 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `test`
+-- Base de données : `cinema`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `categories`
+-- Structure de la table `cine_categories`
 --
 
-DROP TABLE IF EXISTS `categories`;
-CREATE TABLE IF NOT EXISTS `categories` (
+DROP TABLE IF EXISTS `cine_categories`;
+CREATE TABLE IF NOT EXISTS `cine_categories` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `DESCRIPTION` text NOT NULL,
   `NOM` varchar(255) NOT NULL,
@@ -37,22 +37,22 @@ CREATE TABLE IF NOT EXISTS `categories` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `categories`
+-- Déchargement des données de la table `cine_categories`
 --
 
-INSERT INTO `categories` (`ID`, `DESCRIPTION`, `NOM`) VALUES
+INSERT INTO `cine_categories` (`ID`, `DESCRIPTION`, `NOM`) VALUES
 (1, 'Les films qui font peur', 'Horreur'),
 (2, 'Les films imaginaires', 'science-Fiction'),
-(3, 'Les films d\'amour', 'romantisme');
+(3, "Les films d'amour", 'romantisme');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `classification_age_public`
+-- Structure de la table `cine_classification_age_public`
 --
 
-DROP TABLE IF EXISTS `classification_age_public`;
-CREATE TABLE IF NOT EXISTS `classification_age_public` (
+DROP TABLE IF EXISTS `cine_classification_age_public`;
+CREATE TABLE IF NOT EXISTS `cine_classification_age_public` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `AVERTISSEMENT` varchar(255) NOT NULL,
   `INTITULE` varchar(255) NOT NULL,
@@ -61,10 +61,10 @@ CREATE TABLE IF NOT EXISTS `classification_age_public` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `classification_age_public`
+-- Déchargement des données de la table `cine_classification_age_public`
 --
 
-INSERT INTO `classification_age_public` (`ID`, `AVERTISSEMENT`, `INTITULE`) VALUES
+INSERT INTO `cine_classification_age_public` (`ID`, `AVERTISSEMENT`, `INTITULE`) VALUES
 (1, '', 'Tous publics'),
 (2, '', 'Interdit aux moins de 12 ans'),
 (3, '', 'Interdit aux moins de 16 ans'),
@@ -74,11 +74,11 @@ INSERT INTO `classification_age_public` (`ID`, `AVERTISSEMENT`, `INTITULE`) VALU
 -- --------------------------------------------------------
 
 --
--- Structure de la table `employes`
+-- Structure de la table `cine_employes`
 --
 
-DROP TABLE IF EXISTS `employes`;
-CREATE TABLE IF NOT EXISTS `employes` (
+DROP TABLE IF EXISTS `cine_employes`;
+CREATE TABLE IF NOT EXISTS `cine_employes` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `NOM` varchar(255) NOT NULL,
   `PRENOM` varchar(255) NOT NULL,
@@ -90,10 +90,10 @@ CREATE TABLE IF NOT EXISTS `employes` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `employes`
+-- Déchargement des données de la table `cine_employes`
 --
 
-INSERT INTO `employes` (`ID`, `NOM`, `PRENOM`, `ANNEE_ARRIVEE`, `MAIL`, `TELEPHONE`) VALUES
+INSERT INTO `cine_employes` (`ID`, `NOM`, `PRENOM`, `ANNEE_ARRIVEE`, `MAIL`, `TELEPHONE`) VALUES
 (1, 'Dupont', 'Jean', '2004', 'jean@dupont.fr', '0123456789'),
 (2, 'Moulin', 'Agathe', '2010', 'agathe@dumoulin.fr', '9876543210'),
 (5, 'Nolan', 'Christopher', '2018', 'christopher@nolan.fr', '0123476789'),
@@ -102,11 +102,11 @@ INSERT INTO `employes` (`ID`, `NOM`, `PRENOM`, `ANNEE_ARRIVEE`, `MAIL`, `TELEPHO
 -- --------------------------------------------------------
 
 --
--- Structure de la table `films`
+-- Structure de la table `cine_films`
 --
 
-DROP TABLE IF EXISTS `films`;
-CREATE TABLE IF NOT EXISTS `films` (
+DROP TABLE IF EXISTS `cine_films`;
+CREATE TABLE IF NOT EXISTS `cine_films` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `NOM` varchar(255) NOT NULL,
   `URL_AFFICHE` varchar(255) NOT NULL,
@@ -120,24 +120,24 @@ CREATE TABLE IF NOT EXISTS `films` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `films`
+-- Déchargement des données de la table `cine_films`
 --
 
-INSERT INTO `films` (`ID`, `NOM`, `URL_AFFICHE`, `LIEN_TRAILER`, `RESUME`, `DUREE`, `DATE_SORTIE`, `ID_CLASSIFICATION_AGE_PUBLIC`) VALUES
+INSERT INTO `cine_films` (`ID`, `NOM`, `URL_AFFICHE`, `LIEN_TRAILER`, `RESUME`, `DUREE`, `DATE_SORTIE`, `ID_CLASSIFICATION_AGE_PUBLIC`) VALUES
 (1, 'Harry Potter', 'https://images2.fanpop.com/images/photos/6700000/Harry-Potter-3-harry-potter-6761622-1280-1024.jpg', 'https://images2.fanpop.com/images/photos/6700000/Harry-Potter-3-harry-potter-6761622-1280-1024.mp4', 'un film de sorciers', '02:00:00', '2000-03-06', 1),
-(2, 'anatomie d\'une chute', 'https://images2.fanpop.com/images/photos/6700000/anatomie-dune-chute.jpg', 'https://images2.fanpop.com/images/photos/6700000/anatomie-dune-chute.mp4', 'un super film de policier fait par chez nous', '01:30:00', '2024-03-06', 2),
+(2, "anatomie d'une chute", 'https://images2.fanpop.com/images/photos/6700000/anatomie-dune-chute.jpg', 'https://images2.fanpop.com/images/photos/6700000/anatomie-dune-chute.mp4', 'un super film de policier fait par chez nous', '01:30:00', '2024-03-06', 2),
 (3, 'Dune', 'https://images2.fanpop.com/images/photos/6700000/dune.jpg', 'https://images2.fanpop.com/images/photos/6700000/dune.mp4', 'un super film de science-fiction', '03:30:00', '2024-05-08', 2),
 (4, 'Pocahantas', 'https://images2.fanpop.com/images/photos/6700000/Pocahantas.jpg', 'https://images2.fanpop.com/images/photos/6700000/Pocahantas.mp4', 'un disney génial', '03:30:00', '2001-03-06', 1),
-(5, 'Sniper', 'https://images2.fanpop.com/images/photos/6700000/Sniper.jpg', 'https://images2.fanpop.com/images/photos/6700000/Sniper.mp4', 'Un film d\'action', '01:30:00', '2015-03-06', 3);
+(5, 'Sniper', 'https://images2.fanpop.com/images/photos/6700000/Sniper.jpg', 'https://images2.fanpop.com/images/photos/6700000/Sniper.mp4', "Un film d'action", '01:30:00', '2015-03-06', 3);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `projections`
+-- Structure de la table `cine_projections`
 --
 
-DROP TABLE IF EXISTS `projections`;
-CREATE TABLE IF NOT EXISTS `projections` (
+DROP TABLE IF EXISTS `cine_projections`;
+CREATE TABLE IF NOT EXISTS `cine_projections` (
   `HORAIRE` datetime NOT NULL,
   `ID_SALLES` int(11) NOT NULL,
   `ID_FILMS` int(11) NOT NULL,
@@ -149,10 +149,10 @@ CREATE TABLE IF NOT EXISTS `projections` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `projections`
+-- Déchargement des données de la table `cine_projections`
 --
 
-INSERT INTO `projections` (`HORAIRE`, `ID_SALLES`, `ID_FILMS`, `ID_EMPLOYES`) VALUES
+INSERT INTO `cine_projections` (`HORAIRE`, `ID_SALLES`, `ID_FILMS`, `ID_EMPLOYES`) VALUES
 ('2024-03-08 15:00:00', 1, 3, 2),
 ('2024-03-10 13:00:00', 1, 4, 1),
 ('2024-03-08 17:00:00', 2, 4, 5),
@@ -164,11 +164,11 @@ INSERT INTO `projections` (`HORAIRE`, `ID_SALLES`, `ID_FILMS`, `ID_EMPLOYES`) VA
 -- --------------------------------------------------------
 
 --
--- Structure de la table `relations_films_categories`
+-- Structure de la table `cine_relations_films_categories`
 --
 
-DROP TABLE IF EXISTS `relations_films_categories`;
-CREATE TABLE IF NOT EXISTS `relations_films_categories` (
+DROP TABLE IF EXISTS `cine_relations_films_categories`;
+CREATE TABLE IF NOT EXISTS `cine_relations_films_categories` (
   `ID_CATEGORIES` int(11) NOT NULL,
   `ID_FILMS` int(11) NOT NULL,
   PRIMARY KEY (`ID_CATEGORIES`,`ID_FILMS`),
@@ -177,10 +177,10 @@ CREATE TABLE IF NOT EXISTS `relations_films_categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `relations_films_categories`
+-- Déchargement des données de la table `cine_relations_films_categories`
 --
 
-INSERT INTO `relations_films_categories` (`ID_CATEGORIES`, `ID_FILMS`) VALUES
+INSERT INTO `cine_relations_films_categories` (`ID_CATEGORIES`, `ID_FILMS`) VALUES
 (2, 1),
 (1, 2),
 (2, 3),
@@ -190,11 +190,11 @@ INSERT INTO `relations_films_categories` (`ID_CATEGORIES`, `ID_FILMS`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `salles`
+-- Structure de la table `cine_salles`
 --
 
-DROP TABLE IF EXISTS `salles`;
-CREATE TABLE IF NOT EXISTS `salles` (
+DROP TABLE IF EXISTS `cine_salles`;
+CREATE TABLE IF NOT EXISTS `cine_salles` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `PLACES` int(11) NOT NULL,
   `ACCESSIBILITE` tinyint(1) NOT NULL,
@@ -204,10 +204,10 @@ CREATE TABLE IF NOT EXISTS `salles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `salles`
+-- Déchargement des données de la table `cine_salles`
 --
 
-INSERT INTO `salles` (`ID`, `PLACES`, `ACCESSIBILITE`, `NOM`) VALUES
+INSERT INTO `cine_salles` (`ID`, `PLACES`, `ACCESSIBILITE`, `NOM`) VALUES
 (1, 24, 1, 'Vercors'),
 (2, 30, 1, 'Chartreuse'),
 (3, 100, 0, 'Devoluy'),
@@ -218,25 +218,25 @@ INSERT INTO `salles` (`ID`, `PLACES`, `ACCESSIBILITE`, `NOM`) VALUES
 --
 
 --
--- Contraintes pour la table `films`
+-- Contraintes pour la table `cine_films`
 --
-ALTER TABLE `films`
-  ADD CONSTRAINT `FK_FILMS_CLASSIFICATION_AGE_PUBLIC` FOREIGN KEY (`ID_CLASSIFICATION_AGE_PUBLIC`) REFERENCES `classification_age_public` (`ID`);
+ALTER TABLE `cine_films`
+  ADD CONSTRAINT `FK_FILMS_CLASSIFICATION_AGE_PUBLIC` FOREIGN KEY (`ID_CLASSIFICATION_AGE_PUBLIC`) REFERENCES `cine_classification_age_public` (`ID`);
 
 --
--- Contraintes pour la table `projections`
+-- Contraintes pour la table `cine_projections`
 --
-ALTER TABLE `projections`
-  ADD CONSTRAINT `FK_PROJETTE_EMPLOYES1` FOREIGN KEY (`ID_EMPLOYES`) REFERENCES `employes` (`ID`),
-  ADD CONSTRAINT `FK_PROJETTE_FILMS0` FOREIGN KEY (`ID_FILMS`) REFERENCES `films` (`ID`),
-  ADD CONSTRAINT `FK_PROJETTE_SALLES` FOREIGN KEY (`ID_SALLES`) REFERENCES `salles` (`ID`);
+ALTER TABLE `cine_projections`
+  ADD CONSTRAINT `FK_PROJETTE_EMPLOYES1` FOREIGN KEY (`ID_EMPLOYES`) REFERENCES `cine_employes` (`ID`),
+  ADD CONSTRAINT `FK_PROJETTE_FILMS0` FOREIGN KEY (`ID_FILMS`) REFERENCES `cine_films` (`ID`),
+  ADD CONSTRAINT `FK_PROJETTE_SALLES` FOREIGN KEY (`ID_SALLES`) REFERENCES `cine_salles` (`ID`);
 
 --
--- Contraintes pour la table `relations_films_categories`
+-- Contraintes pour la table `cine_relations_films_categories`
 --
-ALTER TABLE `relations_films_categories`
-  ADD CONSTRAINT `FK_CATEGORISE_CATEGORIES_FILMS` FOREIGN KEY (`ID_CATEGORIES`) REFERENCES `categories` (`ID`),
-  ADD CONSTRAINT `FK_CATEGORISE_FILMS0` FOREIGN KEY (`ID_FILMS`) REFERENCES `films` (`ID`);
+ALTER TABLE `cine_relations_films_categories`
+  ADD CONSTRAINT `FK_CATEGORISE_CATEGORIES_FILMS` FOREIGN KEY (`ID_CATEGORIES`) REFERENCES `cine_categories` (`ID`),
+  ADD CONSTRAINT `FK_CATEGORISE_FILMS0` FOREIGN KEY (`ID_FILMS`) REFERENCES `cine_films` (`ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

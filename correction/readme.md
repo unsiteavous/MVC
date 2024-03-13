@@ -15,4 +15,4 @@ Si vous souhaitez faire des modifications avant la création de la base de donn�
 Le programme a été conçu avec :
 - PHP 8.3.2
 - MySQL 5.7
-Elle peut fonctionner avec des versions de PHP à partir de 8.x.
+Elle peut toutefois fonctionner avec des versions de PHP à partir de 8.x.

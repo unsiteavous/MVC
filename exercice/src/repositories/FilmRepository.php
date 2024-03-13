@@ -10,7 +10,7 @@ class FilmRepository {
   }
 
   public function getAllFilms(){
-    $sql = "SELECT * FROM films;";
+    $sql = "SELECT * FROM ".PREFIXE."films;";
 
     $retour = $this->DB->query($sql)->fetchAll(PDO::FETCH_OBJ);
 
