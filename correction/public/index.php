@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . "/../src/autoload.php";
 
-$db = new Database;
+$FilmRepo = new FilmRepository;
 
+var_dump($FilmRepo->getAllFilms()); 

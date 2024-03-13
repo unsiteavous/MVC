@@ -34,7 +34,7 @@ final class Database
   {
 
     // Vérifier si la base de données est vide
-    if ($this->testExistenceTableFilms()) {
+    if ($this->testIfTableFilmsExists()) {
       return "La base de données semble déjà remplie.";
       die();
     }
@@ -45,7 +45,7 @@ final class Database
       $this->DB->query($sql);
     // Mettre à jour le fichier config.php
 
-      if($this->MiseAJourConfig()){
+      if($this->UpdateConfig()){
         return "installation de la Base de Données terminée !";
       }
 
@@ -58,7 +58,7 @@ final class Database
    * Vérifie si la table Films existe déjà dans la BDD
    * @return bool
    */
-  private function testExistenceTableFilms(): bool {
+  private function testIfTableFilmsExists(): bool {
     $existant = $this->DB->query('SHOW TABLES FROM ' . DB_NAME . ' like \'films\'')->fetch();
 
     if ($existant !== false && $existant[0] == "films") {
@@ -69,7 +69,7 @@ final class Database
   }
 
 
-  private function MiseAJourConfig() : bool {
+  private function UpdateConfig() : bool {
 
       $fconfig = fopen($this->config, 'w');
 

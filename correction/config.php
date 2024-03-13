@@ -5,6 +5,7 @@
       define('DB_NAME', 'cinema');
       define('DB_USER', 'cinema');
       define('DB_PWD', 'cinema');
+      define('PREFIXE', 'cine_');
       
       // Ne pas toucher :
       

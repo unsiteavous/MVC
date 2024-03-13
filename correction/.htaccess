@@ -1,17 +1,9 @@
-# Rediriger vers index.php
-
+# Si le module de réécriture d'apache est activé :
 <IfModule mod_rewrite.c>
+  # On l'allume :
   RewriteEngine on
 
-  # Empêcher la visibilité du fichier config.php
-  # RewriteCond %{THE_REQUEST} ^GET.*config [NC]
-  # RewriteRule (.*?)config\.php/*(.*) /$1$2 [R=301,NE,L]
-
-  # Empêcher la visite du dossier SRC de notre projet
-  # RewriteCond %{THE_REQUEST} ^GET.*src [NC]
-  # RewriteRule (.*?)src*(.*) / [R=301,NE,L]
-
   # Rediriger toutes les urls qui iraient ailleurs que dans le dossier public vers le dossier public :
-  RewriteCond %{THE_REQUEST} !^GET./public [NC]
-  RewriteRule ^(.*) /public/ [R=301,NE,L]
+  RewriteCond %{THE_REQUEST} !^GET.*/public [NC]
+  RewriteRule ^(.*)$ /correction/public/$1 [R=301,NE,L]
 </IfModule>
