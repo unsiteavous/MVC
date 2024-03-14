@@ -59,9 +59,9 @@ final class Database
    * @return bool
    */
   private function testIfTableFilmsExists(): bool {
-    $existant = $this->DB->query('SHOW TABLES FROM ' . DB_NAME . ' like \'films\'')->fetch();
+    $existant = $this->DB->query('SHOW TABLES FROM ' . DB_NAME . ' like \'%films%\'')->fetch();
 
-    if ($existant !== false && $existant[0] == "films") {
+    if ($existant !== false && $existant[0] == PREFIXE."films") {
       return true;
     } else {
       return false;
@@ -80,6 +80,7 @@ final class Database
       define('DB_NAME', '". DB_NAME ."');
       define('DB_USER', '". DB_USER ."');
       define('DB_PWD', '". DB_PWD ."');
+      define('PREFIXE', '". PREFIXE ."');
       
       // Ne pas toucher :
       

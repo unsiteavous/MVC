@@ -16,7 +16,7 @@ class FilmRepository {
   public function getAllFilms(){
     $sql = "SELECT * FROM ".PREFIXE."films;";
 
-    return  $this->DB->query($sql)->fetchAll(PDO::FETCH_OBJ);
+    return  $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, 'Film');
   }
 
 
@@ -31,45 +31,45 @@ class FilmRepository {
    * Pour éviter des injections on prépare (on désamorce) la requête.
    */
 
-  public function getThisFilmById($id): object {
+  public function getThisFilmById($id): Film {
     $sql = "SELECT * FROM ".PREFIXE."films WHERE ID = :id";
 
     $statement = $this->DB->prepare($sql);
     $statement->bindParam(':id', $id);
     $statement->execute();
-
-    return $statement->fetch(PDO::FETCH_OBJ);
+    $statement->setFetchMode(PDO::FETCH_CLASS, 'Film');
+    return $statement->fetch();
   }
 
   /**
    * Un autre exemple d'une requête préparée, avec prepare et execute :
    * Cette fois-ci on donne les paramètres tout de suite lors du execute, sous forme d'un tableau associatif.
    */
-  public function getThoseFilmsByClassificationAge($Id_Classification): object {
+  public function getThoseFilmsByClassificationAge($Id_Classification): array {
     $sql = "SELECT * FROM ".PREFIXE."films WHERE ID_CLASSIFICATION_AGE_PUBLIC = :Id_Classification";
 
     $statement = $this->DB->prepare($sql);
     
     $statement->execute([':Id_Classification'=> $Id_Classification]);
 
-    return $statement->fetchAll(PDO::FETCH_OBJ);
+    return $statement->fetchAll(PDO::FETCH_CLASS, 'Film');
   }
 
 
   // Construire la méthode getThoseFilmsByName() Et oui, parce qu'on peut avoir plusieurs films avec le même nom !
-  public function getThoseFilmsByName($Id_Classification): object {
-    $sql = "SELECT * FROM ".PREFIXE."films WHERE ID_CLASSIFICATION_AGE_PUBLIC = :Id_Classification";
+  public function getThoseFilmsByName($NOM): array {
+    $sql = "SELECT * FROM ".PREFIXE."films WHERE NOM LIKE :NOM";
 
     $statement = $this->DB->prepare($sql);
     
-    $statement->execute([':Id_Classification'=> $Id_Classification]);
+    $statement->execute([':NOM'=> "%".$NOM."%"]);
 
-    return $statement->fetchAll(PDO::FETCH_OBJ);
+    return $statement->fetchAll(PDO::FETCH_CLASS, 'Film');
   }
 
   // Construire la méthode CreateThisFilm()
   public function CreateThisFilm(Film $film): bool {
-    $sql = "INSERT INTO ".PREFIXE."films (NOM, URL_AFFICHE, LIEN_TRAILER, RESUME, DUREE, DATE_SORTIE, ID_CLASSIFICATION_AGE_PUBLIC) VALUES (:nom, :url_affiche, : lien_trailer, :resume, :duree, :date_sortie, :id_classification);";
+    $sql = "INSERT INTO ".PREFIXE."films (NOM, URL_AFFICHE, LIEN_TRAILER, RESUME, DUREE, DATE_SORTIE, ID_CLASSIFICATION_AGE_PUBLIC) VALUES (:nom, :url_affiche, :lien_trailer, :resume, :duree, :date_sortie, :id_classification);";
 
     $statement = $this->DB->prepare($sql);
     
@@ -80,7 +80,7 @@ class FilmRepository {
       ':resume'            => $film->getResume(),
       ':duree'             => $film->getDuree(),
       ':date_sortie'       => $film->getDateSortie(),
-      ':Id_Classification' => $film->getIdClassificationAgePublic()
+      ':id_classification' => $film->getIdClassificationAgePublic()
     ]);
 
     return $success;

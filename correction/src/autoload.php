@@ -4,8 +4,8 @@
 function ChargerClasses($classe)
 {
   try {
-    if (file_exists(__DIR__ . "/Classes/" . $classe . ".php")) {
-      require_once __DIR__ . "/Classes/" . $classe . ".php";
+    if (file_exists(__DIR__ . "/Models/" . $classe . ".php")) {
+      require_once __DIR__ . "/Models/" . $classe . ".php";
     } elseif (file_exists(__DIR__ . "/Repositories/" . $classe . ".php")) {
       require_once __DIR__ . "/Repositories/" . $classe . ".php";
     } else {
