@@ -1,4 +1,4 @@
-# Partie 3 : Models et Repositories
+# Partie 3 : Models & Repositories
 Maintenant que nous pouvons nous connecter et s'assurer que la BDD est remplie (voir [partie 2](<partie 2.md>)), nous allons pouvoir commencer à travailler.
 
 ---
