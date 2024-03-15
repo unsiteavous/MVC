@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models;
 
 use PDO;
@@ -42,18 +43,27 @@ final class Database
       return "La base de données semble déjà remplie.";
       die();
     }
-    // Télécharger le fichier sql d'initialisation dans la BDD
+    // Télécharger le(s) fichier(s) sql d'initialisation dans la BDD
+    // Et effectuer les différentes migrations
     try {
-      $sql = file_get_contents(__DIR__. "/../Migrations/cinema-remplie.sql");
-
-      $this->DB->query($sql);
-    // Mettre à jour le fichier config.php
-
-      if($this->UpdateConfig()){
-        return "installation de la Base de Données terminée !";
+      $i = 0;
+      $migrationExistante = TRUE;
+      while ($migrationExistante === TRUE) {
+        $migration = __DIR__ . "/../Migrations/migration$i.sql";
+        if (file_exists($migration)) {
+          $sql = file_get_contents($migration);
+          $this->DB->query($sql);
+          $i++;
+        }else {
+          $migrationExistante = FALSE;
+        }
       }
 
-    } catch(PDOException $erreur){
+      // Mettre à jour le fichier config.php
+      if ($this->UpdateConfig()) {
+        return "installation de la Base de Données terminée !";
+      }
+    } catch (PDOException $erreur) {
       return "impossible de remplir la Base de données : " . $erreur->getMessage();
     }
   }
@@ -62,10 +72,11 @@ final class Database
    * Vérifie si la table Films existe déjà dans la BDD
    * @return bool
    */
-  private function testIfTableFilmsExists(): bool {
+  private function testIfTableFilmsExists(): bool
+  {
     $existant = $this->DB->query('SHOW TABLES FROM ' . DB_NAME . ' like \'%films%\'')->fetch();
 
-    if ($existant !== false && $existant[0] == PREFIXE."films") {
+    if ($existant !== false && $existant[0] == PREFIXE . "films") {
       return true;
     } else {
       return false;
@@ -73,32 +84,32 @@ final class Database
   }
 
 
-  private function UpdateConfig() : bool {
+  private function UpdateConfig(): bool
+  {
 
-      $fconfig = fopen($this->config, 'w');
+    $fconfig = fopen($this->config, 'w');
 
-      $contenu = "<?php
+    $contenu = "<?php
       // lors de la mise en open source, remplacer les infos concernant la base de données.
       
-      define('DB_HOST', '". DB_HOST ."');
-      define('DB_NAME', '". DB_NAME ."');
-      define('DB_USER', '". DB_USER ."');
-      define('DB_PWD', '". DB_PWD ."');
-      define('PREFIXE', '". PREFIXE ."');
+      define('DB_HOST', '" . DB_HOST . "');
+      define('DB_NAME', '" . DB_NAME . "');
+      define('DB_USER', '" . DB_USER . "');
+      define('DB_PWD', '" . DB_PWD . "');
+      define('PREFIXE', '" . PREFIXE . "');
       
       define('HOME_URL', '/correction/public/');
       
       // Ne pas toucher :
       
       define('DB_INITIALIZED', TRUE);";
-      
 
-      if (fwrite($fconfig, $contenu)) {
-        fclose($fconfig);
-        return true;
-      } else {
-        return false;
-      }
+
+    if (fwrite($fconfig, $contenu)) {
+      fclose($fconfig);
+      return true;
+    } else {
+      return false;
+    }
   }
 }
-

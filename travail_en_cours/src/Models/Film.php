@@ -1,23 +1,32 @@
 <?php
 namespace src\Models;
 
-use DateTime;
-use src\Services\Hydratation;
-
 class Film {
   private $Id, $Nom, $UrlAffiche, $LienTrailer, $Resume, $Duree, $DateSortie, $IdClassificationAgePublic;
-
-  use Hydratation;
 
   public function __construct(array $data = array())
   {
     $this->hydrate($data);
   }
 
+  private function hydrate(array $data): void {
+    foreach ($data as $key => $value) {
+      $parts = explode('_', $key);
+      $setter = 'set';
+      foreach ($parts as $part) {
+        $setter .= ucfirst(strtolower($part));
+      }
+      
+      $this->$setter($value);
+    }
+  }
+
+  
+
   /**
    * Get the value of Id
    */ 
-  public function getId(): int
+  public function getId()
   {
     return $this->Id;
   }
@@ -26,7 +35,7 @@ class Film {
    * Set the value of Id
    *
    */ 
-  public function setId(int $Id)
+  public function setId($Id)
   {
     $this->Id = $Id;
   }
@@ -34,7 +43,7 @@ class Film {
   /**
    * Get the value of Nom
    */ 
-  public function getNom(): string
+  public function getNom()
   {
     return $this->Nom;
   }
@@ -43,7 +52,7 @@ class Film {
    * Set the value of Nom
    *
    */ 
-  public function setNom(string $Nom)
+  public function setNom($Nom)
   {
     $this->Nom = $Nom;
   }
@@ -51,7 +60,7 @@ class Film {
   /**
    * Get the value of UrlAffiche
    */ 
-  public function getUrlAffiche(): string
+  public function getUrlAffiche()
   {
     return $this->UrlAffiche;
   }
@@ -60,7 +69,7 @@ class Film {
    * Set the value of UrlAffiche
    *
    */ 
-  public function setUrlAffiche(string $UrlAffiche)
+  public function setUrlAffiche($UrlAffiche)
   {
     $this->UrlAffiche = $UrlAffiche;
   }
@@ -68,7 +77,7 @@ class Film {
   /**
    * Get the value of LienTrailer
    */ 
-  public function getLienTrailer(): string
+  public function getLienTrailer()
   {
     return $this->LienTrailer;
   }
@@ -77,7 +86,7 @@ class Film {
    * Set the value of LienTrailer
    *
    */ 
-  public function setLienTrailer(string $LienTrailer)
+  public function setLienTrailer($LienTrailer)
   {
     $this->LienTrailer = $LienTrailer;
   }
@@ -85,7 +94,7 @@ class Film {
   /**
    * Get the value of Resume
    */ 
-  public function getResume(): string
+  public function getResume()
   {
     return $this->Resume;
   }
@@ -94,7 +103,7 @@ class Film {
    * Set the value of Resume
    *
    */ 
-  public function setResume(string $Resume)
+  public function setResume($Resume)
   {
     $this->Resume = $Resume;
   }
@@ -102,7 +111,7 @@ class Film {
   /**
    * Get the value of Duree
    */ 
-  public function getDuree(): string
+  public function getDuree()
   {
     return $this->Duree;
   }
@@ -111,7 +120,7 @@ class Film {
    * Set the value of Duree
    *
    */ 
-  public function setDuree(string $Duree)
+  public function setDuree($Duree)
   {
     $this->Duree = $Duree;
   }
@@ -119,7 +128,7 @@ class Film {
   /**
    * Get the value of DateSortie
    */ 
-  public function getDateSortie(): string
+  public function getDateSortie()
   {
     return $this->DateSortie;
   }
@@ -128,7 +137,7 @@ class Film {
    * Set the value of DateSortie
    *
    */ 
-  public function setDateSortie(string $DateSortie)
+  public function setDateSortie($DateSortie)
   {
     $this->DateSortie = $DateSortie;
   }
@@ -136,7 +145,7 @@ class Film {
   /**
    * Get the value of IdClassificationAgePublic
    */ 
-  public function getIdClassificationAgePublic(): int
+  public function getIdClassificationAgePublic()
   {
     return $this->IdClassificationAgePublic;
   }
@@ -145,9 +154,12 @@ class Film {
    * Set the value of IdClassificationAgePublic
    *
    */ 
-  public function setIdClassificationAgePublic(int $IdClassificationAgePublic)
+  public function setIdClassificationAgePublic($IdClassificationAgePublic)
   {
     $this->IdClassificationAgePublic = $IdClassificationAgePublic;
   }
 
+  public function __set($name, $value) {
+    $this->hydrate([$name => $value]);
+  }
 }
