@@ -7,6 +7,8 @@
       define('DB_PWD', 'cinema');
       define('PREFIXE', 'cine_');
       
+      define('HOME_URL', '/correction/public/');
+      
       // Ne pas toucher :
       
       define('DB_INITIALIZED', TRUE);

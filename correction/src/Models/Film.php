@@ -1,23 +1,16 @@
 <?php
+namespace src\Models;
+
+use src\Services\Hydratation;
 
 class Film {
   private $Id, $Nom, $UrlAffiche, $LienTrailer, $Resume, $Duree, $DateSortie, $IdClassificationAgePublic;
 
+  use Hydratation;
+
   public function __construct(array $data = array())
   {
     $this->hydrate($data);
-  }
-
-  private function hydrate(array $data): void {
-    foreach ($data as $key => $value) {
-      $parts = explode('_', $key);
-      $setter = 'set';
-      foreach ($parts as $part) {
-        $setter .= ucfirst(strtolower($part));
-      }
-      
-      $this->$setter($value);
-    }
   }
 
   /**
@@ -156,8 +149,4 @@ class Film {
     $this->IdClassificationAgePublic = $IdClassificationAgePublic;
   }
 
-  public function __set($name, $value)
-  {
-    $this->hydrate([$name => $value]);
-  }
 }

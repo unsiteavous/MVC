@@ -92,4 +92,6 @@ Tous les fichiers front vont dans `public`.
 Si tout n'est pas clair pour vous dans cette arborescence, pas d'inquiétude, nous allons découvrir cela au fur et à mesure. 
 
 ## Exercices
-[Partie 1](<partie 1.md>)
+- [Partie 1](<partie 1.md>)
+- [Partie 2](<partie 2.md>)
+- [Partie 3](<partie 3.md>)

@@ -1,4 +1,8 @@
 <?php
+namespace src\Models;
+
+use PDO;
+use PDOException;
 
 final class Database
 {
@@ -81,6 +85,8 @@ final class Database
       define('DB_USER', '". DB_USER ."');
       define('DB_PWD', '". DB_PWD ."');
       define('PREFIXE', '". PREFIXE ."');
+      
+      define('HOME_URL', '/correction/public/');
       
       // Ne pas toucher :
       

@@ -1,4 +1,9 @@
 <?php
+namespace src\Repositories;
+
+use src\Models\Film;
+use PDO;
+use src\Models\Database;
 
 class FilmRepository {
   private $DB;
@@ -16,7 +21,7 @@ class FilmRepository {
   public function getAllFilms(){
     $sql = "SELECT * FROM ".PREFIXE."films;";
 
-    return  $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, 'Film');
+    return  $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, '\src\Models\Film');
   }
 
 
@@ -37,7 +42,7 @@ class FilmRepository {
     $statement = $this->DB->prepare($sql);
     $statement->bindParam(':id', $id);
     $statement->execute();
-    $statement->setFetchMode(PDO::FETCH_CLASS, 'Film');
+    $statement->setFetchMode(PDO::FETCH_CLASS, '\src\Models\Film');
     return $statement->fetch();
   }
 
@@ -52,7 +57,7 @@ class FilmRepository {
     
     $statement->execute([':Id_Classification'=> $Id_Classification]);
 
-    return $statement->fetchAll(PDO::FETCH_CLASS, 'Film');
+    return $statement->fetchAll(PDO::FETCH_CLASS, '\src\Models\Film');
   }
 
 
@@ -64,7 +69,7 @@ class FilmRepository {
     
     $statement->execute([':NOM'=> "%".$NOM."%"]);
 
-    return $statement->fetchAll(PDO::FETCH_CLASS, 'Film');
+    return $statement->fetchAll(PDO::FETCH_CLASS, '\src\Models\Film');
   }
 
   // Construire la méthode CreateThisFilm()
