@@ -68,7 +68,7 @@ Tous les fichiers front vont dans `public`.
             - ...
 
 > src/
-    > Classes/
+    > Models/
         - Database.php
         - User.php
         - ...
@@ -78,7 +78,7 @@ Tous les fichiers front vont dans `public`.
     > Controllers/
         - UserController.php
         - ...
-    > includes/
+    > Views/
         - header.php
         - footer.php
         - ...
