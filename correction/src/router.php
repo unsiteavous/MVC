@@ -6,21 +6,21 @@ use src\Controllers\HomeController;
 $HomeController = new HomeController;
 $FilmController = new FilmController;
 
-$route = $_SERVER['REQUEST_URI'];
-$methode = $_SERVER['REQUEST_METHOD'];
 
+$route = $_SERVER['REDIRECT_URL'];
+$methode = $_SERVER['REQUEST_METHOD'];
 
 switch ($route) {
   case HOME_URL:
     if (isset($_SESSION['connecté'])) {
-      header('location: /dashboard');
+      header('location: '.HOME_URL.'dashboard');
       die;
     } else {
       $HomeController->index();
     }
     break;
 
-  case '/connexion':
+  case HOME_URL.'connexion':
     if (isset($_SESSION['connecté'])) {
       header('location: /dashboard');
       die;
@@ -33,7 +33,7 @@ switch ($route) {
     }
     break;
 
-  case '/deconnexion':
+  case HOME_URL.'deconnexion':
     $HomeController->quit();
     break;
 
@@ -49,7 +49,7 @@ switch ($route) {
               if ($methode === "POST") {
                 $data = $_POST;
                 $FilmController->save($data);
-              }else {
+              } else {
                 $FilmController->new($data);
               }
               break;
@@ -95,12 +95,13 @@ switch ($route) {
           break;
       }
     } else {
-      header("location: /");
+      header("location: ".HOME_URL);
       die;
     }
     break;
 
   default:
-    # code...
+    header("HTTP/1.1 404 Not Found");
+    echo "la page recherchée semble ne pas exister...";
     break;
 }

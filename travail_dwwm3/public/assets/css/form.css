@@ -1,0 +1,54 @@
+form {
+  margin: 50px auto;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  border:1px solid black;
+  border-radius: 5px;
+  box-shadow:5px 5px 5px grey;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+input {
+  margin-bottom: 15px;
+}
+#message, .message {
+  display:none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+.succes {
+  display:block !important;
+  color: green;
+  background-color: #acffac;
+  border:3px solid green;
+}
+.echec {
+  display:block !important;
+  color: red;
+  background-color: #ffacac;
+  border: 3px solid red;
+}
+
+input, select {
+  font-family:Comfortaa;
+  font-size:inherit;
+  padding: 5px 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.1s;
+  text-decoration: none;
+  color: black;
+  margin: 10px 0;
+}
+
+input[type="submit"] {
+  background-color: black;
+  color: white;
+}

@@ -60,10 +60,3 @@ body {
   text-align: center;
   padding: 20px 0 10px;
 }
-
-.error {
-  background-color: rgb(255, 126, 126);
-  padding: 10px;
-  font-weight: 600;
-  border-radius: 5px;
-}

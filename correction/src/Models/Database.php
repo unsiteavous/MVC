@@ -100,7 +100,7 @@ final class Database
       
       // Si le nom de domaine ne pointe pas vers le dossier public, indiquer le chemin entre le nom de domaine et le dossier public.
       // exemple: /mon-site/public/
-      define('HOME_URL', '/correction/public/');
+      define('HOME_URL', '" . HOME_URL . "');
       
       // Ne pas toucher :
       
