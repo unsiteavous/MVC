@@ -13,7 +13,7 @@
   <input type="text" name="lien_trailer" id="lien_trailer" required value="<?= isset($film) ? $film->getLienTrailer() : "" ?>">
   
   <label for="resume">Résumé :</label><br>
-  <input type="text" name="resume" id="resume" required value="<?= isset($film) ? $film->getResume() : "" ?>">
+  <textarea name="resume" id="resume" required cols="30" rows="10"><?= isset($film) ? $film->getResume() : "" ?></textarea>
   
   <label for="duree">Durée :</label><br>
   <input type="time" name="duree" id="duree" required value="<?= isset($film) ? $film->GetDuree() : "" ?>">
