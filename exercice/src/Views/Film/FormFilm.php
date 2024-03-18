@@ -1,4 +1,6 @@
-<form action="<?= $action == "nouveau" ? "/dashboard/films/new" : "/dashboard/films/update/".$film->getId() ?>" method="post">
+<?php
+?>
+<form action="<?= $action == "new" ? "/dashboard/films/new" : "/dashboard/films/update/".$film->getId() ?>" method="post">
   <?= $action == "nouveau" ? "<h3>Enregistrer un nouveau film :</h3>" : "<h3>Mettre à jour un film :</h3>" ?>
   
   <label for="nom">Nom du film :</label><br>
@@ -22,15 +24,23 @@
   <label for="id_classification">Adressé à quel public :</label><br>
   <select name="id_classification" id="id_classification" required>
     <?php foreach ($classifications as $classification) {
-      echo "<option value=".$classification->getId().">".$classification->getIntitule()."</option>";
+      echo "<option value='".$classification->getId()."'";
+      if (isset($film) && $classification->getId() == $film->getIdClassification()) {
+        echo " selected";
+      }
+      echo ">".$classification->getIntitule()."</option>";
     }
     ?>
   </select>
 
   <label for="id_categories">Catégories associées :</label><br>
-  <select name="id_categories" id="id_categories" required multiple>
+  <select name="id_categories[]" id="id_categories" required multiple>
     <?php foreach ($categories as $categorie) {
-      echo "<option value=".$categorie->getId().">".$categorie->getNom()."</option>";
+      echo "<option value='".$categorie->getId()."'";
+      if (isset($film) && in_array($categorie->getId(), $film->getIdCategories())) {
+        echo " selected";
+      }
+      echo ">".$categorie->getNom()."</option>";
     }
     ?>
   </select>

@@ -1,5 +1,6 @@
 <?php
 include __DIR__ ."/BarreOutilsFilm.php";
+
 ?>
 
 <h1><?= $film->getNom() ?></h1>
@@ -7,6 +8,10 @@ include __DIR__ ."/BarreOutilsFilm.php";
   <div class="infos-details">
     <h3>Année de sortie : <?= $film->getDateSortie() ?></h3>
     <h3>Durée : <?= $film->getDuree() ?></h3>
+    <h3>Catégorie(s) : <?php foreach ($film->getNomsCategories() as $categorie) { ?>
+      <span class="categorie" onclick="location.href='/dashboard/films/categorie/<?= $categorie ?>'"><?= $categorie ?></span>
+    <?php } ?></h3>
+    <h3>Adressé à : <span class="classificationage" onclick="location.href='/dashboard/films/classification-age/<?= $film->getIdClassification() ?>'"><?= $film->getNomClassification() ?></span></h3>
     <h3>Résumé : </h3>
     <p><?= $film->getResume() ?></p>
   </div>

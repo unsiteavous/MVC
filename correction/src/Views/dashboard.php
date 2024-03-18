@@ -9,7 +9,7 @@ include_once __DIR__ . '/Includes/colonne.php';
   switch ($section) {
     case 'films':
       switch ($action) {
-        case 'nouveau':
+        case 'new':
           include_once __DIR__ . '/Film/FormFilm.php';
           break;
 

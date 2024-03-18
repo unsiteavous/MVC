@@ -1,4 +1,7 @@
 <?php
+// Pensez à définir le namespace du fichier.
+
+// Pensez également à ajouter tous les use nécessaires !
 
 class FilmRepository {
   private $DB;

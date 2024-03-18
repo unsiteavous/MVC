@@ -43,8 +43,21 @@ final class Database
       echo "La base de données semble déjà remplie.";
       die;
     }else {
+      // Télécharger le(s) fichier(s) sql d'initialisation dans la BDD
+      // Et effectuer les différentes migrations
       try {
-      $sql = file_get_contents(__DIR__."/../Migrations/cinema-remplie.sql");
+        $i = 0;
+        $migrationExistante = TRUE;
+        while ($migrationExistante === TRUE) {
+          $migration = __DIR__ . "/../Migrations/migration$i.sql";
+          if (file_exists($migration)) {
+            $sql = file_get_contents($migration);
+            $this->DB->query($sql);
+            $i++;
+          }else {
+            $migrationExistante = FALSE;
+          }
+        }
       $this->DB->query($sql);
       $this->UpdateConfig();
 

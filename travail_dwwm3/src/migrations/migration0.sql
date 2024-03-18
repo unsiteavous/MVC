@@ -138,12 +138,11 @@ INSERT INTO `cine_films` (`ID`, `NOM`, `URL_AFFICHE`, `LIEN_TRAILER`, `RESUME`, 
 
 DROP TABLE IF EXISTS `cine_projections`;
 CREATE TABLE IF NOT EXISTS `cine_projections` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `HORAIRE` datetime NOT NULL,
   `ID_SALLES` int(11) NOT NULL,
   `ID_FILMS` int(11) NOT NULL,
   `ID_EMPLOYES` int(11) NOT NULL,
-  PRIMARY KEY (`ID`, `HORAIRE`,`ID_SALLES`,`ID_FILMS`,`ID_EMPLOYES`),
+  PRIMARY KEY (`HORAIRE`,`ID_SALLES`,`ID_FILMS`,`ID_EMPLOYES`),
   KEY `FK_PROJETTE_SALLES` (`ID_SALLES`),
   KEY `FK_PROJETTE_FILMS0` (`ID_FILMS`),
   KEY `FK_PROJETTE_EMPLOYES1` (`ID_EMPLOYES`)
@@ -153,14 +152,14 @@ CREATE TABLE IF NOT EXISTS `cine_projections` (
 -- Déchargement des données de la table `cine_projections`
 --
 
-INSERT INTO `cine_projections` (`ID`, `HORAIRE`, `ID_SALLES`, `ID_FILMS`, `ID_EMPLOYES`) VALUES
-(1,'2024-03-08 15:00:00', 1, 3, 2),
-(2,'2024-03-10 13:00:00', 1, 4, 1),
-(3,'2024-03-08 17:00:00', 2, 4, 5),
-(4,'2020-03-17 17:00:00', 4, 4, 1),
-(5,'2021-03-08 17:00:00', 4, 2, 6),
-(6,'2024-03-08 15:00:00', 4, 2, 6),
-(7,'2024-03-20 20:00:00', 4, 1, 2);
+INSERT INTO `cine_projections` (`HORAIRE`, `ID_SALLES`, `ID_FILMS`, `ID_EMPLOYES`) VALUES
+('2024-03-08 15:00:00', 1, 3, 2),
+('2024-03-10 13:00:00', 1, 4, 1),
+('2024-03-08 17:00:00', 2, 4, 5),
+('2020-03-17 17:00:00', 4, 4, 1),
+('2021-03-08 17:00:00', 4, 2, 6),
+('2024-03-08 15:00:00', 4, 2, 6),
+('2024-03-20 20:00:00', 4, 1, 2);
 
 -- --------------------------------------------------------
 

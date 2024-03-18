@@ -1,4 +1,7 @@
 <?php
+// Pensez à définir le namespace du fichier.
+
+// Pensez également à ajouter tous les use nécessaires !
 
 class FilmRepository {
   private $DB;
@@ -72,4 +75,12 @@ class FilmRepository {
 
 
   // Construire la méthode deleteThisFilm()
+
+  // Construire une méthode addFilmToCategories(Film $film)
+  // Elle permettra d'insérer autant de lignes que nécessaire (un film peut être associé à plusieurs catégories)
+  // dans la table relations_films_categories
+
+  // Construire une méthode removeFilmToCategories(Film $film)
+  // qui permettra de supprimer toutes les catégories associées à un film dans la table relations_films_categories
+  
 }

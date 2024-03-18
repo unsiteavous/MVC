@@ -31,6 +31,7 @@ class FilmRepository
       cine_films.DATE_SORTIE, 
       cine_films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
       GROUP_CONCAT(cine_categories.NOM) AS NOMS_CATEGORIES, 
+      GROUP_CONCAT(cine_categories.ID) AS ID_CATEGORIES, 
       cine_classification_age_public.INTITULE as NOM_CLASSIFICATION 
     FROM cine_films
     LEFT JOIN cine_relations_films_categories ON cine_films.ID = cine_relations_films_categories.ID_FILMS 
@@ -64,6 +65,7 @@ class FilmRepository
       cine_films.DATE_SORTIE, 
       cine_films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
       GROUP_CONCAT(cine_categories.NOM) AS NOMS_CATEGORIES, 
+      GROUP_CONCAT(cine_categories.ID) AS ID_CATEGORIES, 
       cine_classification_age_public.INTITULE as NOM_CLASSIFICATION 
     FROM cine_films
     LEFT JOIN cine_relations_films_categories ON cine_films.ID = cine_relations_films_categories.ID_FILMS 
@@ -94,6 +96,7 @@ class FilmRepository
       cine_films.DATE_SORTIE, 
       cine_films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
       GROUP_CONCAT(cine_categories.NOM) AS NOMS_CATEGORIES, 
+      GROUP_CONCAT(cine_categories.ID) AS ID_CATEGORIES, 
       cine_classification_age_public.INTITULE as NOM_CLASSIFICATION 
     FROM cine_films
     LEFT JOIN cine_relations_films_categories ON cine_films.ID = cine_relations_films_categories.ID_FILMS 
@@ -122,6 +125,7 @@ class FilmRepository
       cine_films.DATE_SORTIE, 
       cine_films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
       GROUP_CONCAT(cine_categories.NOM) AS NOMS_CATEGORIES, 
+      GROUP_CONCAT(cine_categories.ID) AS ID_CATEGORIES, 
       cine_classification_age_public.INTITULE as NOM_CLASSIFICATION 
     FROM cine_films
     LEFT JOIN cine_relations_films_categories ON cine_films.ID = cine_relations_films_categories.ID_FILMS 
@@ -137,14 +141,19 @@ class FilmRepository
     return $statement->fetchAll(PDO::FETCH_CLASS, Film::class);
   }
 
-  // Construire la méthode CreateThisFilm()
-  public function CreateThisFilm(Film $film): bool
+  /**
+   * Permet de créer un nouveau film. Retourne l'objet film avec son Id fraîchement créé par la BDD.
+   *
+   * @param Film $film
+   * @return Film
+   */
+  public function CreateThisFilm(Film $film): Film
   {
     $sql = "INSERT INTO " . PREFIXE . "films (NOM, URL_AFFICHE, LIEN_TRAILER, RESUME, DUREE, DATE_SORTIE, ID_CLASSIFICATION_AGE_PUBLIC) VALUES (:nom, :url_affiche, :lien_trailer, :resume, :duree, :date_sortie, :id_classification);";
 
     $statement = $this->DB->prepare($sql);
 
-    $success = $statement->execute([
+    $statement->execute([
       ':nom'               => $film->getNom(),
       ':url_affiche'       => $film->getUrlAffiche(),
       ':lien_trailer'      => $film->getLienTrailer(),
@@ -154,7 +163,10 @@ class FilmRepository
       ':id_classification' => $film->getIdClassification()
     ]);
 
-    return $success;
+    $id = $this->DB->lastInsertId();
+    $film->setId($id);
+
+    return $film;
   }
 
   // Construire la méthode updateThisFilm()
@@ -196,5 +208,29 @@ class FilmRepository
     $statement = $this->DB->prepare($sql);
 
     return $statement->execute([':Id' => $Id]);
+  }
+
+  public function addFilmToCategories(Film $film): bool
+  {
+    $sql = "INSERT INTO " . PREFIXE . "relations_films_categories (ID_CATEGORIES, ID_FILMS) VALUES (:id_category0, :id_film)";
+    for ($i = 1; $i < sizeof($film->getIdCategories()); $i++) {
+      $sql .= ", (:id_category$i, :id_film)";
+    }
+    $sql .= ";";
+    $statement = $this->DB->prepare($sql);
+    $variables = [":id_film" => $film->getId()];
+
+    for ($i = 0; $i < sizeof($film->getIdCategories()); $i++) {
+      $variables[":id_category$i"] = $film->getIdCategories()[$i];
+    }
+
+    return $statement->execute($variables);
+  }
+
+  public function removeFilmToCategories(Film $film): bool
+  {
+    $sql = "DELETE FROM ". PREFIXE . "relations_films_categories WHERE ID_FILMS = :id_film";
+    $statement = $this->DB->prepare($sql);
+    return $statement->execute([":id_film" => $film->getId()]);
   }
 }

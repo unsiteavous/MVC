@@ -115,17 +115,39 @@ button:hover {
 .listeFilms {
   display: grid;
   grid-template-columns: 350px repeat(auto-fill, 350px) 300px;
-  grid-auto-rows: 500px;
   justify-content: center;
 }
 
 .filmCard {
   width: 300px;
-  height: fit-content;
   background-color: aliceblue;
   border-radius: 10px;
   box-shadow: 5px 5px 5px lightgray;
   transition: 0.3s;
+  margin-bottom: 50px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.add-film1, .add-film2 {
+  font-size: 200px;
+  border-radius: 100%;
+  color: white;
+  text-align: center;
+  position: relative;
+  left: 12%;
+  top: 30%;
+  padding: 30px 60px 0px;
+  z-index: 10;
+}
+
+.add-film2 {
+  color: gray;
+  left: 14%;
+  top: -17%;
+  z-index: 5;
 }
 
 .filmCard:hover {
@@ -161,17 +183,18 @@ button:hover {
   display: flex;
   justify-content: space-between;
   margin: 10px;
+  flex-wrap: wrap;
 }
 
 .categorie {
   background-color: lightblue;
   padding: 5px;
   border-radius: 5px;
-  margin: 0 5px;
+  margin: 5px;
   cursor: pointer;
 }
 
-.infos .age {
+.classificationage {
   background-color: darkviolet;
   padding: 5px;
   border-radius: 5px;

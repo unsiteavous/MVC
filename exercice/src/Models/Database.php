@@ -25,7 +25,7 @@ final class Database
     // Faire la méthode initializeDB()
     // Elle devra avant tout faire appel à la méthode testIfTableFilmsExists()
     // Dans le cas ou cette méthode renvoie true, on arrête là.
-    // Sinon, on charge le fichier sql du dossier migrations, puis on exécute la requête sql.
+    // Sinon, on charge les fichiers sql du dossier migrations, puis on exécute la requête sql. comme il peut y avoir plusieurs migrations, on fait ça dans une boucle.
     // Enfin, on fait appel à la méthode UpdateConfig().
 
 

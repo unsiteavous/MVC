@@ -42,29 +42,30 @@ final class Database
     if ($this->testIfTableFilmsExists()) {
       return "La base de données semble déjà remplie.";
       die();
-    }
-    // Télécharger le(s) fichier(s) sql d'initialisation dans la BDD
-    // Et effectuer les différentes migrations
-    try {
-      $i = 0;
-      $migrationExistante = TRUE;
-      while ($migrationExistante === TRUE) {
-        $migration = __DIR__ . "/../Migrations/migration$i.sql";
-        if (file_exists($migration)) {
-          $sql = file_get_contents($migration);
-          $this->DB->query($sql);
-          $i++;
-        }else {
-          $migrationExistante = FALSE;
+    } else {
+      // Télécharger le(s) fichier(s) sql d'initialisation dans la BDD
+      // Et effectuer les différentes migrations
+      try {
+        $i = 0;
+        $migrationExistante = TRUE;
+        while ($migrationExistante === TRUE) {
+          $migration = __DIR__ . "/../Migrations/migration$i.sql";
+          if (file_exists($migration)) {
+            $sql = file_get_contents($migration);
+            $this->DB->query($sql);
+            $i++;
+          } else {
+            $migrationExistante = FALSE;
+          }
         }
-      }
 
-      // Mettre à jour le fichier config.php
-      if ($this->UpdateConfig()) {
-        return "installation de la Base de Données terminée !";
+        // Mettre à jour le fichier config.php
+        if ($this->UpdateConfig()) {
+          return "installation de la Base de Données terminée !";
+        }
+      } catch (PDOException $erreur) {
+        return "impossible de remplir la Base de données : " . $erreur->getMessage();
       }
-    } catch (PDOException $erreur) {
-      return "impossible de remplir la Base de données : " . $erreur->getMessage();
     }
   }
 

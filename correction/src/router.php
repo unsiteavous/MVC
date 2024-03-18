@@ -50,7 +50,7 @@ switch ($route) {
                 $data = $_POST;
                 $FilmController->save($data);
               } else {
-                $FilmController->new($data);
+                $FilmController->new();
               }
               break;
 

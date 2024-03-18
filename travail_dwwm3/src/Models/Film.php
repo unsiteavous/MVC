@@ -1,7 +1,11 @@
 <?php
 // Construire la classe Film.
 
-// Elle aura toutes les propriétés privées qu'on retrouvera dans la BDD.
+// Elle aura toutes les propriétés privées qu'on retrouvera dans la table associée dans la BDD.
+// Elle aura également des propriétés en plus de ces noms de table : $NomClassification, $NomsCategories et $IdCategories, dont les deux derniers seront des tableaux.
+// Cela nous permettra plus facilement de travailler, sans avoir à refaire des appels à la BDD pour savoir quel est le nom de la classification dont on a l'ID, ...
+
+
 
 // Elle aura tous les getters et les setters associés.
 

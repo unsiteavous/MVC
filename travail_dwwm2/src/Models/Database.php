@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models;
 
 use PDO;
@@ -43,21 +44,27 @@ final class Database
     if ($this->testIfTableFilmsExists()) {
       return "La base de données semble déjà remplie.";
       die();
-    }
-    // Télécharger le fichier sql d'initialisation dans la BDD
-    try {
-      $sql = file_get_contents(__DIR__ . "/../Migrations/cinema-remplie.sql");
-
-      $this->DB->query($sql);
-      // Mettre à jour le fichier config.php
-
-      if ($this->MiseAJourConfig()) {
-        return "installation de la Base de Données terminée !";
-        die();
+    } else {
+      // Télécharger le(s) fichier(s) sql d'initialisation dans la BDD
+      // Et effectuer les différentes migrations
+      try {
+        $i = 0;
+        $migrationExistante = TRUE;
+        while ($migrationExistante === TRUE) {
+          $migration = __DIR__ . "/../Migrations/migration$i.sql";
+          if (file_exists($migration)) {
+            $sql = file_get_contents($migration);
+            $this->DB->query($sql);
+            $i++;
+          } else {
+            $migrationExistante = FALSE;
+          }
+        }
+        $this->DB->query($sql);
+        $this->UpdateConfig();
+      } catch (PDOException $e) {
+        echo "Une erreur est survenue lors de l'installation de la Base de données" . $e->getMessage();
       }
-    } catch (PDOException $erreur) {
-      return "impossible de remplir la Base de données : " . $erreur->getMessage();
-      die();
     }
   }
 
@@ -67,9 +74,9 @@ final class Database
    */
   private function testIfTableFilmsExists(): bool
   {
-    $existant = $this->DB->query('SHOW TABLES FROM ' . DB_NAME . ' like \''.PREFIXE.'films\'')->fetch();
+    $existant = $this->DB->query('SHOW TABLES FROM ' . DB_NAME . ' like \'' . PREFIXE . 'films\'')->fetch();
 
-    if ($existant !== false && $existant[0] == PREFIXE."films") {
+    if ($existant !== false && $existant[0] == PREFIXE . "films") {
       return true;
     } else {
       return false;

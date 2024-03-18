@@ -207,9 +207,9 @@ class Film
   }
 
   /**
-   * Get the value of Nom
+   * Get the value of IdCategories
    *
-   * @return  $IdCategories,
+   * @return array $IdCategories,
    */
   public function getIdCategories(): array
   {
@@ -217,16 +217,18 @@ class Film
   }
 
   /**
-   * Set the value of Nom
+   * Set the value of IdCategories
    *
-   * @param   $IdCategories
+   * @param array|int|string  $IdCategories
    * 
    * @return void
    */
-  public function setIdCategories(array|string $IdCategories): void
+  public function setIdCategories(array|int|string $IdCategories): void
   {
     if (is_array($IdCategories)) {
-      $this->NomsCategories = $IdCategories;
+      $this->IdCategories = $IdCategories;
+    } elseif (is_string($IdCategories)) {
+      $this->IdCategories = explode(",", $IdCategories);
     } else {
       $this->IdCategories = [$IdCategories];
     }
