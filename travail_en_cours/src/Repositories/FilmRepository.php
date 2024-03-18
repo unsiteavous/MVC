@@ -96,7 +96,7 @@ class FilmRepository {
       ':RESUME' => $film->getResume(),
       ':DUREE' => $film->getDuree(),
       ':DATE_SORTIE' => $film->getDateSortie(),
-      ':ID_CLASSIFICATION_AGE_PUBLIC' => $film->getIdClassificationAgePublic()
+      ':ID_CLASSIFICATION_AGE_PUBLIC' => $film->getIdClassification()
     ]);
 
     return $retour;
@@ -125,7 +125,7 @@ class FilmRepository {
       ':RESUME' => $film->getResume(),
       ':DUREE' => $film->getDuree(),
       ':DATE_SORTIE' => $film->getDateSortie(),
-      ':ID_CLASSIFICATION_AGE_PUBLIC' => $film->getIdClassificationAgePublic()
+      ':ID_CLASSIFICATION_AGE_PUBLIC' => $film->getIdClassification()
     ]);
 
     return $retour;

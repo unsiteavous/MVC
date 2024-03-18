@@ -1,11 +1,13 @@
 <?php
+
 namespace src\Models;
 
 use DateTime;
 use src\Services\Hydratation;
 
-class Film {
-  private $Id, $Nom, $UrlAffiche, $LienTrailer, $Resume, $Duree, $DateSortie, $IdClassificationAgePublic;
+class Film
+{
+  private $Id, $Nom, $UrlAffiche, $LienTrailer, $Resume, $Duree, $DateSortie, $IdClassification, $NomsCategories, $NomClassification, $IdCategories;
 
   use Hydratation;
 
@@ -16,7 +18,7 @@ class Film {
 
   /**
    * Get the value of Id
-   */ 
+   */
   public function getId(): int
   {
     return $this->Id;
@@ -25,7 +27,7 @@ class Film {
   /**
    * Set the value of Id
    *
-   */ 
+   */
   public function setId(int $Id)
   {
     $this->Id = $Id;
@@ -33,7 +35,7 @@ class Film {
 
   /**
    * Get the value of Nom
-   */ 
+   */
   public function getNom(): string
   {
     return $this->Nom;
@@ -42,7 +44,7 @@ class Film {
   /**
    * Set the value of Nom
    *
-   */ 
+   */
   public function setNom(string $Nom)
   {
     $this->Nom = $Nom;
@@ -50,7 +52,7 @@ class Film {
 
   /**
    * Get the value of UrlAffiche
-   */ 
+   */
   public function getUrlAffiche(): string
   {
     return $this->UrlAffiche;
@@ -59,7 +61,7 @@ class Film {
   /**
    * Set the value of UrlAffiche
    *
-   */ 
+   */
   public function setUrlAffiche(string $UrlAffiche)
   {
     $this->UrlAffiche = $UrlAffiche;
@@ -67,7 +69,7 @@ class Film {
 
   /**
    * Get the value of LienTrailer
-   */ 
+   */
   public function getLienTrailer(): string
   {
     return $this->LienTrailer;
@@ -76,7 +78,7 @@ class Film {
   /**
    * Set the value of LienTrailer
    *
-   */ 
+   */
   public function setLienTrailer(string $LienTrailer)
   {
     $this->LienTrailer = $LienTrailer;
@@ -84,7 +86,7 @@ class Film {
 
   /**
    * Get the value of Resume
-   */ 
+   */
   public function getResume(): string
   {
     return $this->Resume;
@@ -93,7 +95,7 @@ class Film {
   /**
    * Set the value of Resume
    *
-   */ 
+   */
   public function setResume(string $Resume)
   {
     $this->Resume = $Resume;
@@ -101,53 +103,137 @@ class Film {
 
   /**
    * Get the value of Duree
-   */ 
+   */
   public function getDuree(): string
   {
-    return $this->Duree;
+    return $this->Duree->format('H:i:s');
   }
 
   /**
    * Set the value of Duree
    *
-   */ 
-  public function setDuree(string $Duree)
+   */
+  public function setDuree(string|DateTime $Duree)
   {
-    $this->Duree = $Duree;
+    if ($Duree instanceof DateTime) {
+      $this->Duree = $Duree;
+    } else {
+      $this->Duree = new DateTime($Duree);
+    }
   }
 
   /**
    * Get the value of DateSortie
-   */ 
+   */
   public function getDateSortie(): string
   {
-    return $this->DateSortie;
+    return $this->DateSortie->format('Y-m-d');
   }
 
   /**
    * Set the value of DateSortie
    *
-   */ 
-  public function setDateSortie(string $DateSortie)
+   */
+  public function setDateSortie(string|DateTime $DateSortie)
   {
-    $this->DateSortie = $DateSortie;
+    if ($DateSortie instanceof DateTime) {
+      $this->DateSortie = $DateSortie;
+    } else {
+      $this->DateSortie = new DateTime($DateSortie);
+    }
   }
 
   /**
-   * Get the value of IdClassificationAgePublic
-   */ 
-  public function getIdClassificationAgePublic(): int
+   * Get the value of IdClassification
+   */
+  public function getIdClassification(): int
   {
-    return $this->IdClassificationAgePublic;
+    return $this->IdClassification;
   }
 
   /**
-   * Set the value of IdClassificationAgePublic
+   * Set the value of IdClassification
    *
-   */ 
-  public function setIdClassificationAgePublic(int $IdClassificationAgePublic)
+   */
+  public function setIdClassification(int $IdClassification)
   {
-    $this->IdClassificationAgePublic = $IdClassificationAgePublic;
+    $this->IdClassification = $IdClassification;
   }
 
+
+  /**
+   * Get the value of NomsCategories
+   *
+   * @return  array $NomsCategories
+   */
+  public function getNomsCategories(): array
+  {
+    return $this->NomsCategories;
+  }
+
+  /**
+   * Set the value of NomsCategories
+   *
+   * @param   string|array|null $NomsCategories  
+   *
+   * @return void
+   */
+  public function setNomsCategories(string|array|null $NomsCategories): void
+  {
+    if ($NomsCategories === null) {
+      $this->NomsCategories = [];
+    } else if (is_array($NomsCategories)) {
+      $this->NomsCategories = $NomsCategories;
+    } else {
+      $this->NomsCategories = explode(",", $NomsCategories);
+    }
+  }
+
+  /**
+   * Get the value of NomClassification
+   *
+   * @return string $NomClassification,
+   */
+  public function getNomClassification(): string
+  {
+    return $this->NomClassification;
+  }
+
+  /**
+   * Set the value of NomClassification
+   *
+   * @param string  $NomClassification  
+   *
+   * @return void
+   */
+  public function setNomClassification(string $NomClassification): void
+  {
+    $this->NomClassification = $NomClassification;
+  }
+
+  /**
+   * Get the value of Nom
+   *
+   * @return  $IdCategories,
+   */
+  public function getIdCategories(): array
+  {
+    return $this->IdCategories;
+  }
+
+  /**
+   * Set the value of Nom
+   *
+   * @param   $IdCategories
+   * 
+   * @return void
+   */
+  public function setIdCategories(array|string $IdCategories): void
+  {
+    if (is_array($IdCategories)) {
+      $this->NomsCategories = $IdCategories;
+    } else {
+      $this->IdCategories = [$IdCategories];
+    }
+  }
 }

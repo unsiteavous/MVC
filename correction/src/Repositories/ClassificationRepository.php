@@ -3,6 +3,7 @@
 namespace src\Repositories;
 
 use PDO;
+use src\Models\Classification;
 use src\Models\Database;
 
 final class ClassificationRepository
@@ -24,6 +25,6 @@ final class ClassificationRepository
   {
     $sql = "SELECT * FROM " . PREFIXE . "classification_age_public;";
 
-    return  $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, '\src\Models\Classification');
+    return  $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, Classification::class);
   }
 }

@@ -60,13 +60,10 @@ final class FilmTest extends TestCase
       "RESUME" => "Un homme nu dans la jungle",
       "DUREE" => "01:45:00",
       "DATE_SORTIE" => "2000-02-01",
-      "ID_CLASSIFICATION_AGE_PUBLIC" => 1
+      "ID_CLASSIFICATION" => 1
     ]);
 
     $this->assertTrue($FilmRepo->CreateThisFilm($Film));
-    
-    $Film = $FilmRepo->getThoseFilmsByName('Tarzan')[0];
-    $FilmRepo->deleteThisFilm($Film->getId());
   }
 
   public function test_Le_repository_peut_retrouver_un_film_par_son_nom() {
@@ -80,41 +77,17 @@ final class FilmTest extends TestCase
   public function test_Le_repository_peut_mettre_a_jour_un_film()
   {
 
-    $Film = new Film([
-      "NOM" => "Tarzan",
-      "URL_AFFICHE" => "https://google.com?s=tarzan",
-      "LIEN_TRAILER" => "https://youtube.com?s=tarzan",
-      "RESUME" => "Un homme nu dans la jungle",
-      "DUREE" => "01:45:00",
-      "DATE_SORTIE" => "2000-02-01",
-      "ID_CLASSIFICATION_AGE_PUBLIC" => 1
-    ]);
-
     $FilmRepo = new FilmRepository;
-    $FilmRepo->CreateThisFilm($Film);
 
     $Film = $FilmRepo->getThoseFilmsByName('Tarzan')[0];
     $Film->setDuree('02:00:00');
-    $this->assertTrue($FilmRepo->updateFilm($Film));
+    $this->assertTrue($FilmRepo->updateThisFilm($Film));
 
-    $FilmRepo->deleteThisFilm($Film->getId());
   }
 
   public function test_Le_repository_peut_supprimer_un_film(): void
   {
-    $Film = new Film([
-      "NOM" => "Tarzan",
-      "URL_AFFICHE" => "https://google.com?s=tarzan",
-      "LIEN_TRAILER" => "https://youtube.com?s=tarzan",
-      "RESUME" => "Un homme nu dans la jungle",
-      "DUREE" => "01:45:00",
-      "DATE_SORTIE" => "2000-02-01",
-      "ID_CLASSIFICATION_AGE_PUBLIC" => 1
-    ]);
-
     $FilmRepo = new FilmRepository;
-    $FilmRepo->CreateThisFilm($Film);
-    $FilmRepo->getThoseFilmsByName('Tarzan');
 
     $Film = $FilmRepo->getThoseFilmsByName('Tarzan')[0];
 

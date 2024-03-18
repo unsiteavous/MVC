@@ -2,15 +2,31 @@
 
 namespace src\Controllers;
 
-use src\Repositories\ClassificationRepository;
 use src\Services\Reponse;
 
-class HomeController {
-  
+class HomeController
+{
+
   use Reponse;
 
-  public function index(){
-    $classificationRepo = new ClassificationRepository;
-    $this->render("accueil", ['classifications' => $classificationRepo->getAllClassifications()]);
+  public function index()
+  {
+    $this->render("Accueil");
+  }
+
+  public function auth(string $password)
+  {
+    if ($password === 'admin') {
+      $_SESSION['connecté'] = TRUE;
+    } 
+    header('location: /dashboard');
+    die();
+  }
+
+  public function quit()
+  {
+    session_destroy();
+    header('location: /');
+    die();
   }
 }

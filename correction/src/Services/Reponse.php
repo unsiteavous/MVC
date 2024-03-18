@@ -10,11 +10,17 @@ trait Reponse {
    * @param array $data   Les données à afficher dans la vue, sous format tableau associatif.
    * @return void
    */
-  public function render(string $view, array $data = []){
+  public function render(string $view, array $data = ['section' => '', 'action' => '']){
     if (!empty($data)) {
       foreach ($data as $key => $value) {
         ${$key} = $value;
       }
+    }
+    if (!isset($section)) {
+      $section = '';
+    }
+    if (!isset($action)) {
+      $action = '';
     }
     include_once __DIR__ . '/../Views/'. $view . ".php";
   }

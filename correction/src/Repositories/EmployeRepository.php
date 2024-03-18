@@ -22,7 +22,7 @@ class EmployeRepository {
   {
     $sql = "SELECT * FROM " . PREFIXE . "employes;";
 
-    return  $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, '\src\Models\Employe');
+    return  $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, Employe::class);
   }
 
   public function getThisEmployesById(int $Id): Employe {

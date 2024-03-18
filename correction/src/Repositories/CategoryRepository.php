@@ -1,9 +1,9 @@
 <?php
 namespace src\Repositories;
 
-use Category;
 use PDO;
 use PDOException;
+use src\Models\Category;
 use src\Models\Database;
 
 class CategoryRepository {
@@ -20,7 +20,7 @@ class CategoryRepository {
   public function getAllCategories(){
     $sql = "SELECT * FROM ".PREFIXE."categories;";
 
-    $retour = $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, 'Categorie');
+    $retour = $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, Category::class);
 
     return $retour;
   }
@@ -31,7 +31,7 @@ class CategoryRepository {
     $statement = $this->DB->prepare($sql);
     $statement->bindParam(':id', $id);
     $statement->execute();
-    $statement->setFetchMode(PDO::FETCH_CLASS, 'Category');
+    $statement->setFetchMode(PDO::FETCH_CLASS, Category::class);
     $retour = $statement->fetch();
 
     return $retour;
@@ -46,7 +46,7 @@ class CategoryRepository {
 
     $statement->execute();
 
-    return $statement->fetchAll(PDO::FETCH_CLASS, 'Category');
+    return $statement->fetchAll(PDO::FETCH_CLASS, Category::class);
   }
 
   public function CreateThisCategory(Category $Category): bool{

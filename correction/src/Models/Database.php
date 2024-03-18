@@ -98,6 +98,8 @@ final class Database
       define('DB_PWD', '" . DB_PWD . "');
       define('PREFIXE', '" . PREFIXE . "');
       
+      // Si le nom de domaine ne pointe pas vers le dossier public, indiquer le chemin entre le nom de domaine et le dossier public.
+      // exemple: /mon-site/public/
       define('HOME_URL', '/correction/public/');
       
       // Ne pas toucher :

@@ -27,6 +27,7 @@ body {
   margin: 0px 0px 0 0;
   padding: 20px;
   color: white;
+  z-index: 100;
 }
 
 #header div {

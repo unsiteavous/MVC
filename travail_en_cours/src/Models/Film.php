@@ -2,7 +2,7 @@
 namespace src\Models;
 
 class Film {
-  private $Id, $Nom, $UrlAffiche, $LienTrailer, $Resume, $Duree, $DateSortie, $IdClassificationAgePublic;
+  private $Id, $Nom, $UrlAffiche, $LienTrailer, $Resume, $Duree, $DateSortie, $IdClassification;
 
   public function __construct(array $data = array())
   {
@@ -143,20 +143,20 @@ class Film {
   }
 
   /**
-   * Get the value of IdClassificationAgePublic
+   * Get the value of IdClassification
    */ 
-  public function getIdClassificationAgePublic()
+  public function getIdClassification()
   {
-    return $this->IdClassificationAgePublic;
+    return $this->IdClassification;
   }
 
   /**
-   * Set the value of IdClassificationAgePublic
+   * Set the value of IdClassification
    *
    */ 
-  public function setIdClassificationAgePublic($IdClassificationAgePublic)
+  public function setIdClassification($IdClassification)
   {
-    $this->IdClassificationAgePublic = $IdClassificationAgePublic;
+    $this->IdClassification = $IdClassification;
   }
 
   public function __set($name, $value) {

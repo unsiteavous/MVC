@@ -34,7 +34,6 @@ Si vous retournez sur votre navigateur, vous devriez maintenant voir l'installat
 
 Faites des essais, en vidant la base de données, et d'autres avec la base pleine.
 
-Vous pouvez ensuite passer à la [partie 3](<partie 3.md>).
 
 ## Exercice 4 : Namespaces
 Les `namespaces` sont des moyens d'appeler les classes à instancier avec un chemin qu'on définit dans les classes, plutôt qu'en utilisant le chemin relatif du fichier.
@@ -87,3 +86,8 @@ use src\Models\Database;
 ```
 
 Enfin, pour que tout cela marche, il va falloir modifier notre fichier `autoload.php`. Retournez dans le fichier et suivez les consignes de l'exercice 4.
+  
+<br><br>
+
+---
+Vous pouvez ensuite passer à la [partie 3](<partie 3.md>).

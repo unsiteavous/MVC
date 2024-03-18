@@ -1,5 +1,5 @@
 <?php
-namespace src\Views\accueil;
+namespace src\Views\Accueil;
 
 include_once __DIR__ . '/Includes/header.php';
 
