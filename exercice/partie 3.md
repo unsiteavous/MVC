@@ -40,3 +40,9 @@ Allez dans le fichier `src/Repositories/FilmRepository.php`, et suivez les consi
 ## Exercice 3 : ... Et recommencer !
 Faire la même chose pour les autres tables de notre base de données : catégories, Classifications âge, employés, salles et projections.
 
+Et comme c'est long, c'est fastidieux, et surtout c'est répétitif, on va trouver des moyens d'accélérer et de se faciliter la vie... 
+
+Pour construire tous les getters et setters facilement dans vos Modèles, je vous conseille d'utiliser [PHP getters & Setters (CV fork)](https://marketplace.visualstudio.com/items?itemName=cvergne.vscode-php-getters-setters-cv). 
+C'est un super outil, mis à jour (contrairement à d'autres version qui ont le même nom à peu près), et qui est très complet dans les commandes à faire, ou dans le typage des données. Prenez le temps de le découvrir, et de personnaliser les templates si vous le voulez !
+
+Pour le reste, rendez-vous dans la [partie 4](<partie 4.md>) !

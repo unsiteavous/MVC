@@ -2,7 +2,6 @@
 
 namespace src\Controllers;
 
-use DateTime;
 use src\Models\Film;
 use src\Repositories\CategoryRepository;
 use src\Repositories\ClassificationRepository;

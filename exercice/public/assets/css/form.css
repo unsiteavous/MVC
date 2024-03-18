@@ -35,7 +35,7 @@ input {
   border: 3px solid red;
 }
 
-input, select {
+input, select, button {
   font-family:Comfortaa;
   font-size:inherit;
   padding: 5px 10px;
@@ -48,7 +48,12 @@ input, select {
   margin: 10px 0;
 }
 
-input[type="submit"] {
+input[type="submit"], button {
   background-color: black;
   color: white;
+}
+
+.center {
+  margin: 20px auto;
+  display: block;
 }

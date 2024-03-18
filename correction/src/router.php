@@ -101,7 +101,6 @@ switch ($route) {
     break;
 
   default:
-    header("HTTP/1.1 404 Not Found");
-    echo "la page recherchée semble ne pas exister...";
+    $HomeController->page404();
     break;
 }

@@ -7,13 +7,6 @@ class Classification {
   private $Id, $Intitule, $Avertissement;
 
   use Hydratation;
-  
-  public function __construct(array $data = array())
-  {
-    $this->hydrate($data);
-  }
-
-
 
 	/**
 	 * Get the value of Id

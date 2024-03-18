@@ -15,11 +15,6 @@ class Projection
 
 	use Hydratation;
 
-	public function __construct(array $data)
-	{
-		$this->hydrate($data);
-	}
-
 	/**
 	 * Get the value of id
 	 *

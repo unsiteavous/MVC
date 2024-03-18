@@ -1,94 +1,35 @@
-# Partie 4 : Tester son application
-On le fait tous naturellement : Est-ce que ma nouvelle méthode `getAllFilms()` fonctionne ? et hop, on va faire un essai.
+# Partie 4 : Les services
+Vous commencez à comprendre le principe de la programmation : un code qui se répète, c'est un code mal pensé, mal optimisé.
 
-En fait, c'est un procédé qui mérite qu'on s'y attarde sérieusement. Faire des tests pour savoir si l'application fonctionne, c'est très important. Et pas juste à un instant T, mais un peu tout le temps.
+Quand on faisait des includes pour les header et footer dans nos projets précédents, on partait du principe que tout le code qui se répétait méritait d'avoir son propre fichier.
 
-En effet, il n'y a rien de pire que l'ajout d'une feature, qui casse un truc qui marchait avant... et qu'on s'en rend compte que bien plus tard, quand on a à nouveau besoin du truc pété.
+Et bien c'est aussi possible pour les classes !
 
-On va donc mettre en place des tests qui pourront être faits quand on veut.
+Oui oui, nous pouvons regrouper des bouts de codes qu'on retrouve dans toutes les classes, et les mettre dans un fichier particulier, que l'on incluera ensuite dans les classes en question, et qui nous permettront d'accéder à tout ce code comme s'il était écrit dans la classe.
 
-## Tests Unitaires
-Il y a deux sortes de tests. Les premiers sont les tests unitaires. Cela veut dire qu'ils permettent de tester un élément. par exemple, est-ce que ma fonction `verifierEmailValide()` fonctionne bien comme attendu ?
+Par exemple, actuellement, on constate que toutes nos classes ont :
+- un constructeur identique
+- la même méthode d'hydratation
+- la même méthode magique __set()
 
-On ne s'intéresse ici qu'au bon fonctionnement d'un seul bout de code.
+Ce même code, multiplié par les 6 classes qui s'en servent, ça fait beaucoup de lignes de codes redondantes !!
 
-exemple : 
-```php
-public function verifierEmailValide(string $email): bool{
-  if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    return true;
-  } else {
-    return false;
-  }
-}
-```
+## Traits
+En POO, on appelle ces fichiers qui contiennent du code utilisé par plusieurs classes des `traits`. 
+Ce sont des classes, mais au lieu de commencer avec le mot `class`, on commence avec le mot `trait`.
 
-Pour savoir si ma fonction travaille correctement, je dois la tester dans plusieurs cas : avec une bonne et une mauvaise adresse mail.
+On n'oublie pas le namespace en haut du fichier, et ensuite dans les classes qui doivent l'appeler, juste après les propriétés, nous viendront mettre `use NomDuTrait;`.
 
-## Tests Fonctionnels
-L'autre sorte de tests, ce sont les tests fonctionnels. Ceux-là sont plus complexes, car ils s'occupent de toute la chaîne des répercutions liées à une action utilisateur.
+Cela permet d'ajouter à notre classe tout ce qui se trouve dans ce trait, et de faire comme si c'était écrit dans la classe. Il est bien sûr possible de faire de l'héritage, de la réécriture, et tout le reste, mais on va en rester là pour le moment.
 
-Par exemple, un utilisateur qui tente de se connecter.
-1. Il va soumettre le formulaire,
-2. le traitement va le vérifier, puis appeler la classe nécessaire,
-3. le repository associé va être convoqué pour lire la BDD,
-4. en fonction du résultat une vue sera renvoyée à l'utilisateur.
 
-Et potentiellement, il peut y avoir des bugs un peu partout le long du parcours de la donnée.
+## Exercice 1 : Factoriser le code
+On va donc toutes les regrouper au sein d'un fichier de services, qui se situe dans `src/Services/Hydratation.php`.
 
-On fait donc un test d'ensemble, parce que même si les tests unitaires répondent que tout marche séparément, parfois la mise à la suite de plusieurs actions crée des comportements inattendus.
+Copiez les trois méthodes sus-mentionnées, et collez-les dans le trait Hydratation. 
 
-## PHPUNIT
-Pour faire ces tests, on va s'appuyer sur un outil fabuleux : **[PHPUNIT](https://phpunit.de/)**.
+Ensuite, supprimez ces trois méthodes dans toutes les classes que vous avez déjà écrites, et à la place, venez écrire `use Hydratation;`, en vérifiant que le namespace à utiliser soit bien ajouté en haut du fichier (il devrait ressembler à ça : use `src\Services\Hydratation;`).
 
-C'est un outil qui va nous permettre, depuis la ligne de commande, de lire nos fichiers de tests, et nous afficher les erreurs potentielles.
+Il y aura donc bien deux `use` dans ce fichier mais pas les mêmes et pas aux mêmes endroit. Je précise, au cas où. ;)
 
-Grâce à ça, fini le debug avec des var_dump... (Non je plaisante 😇)
 
-### Installation
-#### 1. COMPOSER
-Pour l'installer, il vous faudra d'abord installer [composer](https://getcomposer.org/).\
-Composer est un outil qui nous permet d'installer des librairies dans nos projets PHP. On l'utilisera beaucoup par la suite.
-
-une fois que composer est installé, on peut tester s'il fonctionne bien. Dans un terminal, faites: 
-```bash
-composer -v
-```
-#### 2. PHPUNIT
-Mettez-vous dans le dossier src de votre projet, puis tapez la commande suivante 
-```bash
-composer require --dev phpunit/phpunit ^11
-```
-
-le `--dev` prévient composer que ce ne sera pas une librairie à mettre dans le projet en production à la fin.
-
-Une fois que cela est fait, on constate qu'un dossier `vendor` est apparu, ainsi que deux fichiers, `composer.json` et `composer.lock`.
-
-à l'intérieur du `composer.json`, venez mettre ceci :
-
-```json
-{
-    "autoload": {
-        "classmap": [
-            "./"
-        ]
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^11"
-    },
-    "scripts": {
-        "tests_unitaires": "./vendor/bin/phpunit --colors=always --testdox ./Tests/Units/",
-        "tests_fonctionnels": "./vendor/bin/phpunit --colors=always --testdox ./Tests/Features/"
-    }
-}
-```
-
-Maintenant que tout est installé, vous pouvez tester votre application. **ATTENTION**, il faudra bien rester dans le dossier src quand vous êtes dans la console, sinon vous n'arriverez pas à lancer les scripts. Voici les commandes : 
-
-```bash 
-composer tests_unitaires
-composer tests_fonctionnels
-```
-
-## Exercices
-En vous aidant de la [doc](https://docs.phpunit.de/en/11.0/assertions.html), et de l'exemple dans le fichiers de tests unitaires, créez les différents tests pour FilmRepository.

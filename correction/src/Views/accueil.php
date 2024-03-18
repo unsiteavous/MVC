@@ -2,7 +2,7 @@
 
 include_once __DIR__ . '/Includes/header.php';
 ?>
-<div class="content">
+<div class="main">
   <h1>Administration</h1>
   <form action="connexion" method="post">
     <label for="password">Code d'accès :</label>

@@ -11,11 +11,6 @@ class Film
 
   use Hydratation;
 
-  public function __construct(array $data = array())
-  {
-    $this->hydrate($data);
-  }
-
   /**
    * Get the value of Id
    */
