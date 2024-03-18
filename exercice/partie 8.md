@@ -38,4 +38,49 @@ On pourrait faire des includes. Ça obligerait à des inclusions pas simples, et
 De plus, comme nous allons avoir à faire des inclusions de la sorte dans tous nos controllers, nous pouvons réfléchir à factoriser notre code en un seul fichier... 
 
 Et oui gagné, nous allons faire un nouveau service, un nouveau `trait` !
-Pour celles et ceux qui ne s'en souviennent pas, rendez-vous dans la partie
+Pour celles et ceux qui ne s'en souviennent pas, rendez-vous dans la [partie 4](<partie 4.md>).
+
+Bon, celui-là je vous le donne, parce que l'écrire n'est pas le plus intéressant. Il est plus intéressant pour vous d'en comprendre le fonctionnement et le fait qu'à partir de maintenant, lorsque nous voudrons afficher une vue, nous n'aurons plus qu'à faire :
+
+```php
+namespace src\Controllers;
+
+use src\Services;
+
+class FilmController {
+  private $proprietes;
+
+  use Reponse;
+
+  public function index()
+  {
+    $films = $this->FilmRepo->getAllFilms();
+    
+    $this->render("Dashboard", 
+      [
+        'section' => 'films',
+        'films' => $films
+      ]);
+  }
+
+  //...
+}
+```
+
+Cette méthode `render` que je vous ai créée porte le même nom que celle que nous utiliserons plus tard dans Symfony ! :)
+
+Elle va nous permettre de préciser le fichier qu'on va vouloir inclure (dans l'exemple, c'est Dashboard), et on va aussi pouvoir lui passer des paramètres, qu'on utilisera ensuite dans notre vue pour mettre en forme nos données (dans l'exemple, on lui passe la section et la liste des films).
+
+l'attribution clé => valeur est importante, parce qu'on pourrait passer juste la valeur, `$films` par exemple, mais comment s'appelle-t-elle ensuite de l'autre côté ? elle s'appelle `data[1]` ... C'est quand même un peu nul comme nom ! 
+
+## Exercice 1 : Utiliser la méthode `render()`
+Reprenez le HomeController et utilisez la méthode render pour afficher vos vues.
+
+## Exercice 2 : Faites de même pour FilmController
+Maintenant que vous avez toutes les cartes en main, vous pouvez reprendre le fichier `src/Controllers/FilmController.php`, et mettre en place les différentes méthodes du CRUD.
+
+## Exercice 3 : ... Et recommencez !
+Rien de mieux que la pratique vous avancer et comprendre ce que l'on fait.
+JE vous laisse faire exactement la même chose pour chacunes des autres entités (catégories, employés, salles, projection et classification.)
+
+Bravo à vous, vous venez de mettre au point un MCD d'une grande qualité, dont même symfony jalouse l'efficacité et le rangement ! 😉

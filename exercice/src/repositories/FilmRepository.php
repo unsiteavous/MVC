@@ -63,7 +63,7 @@ class FilmRepository {
 
 
   // Construire la méthode getThoseFilmsByName() Et oui, parce qu'on peut avoir plusieurs films avec le même nom !
-  // Bien penser à préfixer vos tables ;)
+  // Bien penser à préfixer vos tables 😉
 
   // Construire la méthode CreateThisFilm()
 

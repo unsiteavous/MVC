@@ -23,12 +23,12 @@ class FilmController
   public function index()
   {
     // Cette méthode va permettre d'afficher tous les films.
-    // Récupérez tous les films depuis la base de données, puis affichez-les avec un var_dump
+    // Récupérez tous les films depuis la base de données, puis affichez-les avec la bonne vue (aidez-vous de section, et de ce qui est attendu dans les fichiers des vues.)
   }
 
   public function show($id)
   {
-    // Récupérez le film avec l'id donné, et affichez-le avec un var_dump.
+    // Récupérez le film avec l'id donné, et affichez-le avec la bonne vue (aidez-vous de section et action)
   }
 
 
@@ -38,6 +38,8 @@ class FilmController
   {
     // Cette méthode permet d'afficher le formulaire de modification.
     // n'oubliez pas de récupérer la liste des catégories et des priorités ;)
+
+    // Affichez la bonne vue.
   }
 
   public function save($data, $id = null)
@@ -82,8 +84,10 @@ class FilmController
 
   public function delete($id)
   {
-    $this->FilmRepo->deleteThisFilm($id);
-    $films = $this->FilmRepo->getAllFilms();
-    $this->render("Dashboard", ['section' => 'films', 'films' => $films]);
+    // Supprimez le film avec l'ID
+
+    // Récupérez la liste de tous les films
+
+    // Affichez la vue dashboard, avec la section film et la variable films en paramètres.
   }
 }
