@@ -1,16 +1,16 @@
 @font-face{
   font-family: Azonix;
-  src: url('fonts/azonix.woff2') format('woff2'),
-       url('fonts/azonix.woff') format('woff'),
-       url('fonts/azonix.otf')  format('truetype'),
-       url('fonts/azonix.eot') format('embedded-opentype');
+  src: url('../fonts/azonix.woff2') format('woff2'),
+       url('../fonts/azonix.woff') format('woff'),
+       url('../fonts/azonix.otf')  format('truetype'),
+       url('../fonts/azonix.eot') format('embedded-opentype');
 }
 @font-face{
   font-family: Comfortaa;
-  src: url('fonts/Comfortaa.woff2') format('woff2'),
-       url('fonts/Comfortaa.woff') format('woff'),
-       url('fonts/Comfortaa.eot') format('embedded-opentype'),
-       url('fonts/Comfortaa.ttf')  format('truetype');
+  src: url('../fonts/Comfortaa.woff2') format('woff2'),
+       url('../fonts/Comfortaa.woff') format('woff'),
+       url('../fonts/Comfortaa.eot') format('embedded-opentype'),
+       url('../fonts/Comfortaa.ttf')  format('truetype');
 }
 
 body {
@@ -27,6 +27,7 @@ body {
   margin: 0px 0px 0 0;
   padding: 20px;
   color: white;
+  z-index: 100;
 }
 
 #header div {
@@ -57,5 +58,5 @@ body {
   background-color: black;
   color: white;
   text-align: center;
-  margin: 20px auto;
+  padding: 20px 0 10px;
 }
