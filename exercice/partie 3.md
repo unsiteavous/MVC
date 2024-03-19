@@ -37,7 +37,27 @@ Allez dans le fichier `src/Models/Film.php`, et suivez les consignes.
 ## Exercice 2 : Construire le repository associé
 Allez dans le fichier `src/Repositories/FilmRepository.php`, et suivez les consignes.
 
-## Exercice 3 : ... Et recommencer !
+## Exercice 3 : Minimiser les appels au back
+Afin d'économiser du temps, des ressources, de l'energie, et d'augmenter la sécurité de notre application, on va essayer de faire le moins de requêtes possible à notre Back et à la Base de données.
+
+En effet, si vous appelez un film, puis que vous faites une seconde requête pour savoir quelles sont ses catégories associées, puis que vous en faites une troisième pour connaître le nom de la classification, ... Ça alourdit considérablement chaque action de trois requêtes, alors qu'on peut en faire une seule qui demande tout ça.
+
+Prenez le temps de modifier les requêtes sql pour récupérer non seulement le film, mais aussi le nom de la classification ainsi que le(s) noms et le(s) id(s) des catégories associées !
+
+Faites des essais dans phpmyadmin, pour composer votre requête correcte.
+
+### Aide 
+Vous aurez besoin de :
+- Récupérer les éléments depuis plusieurs tables. notez donc `table.colonne`.
+- Certaines colonnes ont des noms différents de ce qui est attendu par la classe film : `ID_CLASSIFICATION_AGE_PUBLIC` doit correspondre à `IdClassification`. pour faire ça, vous pouvez renommer le résultat avec `AS` en SQL. par exemple :
+```sql
+SELECT films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION ...
+```
+- Certaines informations peuvent être multiples : les catégories liées aux films. Pour récupérer toutes les catégories sur une seule ligne, on va utiliser `GROUP_CONCAT()` lorsqu'on dit quelle donnée on veut, puis à la fin, `GROUP BY` où l'on précise quelle colonne permet de regrouper les infos (en l'occurence, l'ID du film).
+- Vous utiliserez `LEFT JOIN` pour faire les associations entre les différentes tables nécessaires pour retrouver toutes les données.
+
+
+## Exercice 4 : ... Et recommencer !
 Faire la même chose pour les autres tables de notre base de données : catégories, Classifications âge, employés, salles et projections.
 
 Et comme c'est long, c'est fastidieux, et surtout c'est répétitif, on va trouver des moyens d'accélérer et de se faciliter la vie... 

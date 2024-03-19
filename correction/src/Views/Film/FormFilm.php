@@ -34,7 +34,7 @@
   </select>
 
   <label for="id_categories">Catégories associées :</label><br>
-  <select name="id_categories[]" id="id_categories" required multiple>
+  <select name="id_categories[]" id="id_categories" multiple>
     <?php foreach ($categories as $categorie) {
       echo "<option value='".$categorie->getId()."'";
       if (isset($film) && in_array($categorie->getId(), $film->getIdCategories())) {

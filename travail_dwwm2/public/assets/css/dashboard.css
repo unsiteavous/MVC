@@ -111,6 +111,17 @@ button:hover {
 }
 
 /* =============== CARTE FILM ================= */
+#tri-categories {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  align-items: center;
+}
+
+.categorie-selected {
+  background-color: darkblue !important;
+  color: white;
+}
 
 .listeFilms {
   display: grid;
@@ -145,9 +156,15 @@ button:hover {
 
 .add-film2 {
   color: gray;
-  left: 14%;
-  top: -17%;
+  left: 13%;
+  top: -19%;
   z-index: 5;
+  transition:0.3s;
+}
+
+.pointer:hover .add-film2 {
+  left: 14%;
+  top: -18.5%;
 }
 
 .filmCard:hover {
@@ -192,6 +209,7 @@ button:hover {
   border-radius: 5px;
   margin: 5px;
   cursor: pointer;
+  height: fit-content;
 }
 
 .classificationage {

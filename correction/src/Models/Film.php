@@ -219,11 +219,11 @@ class Film
   /**
    * Set the value of IdCategories
    *
-   * @param array|int|string  $IdCategories
+   * @param mixed  $IdCategories
    * 
    * @return void
    */
-  public function setIdCategories(array|int|string $IdCategories): void
+  public function setIdCategories(mixed $IdCategories): void
   {
     if (is_array($IdCategories)) {
       $this->IdCategories = $IdCategories;

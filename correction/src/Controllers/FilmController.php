@@ -25,8 +25,9 @@ class FilmController
 
   public function index()
   {
+    $categories = $this->CategoryRepo->getAllCategories();
     $films = $this->FilmRepo->getAllFilms();
-    $this->render("Dashboard", ['section' => 'films', 'films' => $films]);
+    $this->render("Dashboard", ['section' => 'films', 'films' => $films, 'categories' => $categories]);
   }
 
   public function show($id)
@@ -61,6 +62,8 @@ class FilmController
     $film = new Film($data);
     if (isset($data['id_categories']) && !empty($data['id_categories'])){
       $film->setIdCategories($data['id_categories']);
+    } else {
+      $film->setIdCategories([]);
     }
 
     if (!empty($film->getNom()) &&

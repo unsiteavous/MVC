@@ -1,6 +1,9 @@
 <?php
-
+namespace src\Models;
 // Définir une classe Database inhéritable.
+
+use PDO;
+use PDOException;
 
 final class Database
 {

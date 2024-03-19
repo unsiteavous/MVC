@@ -22,22 +22,22 @@ class FilmRepository
   // il n'y a pas de risques, car aucun paramètre venant de l'extérieur n'est demandé dans le sql.
   public function getAllFilms()
   {
-    $sql = "SELECT cine_films.ID, 
-      cine_films.NOM, 
-      cine_films.URL_AFFICHE, 
-      cine_films.LIEN_TRAILER, 
-      cine_films.RESUME, 
-      cine_films.DUREE, 
-      cine_films.DATE_SORTIE, 
-      cine_films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
-      GROUP_CONCAT(cine_categories.NOM) AS NOMS_CATEGORIES, 
-      GROUP_CONCAT(cine_categories.ID) AS ID_CATEGORIES, 
-      cine_classification_age_public.INTITULE as NOM_CLASSIFICATION 
-    FROM cine_films
-    LEFT JOIN cine_relations_films_categories ON cine_films.ID = cine_relations_films_categories.ID_FILMS 
-    LEFT JOIN cine_categories ON cine_relations_films_categories.ID_CATEGORIES = cine_categories.ID
-    INNER JOIN cine_classification_age_public ON cine_films.ID_CLASSIFICATION_AGE_PUBLIC = cine_classification_age_public.ID
-    GROUP BY cine_films.ID;";
+    $sql = "SELECT " . PREFIXE . "films.ID, 
+      " . PREFIXE . "films.NOM, 
+      " . PREFIXE . "films.URL_AFFICHE, 
+      " . PREFIXE . "films.LIEN_TRAILER, 
+      " . PREFIXE . "films.RESUME, 
+      " . PREFIXE . "films.DUREE, 
+      " . PREFIXE . "films.DATE_SORTIE, 
+      " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
+      GROUP_CONCAT(" . PREFIXE . "categories.NOM) AS NOMS_CATEGORIES, 
+      GROUP_CONCAT(" . PREFIXE . "categories.ID) AS ID_CATEGORIES, 
+      " . PREFIXE . "classification_age_public.INTITULE as NOM_CLASSIFICATION 
+    FROM " . PREFIXE . "films
+    LEFT JOIN " . PREFIXE . "relations_films_categories ON " . PREFIXE . "films.ID = " . PREFIXE . "relations_films_categories.ID_FILMS 
+    LEFT JOIN " . PREFIXE . "categories ON " . PREFIXE . "relations_films_categories.ID_CATEGORIES = " . PREFIXE . "categories.ID
+    INNER JOIN " . PREFIXE . "classification_age_public ON " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC = " . PREFIXE . "classification_age_public.ID
+    GROUP BY " . PREFIXE . "films.ID;";
 
     return  $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, Film::class);
   }
@@ -56,23 +56,23 @@ class FilmRepository
 
   public function getThisFilmById($id): Film
   {
-    $sql = "SELECT cine_films.ID, 
-      cine_films.NOM, 
-      cine_films.URL_AFFICHE, 
-      cine_films.LIEN_TRAILER, 
-      cine_films.RESUME, 
-      cine_films.DUREE, 
-      cine_films.DATE_SORTIE, 
-      cine_films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
-      GROUP_CONCAT(cine_categories.NOM) AS NOMS_CATEGORIES, 
-      GROUP_CONCAT(cine_categories.ID) AS ID_CATEGORIES, 
-      cine_classification_age_public.INTITULE as NOM_CLASSIFICATION 
-    FROM cine_films
-    LEFT JOIN cine_relations_films_categories ON cine_films.ID = cine_relations_films_categories.ID_FILMS 
-    LEFT JOIN cine_categories ON cine_relations_films_categories.ID_CATEGORIES = cine_categories.ID
-    INNER JOIN cine_classification_age_public ON cine_films.ID_CLASSIFICATION_AGE_PUBLIC = cine_classification_age_public.ID
-    WHERE cine_films.ID = :id
-    GROUP BY cine_films.ID";
+    $sql = "SELECT " . PREFIXE . "films.ID, 
+      " . PREFIXE . "films.NOM, 
+      " . PREFIXE . "films.URL_AFFICHE, 
+      " . PREFIXE . "films.LIEN_TRAILER, 
+      " . PREFIXE . "films.RESUME, 
+      " . PREFIXE . "films.DUREE, 
+      " . PREFIXE . "films.DATE_SORTIE, 
+      " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
+      GROUP_CONCAT(" . PREFIXE . "categories.NOM) AS NOMS_CATEGORIES, 
+      GROUP_CONCAT(" . PREFIXE . "categories.ID) AS ID_CATEGORIES, 
+      " . PREFIXE . "classification_age_public.INTITULE as NOM_CLASSIFICATION 
+    FROM " . PREFIXE . "films
+    LEFT JOIN " . PREFIXE . "relations_films_categories ON " . PREFIXE . "films.ID = " . PREFIXE . "relations_films_categories.ID_FILMS 
+    LEFT JOIN " . PREFIXE . "categories ON " . PREFIXE . "relations_films_categories.ID_CATEGORIES = " . PREFIXE . "categories.ID
+    INNER JOIN " . PREFIXE . "classification_age_public ON " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC = " . PREFIXE . "classification_age_public.ID
+    WHERE " . PREFIXE . "films.ID = :id
+    GROUP BY " . PREFIXE . "films.ID";
 
     $statement = $this->DB->prepare($sql);
     $statement->bindParam(':id', $id);
@@ -87,23 +87,23 @@ class FilmRepository
    */
   public function getThoseFilmsByClassificationAge($Id_Classification): array
   {
-    $sql = "SELECT cine_films.ID, 
-      cine_films.NOM, 
-      cine_films.URL_AFFICHE, 
-      cine_films.LIEN_TRAILER, 
-      cine_films.RESUME, 
-      cine_films.DUREE, 
-      cine_films.DATE_SORTIE, 
-      cine_films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
-      GROUP_CONCAT(cine_categories.NOM) AS NOMS_CATEGORIES, 
-      GROUP_CONCAT(cine_categories.ID) AS ID_CATEGORIES, 
-      cine_classification_age_public.INTITULE as NOM_CLASSIFICATION 
-    FROM cine_films
-    LEFT JOIN cine_relations_films_categories ON cine_films.ID = cine_relations_films_categories.ID_FILMS 
-    LEFT JOIN cine_categories ON cine_relations_films_categories.ID_CATEGORIES = cine_categories.ID
-    INNER JOIN cine_classification_age_public ON cine_films.ID_CLASSIFICATION_AGE_PUBLIC = cine_classification_age_public.ID
-    WHERE cine_films.ID_CLASSIFICATION_AGE_PUBLIC = :Id_Classification
-    GROUP BY cine_films.ID";
+    $sql = "SELECT " . PREFIXE . "films.ID, 
+      " . PREFIXE . "films.NOM, 
+      " . PREFIXE . "films.URL_AFFICHE, 
+      " . PREFIXE . "films.LIEN_TRAILER, 
+      " . PREFIXE . "films.RESUME, 
+      " . PREFIXE . "films.DUREE, 
+      " . PREFIXE . "films.DATE_SORTIE, 
+      " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
+      GROUP_CONCAT(" . PREFIXE . "categories.NOM) AS NOMS_CATEGORIES, 
+      GROUP_CONCAT(" . PREFIXE . "categories.ID) AS ID_CATEGORIES, 
+      " . PREFIXE . "classification_age_public.INTITULE as NOM_CLASSIFICATION 
+    FROM " . PREFIXE . "films
+    LEFT JOIN " . PREFIXE . "relations_films_categories ON " . PREFIXE . "films.ID = " . PREFIXE . "relations_films_categories.ID_FILMS 
+    LEFT JOIN " . PREFIXE . "categories ON " . PREFIXE . "relations_films_categories.ID_CATEGORIES = " . PREFIXE . "categories.ID
+    INNER JOIN " . PREFIXE . "classification_age_public ON " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC = " . PREFIXE . "classification_age_public.ID
+    WHERE " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC = :Id_Classification
+    GROUP BY " . PREFIXE . "films.ID";
 
     $statement = $this->DB->prepare($sql);
 
@@ -116,23 +116,23 @@ class FilmRepository
   // Construire la méthode getThoseFilmsByName() Et oui, parce qu'on peut avoir plusieurs films avec le même nom !
   public function getThoseFilmsByName($NOM): array
   {
-    $sql = "SELECT cine_films.ID, 
-      cine_films.NOM, 
-      cine_films.URL_AFFICHE, 
-      cine_films.LIEN_TRAILER, 
-      cine_films.RESUME, 
-      cine_films.DUREE, 
-      cine_films.DATE_SORTIE, 
-      cine_films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
-      GROUP_CONCAT(cine_categories.NOM) AS NOMS_CATEGORIES, 
-      GROUP_CONCAT(cine_categories.ID) AS ID_CATEGORIES, 
-      cine_classification_age_public.INTITULE as NOM_CLASSIFICATION 
-    FROM cine_films
-    LEFT JOIN cine_relations_films_categories ON cine_films.ID = cine_relations_films_categories.ID_FILMS 
-    LEFT JOIN cine_categories ON cine_relations_films_categories.ID_CATEGORIES = cine_categories.ID
-    INNER JOIN cine_classification_age_public ON cine_films.ID_CLASSIFICATION_AGE_PUBLIC = cine_classification_age_public.ID
-    WHERE cine_films.NOM LIKE :NOM
-    GROUP BY cine_films.ID;";
+    $sql = "SELECT " . PREFIXE . "films.ID, 
+      " . PREFIXE . "films.NOM, 
+      " . PREFIXE . "films.URL_AFFICHE, 
+      " . PREFIXE . "films.LIEN_TRAILER, 
+      " . PREFIXE . "films.RESUME, 
+      " . PREFIXE . "films.DUREE, 
+      " . PREFIXE . "films.DATE_SORTIE, 
+      " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
+      GROUP_CONCAT(" . PREFIXE . "categories.NOM) AS NOMS_CATEGORIES, 
+      GROUP_CONCAT(" . PREFIXE . "categories.ID) AS ID_CATEGORIES, 
+      " . PREFIXE . "classification_age_public.INTITULE as NOM_CLASSIFICATION 
+    FROM " . PREFIXE . "films
+    LEFT JOIN " . PREFIXE . "relations_films_categories ON " . PREFIXE . "films.ID = " . PREFIXE . "relations_films_categories.ID_FILMS 
+    LEFT JOIN " . PREFIXE . "categories ON " . PREFIXE . "relations_films_categories.ID_CATEGORIES = " . PREFIXE . "categories.ID
+    INNER JOIN " . PREFIXE . "classification_age_public ON " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC = " . PREFIXE . "classification_age_public.ID
+    WHERE " . PREFIXE . "films.NOM LIKE :NOM
+    GROUP BY " . PREFIXE . "films.ID;";
 
     $statement = $this->DB->prepare($sql);
 
@@ -212,24 +212,28 @@ class FilmRepository
 
   public function addFilmToCategories(Film $film): bool
   {
-    $sql = "INSERT INTO " . PREFIXE . "relations_films_categories (ID_CATEGORIES, ID_FILMS) VALUES (:id_category0, :id_film)";
-    for ($i = 1; $i < sizeof($film->getIdCategories()); $i++) {
-      $sql .= ", (:id_category$i, :id_film)";
-    }
-    $sql .= ";";
-    $statement = $this->DB->prepare($sql);
-    $variables = [":id_film" => $film->getId()];
+    if ($film->getIdCategories() !== []) {
+      $sql = "INSERT INTO " . PREFIXE . "relations_films_categories (ID_CATEGORIES, ID_FILMS) VALUES (:id_category0, :id_film)";
+      for ($i = 1; $i < sizeof($film->getIdCategories()); $i++) {
+        $sql .= ", (:id_category$i, :id_film)";
+      }
+      $sql .= ";";
+      $statement = $this->DB->prepare($sql);
+      $variables = [":id_film" => $film->getId()];
 
-    for ($i = 0; $i < sizeof($film->getIdCategories()); $i++) {
-      $variables[":id_category$i"] = $film->getIdCategories()[$i];
-    }
+      for ($i = 0; $i < sizeof($film->getIdCategories()); $i++) {
+        $variables[":id_category$i"] = $film->getIdCategories()[$i];
+      }
 
-    return $statement->execute($variables);
+      return $statement->execute($variables);
+    } else {
+      return true;
+    }
   }
 
   public function removeFilmToCategories(Film $film): bool
   {
-    $sql = "DELETE FROM ". PREFIXE . "relations_films_categories WHERE ID_FILMS = :id_film";
+    $sql = "DELETE FROM " . PREFIXE . "relations_films_categories WHERE ID_FILMS = :id_film";
     $statement = $this->DB->prepare($sql);
     return $statement->execute([":id_film" => $film->getId()]);
   }
