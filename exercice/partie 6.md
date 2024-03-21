@@ -77,6 +77,31 @@ Dans un autre cas
 - Réalisez l'analyse de la route de l'exemple dans le router.
 - à la place de details, il peut y avoir new, delete ou update. Faire les analyses correspondantes.
 
+## Exercice 5 : Perfectionner sa route composée
+Mais notre lecture de la route composée a une limite actuellement : où que soit le mot dashboard, on arrive sur le tableau de bord. \
+Ces deux routes :
+
+```
+monsite.com/dashboard/films/details/4
+monsite.com/details/films/dashboard/4
+```
+Permettent toutes les deux de voir exactement la même chose, alors que l'ordre des éléments dans l'url n'est pas respecté. Pire :
+
+```
+monsite.com/articles/bon
+monsite.com/articles/bonne
+
+```
+Si j'écoute ma route pour savoir si mon URL contient `bon`, les deux urls vont correspondre à mes attentes : dans les deux cas on trouve "bon" dedans !
+
+Pour éviter ça, on va pouvoir utiliser un `Service`. Rassurez-vous il est tout prêt !
+Utilisez en statique la méthode `routeComposee` du fichier `src/Services/Routing.php`.
+
+Et adaptez vos routes pour écouter les différentes lignes du tableau ainsi obtenu. 
+Vous résolvez les deux problèmes d'un coup : l'ordre et l'unicité de chaque élément dans l'url !
+
+Enfin, pour récupérer l'ID, vous avec deux possibilités : écouter la dernière ligne du tableau en donnant le bon numéro d'index, ou utiliser la fonction native de PHP `end()`.
+
 Maintenant qu'on a vu comment récupérer les routes et répondre en fonction de la requête, il va falloir enrichir la réponse ! Comment traiter les données reçues, et répondre une page complète ? 
 
-On voit ça dans la [partie 6](<partie 6.md>) !
+On voit ça dans la [partie 7](<partie 7.md>) !
