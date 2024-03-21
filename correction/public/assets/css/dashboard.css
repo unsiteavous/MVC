@@ -268,7 +268,7 @@ button:hover {
 /* =========== POPUP ============= */
 
 .popup {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
@@ -279,10 +279,11 @@ button:hover {
 
 .popup div {
   background-color: white;
-  margin: 200px 30%;
+  margin: 38vh auto;
   border: 10px solid gray;
   border-radius: 15px;
   padding: 10px;
+  width: 700px;
 }
 
 .popup span {
