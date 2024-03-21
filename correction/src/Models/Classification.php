@@ -4,7 +4,9 @@ namespace src\Models;
 use src\Services\Hydratation;
 
 class Classification {
-  private $Id, $Intitule, $Avertissement;
+  private int $Id;
+  private string $Avertissement;
+  private string $Intitule;
 
   use Hydratation;
 

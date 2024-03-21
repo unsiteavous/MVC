@@ -83,7 +83,7 @@ final class Database
     }
   }
 
-  private function MiseAJourConfig(): bool
+  private function UpdateConfig(): bool
   {
 
     $fconfig = fopen($this->config, 'w');

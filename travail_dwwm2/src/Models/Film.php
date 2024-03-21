@@ -1,27 +1,12 @@
 <?php
 namespace src\Models;
 
+use src\Services\Hydratation;
+
 class Film {
-  private $Id, $Nom, $UrlAffiche, $LienTrailer, $Resume, $Duree, $DateSortie, $IdClassification;
+  private $Id, $Nom, $UrlAffiche, $LienTrailer, $Resume, $Duree, $DateSortie, $IdClassification, $NomsCategories, $IdCategories, $NomClassification;
 
-  public function __construct(array $data = array())
-  {
-    $this->hydrate($data);
-  }
-
-  private function hydrate(array $data): void {
-    foreach ($data as $key => $value) {
-      $parts = explode('_', $key);
-      $setter = 'set';
-      foreach ($parts as $part) {
-        $setter .= ucfirst(strtolower($part));
-      }
-      
-      $this->$setter($value);
-    }
-  }
-
-  
+  use Hydratation;
 
   /**
    * Get the value of Id
@@ -159,7 +144,82 @@ class Film {
     $this->IdClassification = $IdClassification;
   }
 
-  public function __set($name, $value) {
-    $this->hydrate([$name => $value]);
+  
+  /**
+   * Get the value of NomClassification
+   *
+   * @return  string
+   */
+  public function getNomClassification(): string
+  {
+    return $this->NomClassification;
+  }
+
+  /**
+   * Set the value of NomClassification
+   *
+   * @param   string  $NomClassification  
+   *
+   * @return void
+   */
+  public function setNomClassification(string $NomClassification): void
+  {
+    $this->NomClassification = $NomClassification;
+  }
+
+  /**
+   * Get the value of NomsCategories
+   *
+   * @return  array
+   */
+  public function getNomsCategories(): array
+  {
+    return $this->NomsCategories;
+  }
+
+  /**
+   * Set the value of NomsCategories
+   *
+   * @param   null|string|array  $NomsCategories  
+   *
+   * @return void
+   */
+  public function setNomsCategories(null|string|array $NomsCategories): void
+  {
+    if (is_array($NomsCategories)) {
+      $this->NomsCategories = $NomsCategories;
+    } else if (is_string($NomsCategories)) {
+      $this->NomsCategories = explode(",", $NomsCategories);
+    } else {
+      $this->NomsCategories = [];
+    }
+  }
+
+  /**
+   * Get the value of IdCategories
+   *
+   * @return  mixed
+   */
+  public function getIdCategories(): mixed
+  {
+    return $this->IdCategories;
+  }
+
+  /**
+   * Set the value of IdCategories
+   *
+   * @param   mixed  $IdCategories  
+   *
+   * @return void
+   */
+  public function setIdCategories(mixed $IdCategories): void
+  {
+    if (is_array($IdCategories)) {
+      $this->IdCategories = $IdCategories;
+    } else if (is_string($IdCategories)) {
+      $this->IdCategories = explode(",", $IdCategories);
+    } else {
+      $this->IdCategories = [$IdCategories];
+    }
   }
 }

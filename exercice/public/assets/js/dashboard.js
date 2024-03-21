@@ -57,3 +57,40 @@ function transformNodelistToArray(nodelist) {
 
   return array;
 }
+
+
+// POPUP SUPPRESSION
+
+function ouvrirPopupSuppression(id)
+{
+  let popup = document.createElement('div');
+  popup.id = 'popup';
+  popup.classList.add('popup');
+      popup.onclick = function(){fermerPopupSuppression(popup.id)};
+  document.body.appendChild(popup);
+
+  let contenuPopup = document.createElement('div');
+  popup.appendChild(contenuPopup);
+
+  let croix = document.createElement('span');
+  croix.textContent = '➕';
+  croix.onclick = function(){fermerPopupSuppression(popup.id)};
+  contenuPopup.appendChild(croix);
+      contenuPopup.onclick = function(event){event.stopPropagation()};
+  let encartMessage = document.createElement('h3');
+  encartMessage.textContent = 'Voulez-vous vraiment supprimer ce film ?';
+  contenuPopup.appendChild(encartMessage);
+  let bouton = document.createElement('button');
+  bouton.classList.add('center');
+  bouton.textContent = 'Confirmer la suppression';
+  bouton.onclick = function(){fermerPopupSuppression(location.href='/dashboard/films/delete/'+id)};
+  contenuPopup.appendChild(bouton);
+}
+
+
+function fermerPopupSuppression()
+{
+  let popup = document.getElementById('popup');
+
+  document.body.removeChild(popup);
+}

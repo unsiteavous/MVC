@@ -264,3 +264,35 @@ button:hover {
 .invisible {
   display: none;
 }
+
+/* =========== POPUP ============= */
+
+.popup {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #000000ab;
+  z-index: 100;
+}
+
+.popup div {
+  background-color: white;
+  margin: 200px 30%;
+  border: 10px solid gray;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.popup span {
+  transform: rotate(45deg);
+  font-size: 30px;
+  float: right;
+  cursor: pointer;
+}
+
+.popup h3 {
+  text-align: center;
+  margin: 40px 0;
+}

@@ -3,6 +3,7 @@
 namespace src\Models;
 
 use DateTime;
+use src\Services\Hydratation;
 
 final class Film
 {
@@ -18,29 +19,7 @@ final class Film
   private string|array|null $NomsCategories;
   private mixed $IdCategories;
 
-  public function __construct(array $data = [])
-  {
-    $this->hydrate($data);
-  }
-  public function __set($name, $value)
-  {
-    $this->hydrate([$name => $value]);
-  }
-
-  private function hydrate(array $data): void
-  {
-    $setter = "set";
-    foreach ($data as $key => $value) {
-      $parts = explode("_", $key);
-      foreach ($parts as $part) {
-        $part = strtolower($part);
-        $part = ucfirst($part);
-        $setter .= $part;
-      }
-      $this->$setter($value);
-    }
-  }
-
+  use Hydratation;
 
   /**
    * Get the value of Id
@@ -155,11 +134,11 @@ final class Film
   /**
    * Get the value of Duree
    *
-   * @return  DateTime
+   * @return  string
    */
-  public function getDuree(): DateTime
+  public function getDuree(): string
   {
-    return $this->Duree;
+    return $this->Duree->format("H:i");
   }
 
   /**
@@ -181,11 +160,11 @@ final class Film
   /**
    * Get the value of DateSortie
    *
-   * @return  DateTime
+   * @return  string
    */
-  public function getDateSortie(): DateTime
+  public function getDateSortie(): string
   {
-    return $this->DateSortie;
+    return $this->DateSortie->format('Y-m-d');
   }
 
   /**

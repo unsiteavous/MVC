@@ -22,22 +22,7 @@ class FilmRepository
   // il n'y a pas de risques, car aucun paramètre venant de l'extérieur n'est demandé dans le sql.
   public function getAllFilms()
   {
-    $sql = "SELECT " . PREFIXE . "films.ID, 
-      " . PREFIXE . "films.NOM, 
-      " . PREFIXE . "films.URL_AFFICHE, 
-      " . PREFIXE . "films.LIEN_TRAILER, 
-      " . PREFIXE . "films.RESUME, 
-      " . PREFIXE . "films.DUREE, 
-      " . PREFIXE . "films.DATE_SORTIE, 
-      " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
-      GROUP_CONCAT(" . PREFIXE . "categories.NOM) AS NOMS_CATEGORIES, 
-      GROUP_CONCAT(" . PREFIXE . "categories.ID) AS ID_CATEGORIES, 
-      " . PREFIXE . "classification_age_public.INTITULE as NOM_CLASSIFICATION 
-    FROM " . PREFIXE . "films
-    LEFT JOIN " . PREFIXE . "relations_films_categories ON " . PREFIXE . "films.ID = " . PREFIXE . "relations_films_categories.ID_FILMS 
-    LEFT JOIN " . PREFIXE . "categories ON " . PREFIXE . "relations_films_categories.ID_CATEGORIES = " . PREFIXE . "categories.ID
-    INNER JOIN " . PREFIXE . "classification_age_public ON " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC = " . PREFIXE . "classification_age_public.ID
-    GROUP BY " . PREFIXE . "films.ID;";
+    $sql = $this->concatenationRequete("");
 
     return  $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, Film::class);
   }
@@ -56,23 +41,7 @@ class FilmRepository
 
   public function getThisFilmById($id): Film
   {
-    $sql = "SELECT " . PREFIXE . "films.ID, 
-      " . PREFIXE . "films.NOM, 
-      " . PREFIXE . "films.URL_AFFICHE, 
-      " . PREFIXE . "films.LIEN_TRAILER, 
-      " . PREFIXE . "films.RESUME, 
-      " . PREFIXE . "films.DUREE, 
-      " . PREFIXE . "films.DATE_SORTIE, 
-      " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
-      GROUP_CONCAT(" . PREFIXE . "categories.NOM) AS NOMS_CATEGORIES, 
-      GROUP_CONCAT(" . PREFIXE . "categories.ID) AS ID_CATEGORIES, 
-      " . PREFIXE . "classification_age_public.INTITULE as NOM_CLASSIFICATION 
-    FROM " . PREFIXE . "films
-    LEFT JOIN " . PREFIXE . "relations_films_categories ON " . PREFIXE . "films.ID = " . PREFIXE . "relations_films_categories.ID_FILMS 
-    LEFT JOIN " . PREFIXE . "categories ON " . PREFIXE . "relations_films_categories.ID_CATEGORIES = " . PREFIXE . "categories.ID
-    INNER JOIN " . PREFIXE . "classification_age_public ON " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC = " . PREFIXE . "classification_age_public.ID
-    WHERE " . PREFIXE . "films.ID = :id
-    GROUP BY " . PREFIXE . "films.ID";
+    $sql = $this->concatenationRequete("WHERE " . PREFIXE . "films.ID = :id");
 
     $statement = $this->DB->prepare($sql);
     $statement->bindParam(':id', $id);
@@ -87,23 +56,7 @@ class FilmRepository
    */
   public function getThoseFilmsByClassificationAge($Id_Classification): array
   {
-    $sql = "SELECT " . PREFIXE . "films.ID, 
-      " . PREFIXE . "films.NOM, 
-      " . PREFIXE . "films.URL_AFFICHE, 
-      " . PREFIXE . "films.LIEN_TRAILER, 
-      " . PREFIXE . "films.RESUME, 
-      " . PREFIXE . "films.DUREE, 
-      " . PREFIXE . "films.DATE_SORTIE, 
-      " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
-      GROUP_CONCAT(" . PREFIXE . "categories.NOM) AS NOMS_CATEGORIES, 
-      GROUP_CONCAT(" . PREFIXE . "categories.ID) AS ID_CATEGORIES, 
-      " . PREFIXE . "classification_age_public.INTITULE as NOM_CLASSIFICATION 
-    FROM " . PREFIXE . "films
-    LEFT JOIN " . PREFIXE . "relations_films_categories ON " . PREFIXE . "films.ID = " . PREFIXE . "relations_films_categories.ID_FILMS 
-    LEFT JOIN " . PREFIXE . "categories ON " . PREFIXE . "relations_films_categories.ID_CATEGORIES = " . PREFIXE . "categories.ID
-    INNER JOIN " . PREFIXE . "classification_age_public ON " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC = " . PREFIXE . "classification_age_public.ID
-    WHERE " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC = :Id_Classification
-    GROUP BY " . PREFIXE . "films.ID";
+    $sql = $this->concatenationRequete("WHERE " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC = :Id_Classification");
 
     $statement = $this->DB->prepare($sql);
 
@@ -116,23 +69,7 @@ class FilmRepository
   // Construire la méthode getThoseFilmsByName() Et oui, parce qu'on peut avoir plusieurs films avec le même nom !
   public function getThoseFilmsByName($NOM): array
   {
-    $sql = "SELECT " . PREFIXE . "films.ID, 
-      " . PREFIXE . "films.NOM, 
-      " . PREFIXE . "films.URL_AFFICHE, 
-      " . PREFIXE . "films.LIEN_TRAILER, 
-      " . PREFIXE . "films.RESUME, 
-      " . PREFIXE . "films.DUREE, 
-      " . PREFIXE . "films.DATE_SORTIE, 
-      " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
-      GROUP_CONCAT(" . PREFIXE . "categories.NOM) AS NOMS_CATEGORIES, 
-      GROUP_CONCAT(" . PREFIXE . "categories.ID) AS ID_CATEGORIES, 
-      " . PREFIXE . "classification_age_public.INTITULE as NOM_CLASSIFICATION 
-    FROM " . PREFIXE . "films
-    LEFT JOIN " . PREFIXE . "relations_films_categories ON " . PREFIXE . "films.ID = " . PREFIXE . "relations_films_categories.ID_FILMS 
-    LEFT JOIN " . PREFIXE . "categories ON " . PREFIXE . "relations_films_categories.ID_CATEGORIES = " . PREFIXE . "categories.ID
-    INNER JOIN " . PREFIXE . "classification_age_public ON " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC = " . PREFIXE . "classification_age_public.ID
-    WHERE " . PREFIXE . "films.NOM LIKE :NOM
-    GROUP BY " . PREFIXE . "films.ID;";
+    $sql = $this->concatenationRequete("WHERE " . PREFIXE . "films.NOM LIKE :NOM");
 
     $statement = $this->DB->prepare($sql);
 
@@ -236,5 +173,29 @@ class FilmRepository
     $sql = "DELETE FROM " . PREFIXE . "relations_films_categories WHERE ID_FILMS = :id_film";
     $statement = $this->DB->prepare($sql);
     return $statement->execute([":id_film" => $film->getId()]);
+  }
+
+  private function concatenationRequete(string $requete): string
+  {
+    $sql = "SELECT " . PREFIXE . "films.ID, 
+    " . PREFIXE . "films.NOM, 
+    " . PREFIXE . "films.URL_AFFICHE, 
+    " . PREFIXE . "films.LIEN_TRAILER, 
+    " . PREFIXE . "films.RESUME, 
+    " . PREFIXE . "films.DUREE, 
+    " . PREFIXE . "films.DATE_SORTIE, 
+    " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
+    GROUP_CONCAT(" . PREFIXE . "categories.NOM) AS NOMS_CATEGORIES, 
+    GROUP_CONCAT(" . PREFIXE . "categories.ID) AS ID_CATEGORIES, 
+    " . PREFIXE . "classification_age_public.INTITULE as NOM_CLASSIFICATION 
+  FROM " . PREFIXE . "films
+  LEFT JOIN " . PREFIXE . "relations_films_categories ON " . PREFIXE . "films.ID = " . PREFIXE . "relations_films_categories.ID_FILMS 
+  LEFT JOIN " . PREFIXE . "categories ON " . PREFIXE . "relations_films_categories.ID_CATEGORIES = " . PREFIXE . "categories.ID
+  INNER JOIN " . PREFIXE . "classification_age_public ON " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC = " . PREFIXE . "classification_age_public.ID
+  ";
+    $sql .= $requete;
+    $sql .= " GROUP BY " . PREFIXE . "films.ID;";
+
+    return $sql;
   }
 }

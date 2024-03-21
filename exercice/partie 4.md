@@ -23,7 +23,7 @@ On n'oublie pas le namespace en haut du fichier, et ensuite dans les classes qui
 Cela permet d'ajouter à notre classe tout ce qui se trouve dans ce trait, et de faire comme si c'était écrit dans la classe. Il est bien sûr possible de faire de l'héritage, de la réécriture, et tout le reste, mais on va en rester là pour le moment. La seule chose qui est importante à savoir, c'est que si vous réécrivez une méthode dans la classe alors qu'elle existait dans le trait, ce sera toujours la méthode de la classe qui sera utilisée en priorité.
 
 
-## Exercice : Factoriser le code
+## Exercice 1 : Factoriser les Modèles
 On va donc toutes les regrouper au sein d'un fichier de services, qui se situe dans `src/Services/Hydratation.php`.
 
 Copiez les trois méthodes sus-mentionnées, et collez-les dans le trait Hydratation. 
@@ -32,4 +32,10 @@ Ensuite, supprimez ces trois méthodes dans toutes les classes que vous avez dé
 
 Il y aura donc bien deux `use` dans ce fichier mais pas les mêmes et pas aux mêmes endroit. Je précise, au cas où. 😉
 
+## Exercice 2 : Factoriser les Repositories
+De la même manière, on a dans les repositories beaucoup de code redondant, notamment dans les requêtes SQL par jointure (comme dans FilmRepository par exemple).
 
+Créez une méthode privée `concatenationRequete()` qui va vous permettre d'écrire ce code qu'une seule fois, en variant seulement la ligne du `WHERE`.
+
+
+Vous pouvez maintenant passer à la [Partie 5](<partie 5.md>) !

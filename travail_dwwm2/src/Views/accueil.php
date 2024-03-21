@@ -1,6 +1,6 @@
 <?php
 
-// Inclure le header
+include __DIR__ ."/Includes/header.php";
 ?>
 <div class="main">
   <h1>Administration</h1>
@@ -16,4 +16,4 @@
   </form>
 </div>
 <?php
-// Inclure le footer
+include __DIR__ ."/Includes/footer.php";

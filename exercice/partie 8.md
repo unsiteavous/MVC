@@ -73,13 +73,13 @@ Elle va nous permettre de préciser le fichier qu'on va vouloir inclure (dans l'
 
 l'attribution clé => valeur est importante, parce qu'on pourrait passer juste la valeur, `$films` par exemple, mais comment s'appelle-t-elle ensuite de l'autre côté ? elle s'appelle `data[1]` ... C'est quand même un peu nul comme nom ! 
 
-## Exercice 1 : Utiliser la méthode `render()`
+## Exercice 3 : Utiliser la méthode `render()`
 Reprenez le HomeController et utilisez la méthode render pour afficher vos vues.
 
-## Exercice 2 : Faites de même pour FilmController
+## Exercice 4 : Faites de même pour FilmController
 Maintenant que vous avez toutes les cartes en main, vous pouvez reprendre le fichier `src/Controllers/FilmController.php`, et mettre en place les différentes méthodes du CRUD.
 
-## Exercice 3 : ... Et recommencez !
+## Exercice 5 : ... Et recommencez !
 Rien de mieux que la pratique vous avancer et comprendre ce que l'on fait.
 JE vous laisse faire exactement la même chose pour chacunes des autres entités (catégories, employés, salles, projection et classification.)
 

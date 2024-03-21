@@ -4,7 +4,9 @@ namespace src\Models;
 use src\Services\Hydratation;
 
 class Category {
-  private $Id, $Description, $Nom;
+  private int $Id;
+	private string $Description;
+	private string $Nom;
 
 	use Hydratation;
 	

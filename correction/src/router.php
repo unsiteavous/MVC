@@ -1,14 +1,15 @@
 <?php
-
+// include __DIR__ ."/../src/Services/Fonction.php";
 use src\Controllers\FilmController;
 use src\Controllers\HomeController;
-
+use src\Services\Routing;
 $HomeController = new HomeController;
 $FilmController = new FilmController;
 
-
 $route = $_SERVER['REDIRECT_URL'];
 $methode = $_SERVER['REQUEST_METHOD'];
+$routeComposee = Routing::routeComposee($route);
+
 
 switch ($route) {
   case HOME_URL:
@@ -37,15 +38,15 @@ switch ($route) {
     $HomeController->quit();
     break;
 
-  case str_contains($route, "dashboard"):
+  case $routeComposee[0] == "dashboard":
     if (isset($_SESSION["connecté"])) {
       // On a ici toutes les routes qu'on a à partir du dashboard
 
       switch ($route) {
-        case str_contains($route, "films"):
+        case $routeComposee[1] == "films":
           // On a ici toutes les routes qu'on peut faire pour les films
           switch ($route) {
-            case str_contains($route, "new"):
+            case $routeComposee[2] == "new":
               if ($methode === "POST") {
                 $data = $_POST;
                 $FilmController->save($data);
@@ -54,30 +55,26 @@ switch ($route) {
               }
               break;
 
-            case str_contains($route, 'details'):
-              $idFilm = explode('/', $route);
-              $idFilm = end($idFilm);
+            case $routeComposee[2] == 'details':
+              $idFilm = end($routeComposee);
               $FilmController->show($idFilm);
               break;
 
-            case str_contains($route, "edit"):
-              $idFilm = explode('/', $route);
-              $idFilm = end($idFilm);
+            case $routeComposee[2] == "edit":
+              $idFilm = end($routeComposee);
               $FilmController->edit($idFilm);
               break;
 
-            case str_contains($route, "update"):
+            case $routeComposee[2] == "update":
               if ($methode === "POST") {
-                $idFilm = explode('/', $route);
-                $idFilm = end($idFilm);
+                $idFilm = end($routeComposee);
                 $data = $_POST;
                 $FilmController->save($data, $idFilm);
               }
               break;
 
-            case str_contains($route, "delete"):
-              $idFilm = explode('/', $route);
-              $idFilm = end($idFilm);
+            case $routeComposee[2] == "delete":
+              $idFilm = end($routeComposee);
               $FilmController->delete($idFilm);
               break;
 

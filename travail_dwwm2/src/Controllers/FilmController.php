@@ -14,21 +14,30 @@ class FilmController
   private $ClassificationRepo;
 
   // PARTIE 7 : EXERCICE 1 :
+  // Faites les méthodes index et show, en affichant les données qu'avec des var_dump.
+
+  // PARTIE 8 : EXERCICE 4 :
+  // Reprenez les mêmes méthodes en affichant les bonnes vues à la place des var_dump.
 
   public function __construct()
   {
     // Instanciez les 3 propriétés avec les repositories concernés.
+    $this->FilmRepo = new FilmRepository();
+    $this->CategoryRepo = new CategoryRepository();
+    // $this->ClassificationRepo = new ClassificationRepository();
   }
 
   public function index()
   {
     // Cette méthode va permettre d'afficher tous les films.
     // Récupérez tous les films depuis la base de données, puis affichez-les avec la bonne vue (aidez-vous de section, et de ce qui est attendu dans les fichiers des vues.)
+    var_dump($this->FilmRepo->getAllFilms());
   }
 
   public function show($id)
   {
     // Récupérez le film avec l'id donné, et affichez-le avec la bonne vue (aidez-vous de section et action)
+    var_dump($this->FilmRepo->getThisFilmById($id));
   }
 
 

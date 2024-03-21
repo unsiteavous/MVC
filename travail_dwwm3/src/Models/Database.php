@@ -23,7 +23,6 @@ final class Database
     try{
       $dsn = "mysql:host=".DB_HOST.";dbname=".DB_NAME;
       $this->DB = new PDO($dsn, DB_USER, DB_PWD);
-      echo "connexion réussie !";
     }catch(PDOException $e){
       echo "connexion à la BDD échouée :" . $e->getMessage();
     }

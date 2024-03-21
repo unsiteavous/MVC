@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Repositories;
 
 use src\Models\Database;
@@ -6,7 +7,8 @@ use src\Models\Film;
 use PDO;
 use PDOException;
 
-class FilmRepository {
+class FilmRepository
+{
   private $DB;
 
   public function __construct()
@@ -19,10 +21,11 @@ class FilmRepository {
 
   // Exemple d'une requête avec query :
   // il n'y a pas de risques, car aucun paramètre venant de l'extérieur n'est demandé dans le sql.
-  public function getAllFilms(){
-    $sql = "SELECT * FROM ".PREFIXE."films;";
+  public function getAllFilms()
+  {
+    $sql = $this->concatenationRequete('');
 
-    $retour = $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, 'src\Models\Film');
+    $retour = $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, Film::class);
 
     return $retour;
   }
@@ -39,8 +42,9 @@ class FilmRepository {
    * Pour éviter des injections on prépare (on désamorce) la requête.
    */
 
-  public function getThisFilmById(int $id): Film {
-    $sql = "SELECT * FROM ".PREFIXE."films WHERE id = :id";
+  public function getThisFilmById(int $id): Film
+  {
+    $sql = $this->concatenationRequete("WHERE " . PREFIXE . "films.ID = :id");
 
     $statement = $this->DB->prepare($sql);
     $statement->bindParam(':id', $id);
@@ -55,12 +59,13 @@ class FilmRepository {
    * Un autre exemple d'une requête préparée, avec prepare et execute :
    * Cette fois-ci on donne les paramètres tout de suite lors du execute, sous forme d'un tableau associatif.
    */
-  public function getThoseFilmsByClassificationAge($Id_Classification): array {
-    $sql = "SELECT * FROM ".PREFIXE."films WHERE ID_CLASSIFICATION_AGE_PUBLIC = :Id_Classification";
+  public function getThoseFilmsByClassificationAge($Id_Classification): array
+  {
+    $sql = $this->concatenationRequete('WHERE ' . PREFIXE . 'films.ID_CLASSIFICATION_AGE_PUBLIC = :Id_Classification');
 
     $statement = $this->DB->prepare($sql);
-    
-    $statement->execute([':Id_Classification'=> $Id_Classification]);
+
+    $statement->execute([':Id_Classification' => $Id_Classification]);
 
     $retour = $statement->fetchAll(PDO::FETCH_CLASS, 'src\Models\Film');
 
@@ -70,12 +75,13 @@ class FilmRepository {
   // Construire la méthode getThoseFilmsByName() Et oui, parce qu'on peut avoir plusieurs films avec le même nom !
   // Bien penser à préfixer vos tables ;)
 
-  public function getThoseFilmsByName(string $nom): array {
-    $sql = "SELECT * FROM ". PREFIXE ."films WHERE NOM = :nom";
+  public function getThoseFilmsByName(string $nom): array
+  {
+    $sql = $this->concatenationRequete('WHERE ' . PREFIXE . 'films.NOM = :nom');
 
     $statement = $this->DB->prepare($sql);
 
-    $statement->bindParam(':nom', $nom);
+    $statement->bindParam(':nom', '%'.$nom.'%');
 
     $statement->execute();
 
@@ -83,13 +89,13 @@ class FilmRepository {
   }
   // Construire la méthode CreateThisFilm()
 
-  public function CreateThisFilm(Film $film): bool{
-    $sql = "INSERT INTO ". PREFIXE . "films (ID, NOM, URL_AFFICHE, LIEN_TRAILER, RESUME, DUREE, DATE_SORTIE, ID_CLASSIFICATION_AGE_PUBLIC) VALUES (:ID, :NOM, :URL_AFFICHE, :LIEN_TRAILER, :RESUME, :DUREE, :DATE_SORTIE, :ID_CLASSIFICATION_AGE_PUBLIC)";
+  public function CreateThisFilm(Film $film): Film
+  {
+    $sql = "INSERT INTO " . PREFIXE . "films (NOM, URL_AFFICHE, LIEN_TRAILER, RESUME, DUREE, DATE_SORTIE, ID_CLASSIFICATION_AGE_PUBLIC) VALUES (:NOM, :URL_AFFICHE, :LIEN_TRAILER, :RESUME, :DUREE, :DATE_SORTIE, :ID_CLASSIFICATION_AGE_PUBLIC)";
 
     $statement = $this->DB->prepare($sql);
 
-    $retour = $statement->execute([
-      ':ID' => $film->getId(),
+    $statement->execute([
       ':NOM' => $film->getNom(),
       ':URL_AFFICHE' => $film->getUrlAffiche(),
       ':LIEN_TRAILER' => $film->getLienTrailer(),
@@ -99,12 +105,15 @@ class FilmRepository {
       ':ID_CLASSIFICATION_AGE_PUBLIC' => $film->getIdClassification()
     ]);
 
-    return $retour;
+    $film->setId($this->DB->lastInsertId());
+
+    return $film;
   }
 
   // Construire la méthode updateThisFilm()
-  public function updateThisFilm(Film $film): bool{
-    $sql = "UPDATE ". PREFIXE . "films 
+  public function updateThisFilm(Film $film): bool
+  {
+    $sql = "UPDATE " . PREFIXE . "films 
             SET
               NOM = :NOM,
               URL_AFFICHE = :URL_AFFICHE,
@@ -132,19 +141,43 @@ class FilmRepository {
   }
 
   // Construire la méthode deleteThisFilm()
-  public function deleteThisFilm(int $ID): bool {
-    try{
-    $sql = "DELETE FROM " . PREFIXE . "projections WHERE ID_FILMS = :ID;
+  public function deleteThisFilm(int $ID): bool
+  {
+    try {
+      $sql = "DELETE FROM " . PREFIXE . "projections WHERE ID_FILMS = :ID;
             DELETE FROM " . PREFIXE . "relations_films_categories WHERE ID_FILMS = :ID;
             DELETE FROM " . PREFIXE . "films WHERE ID = :ID;";
 
-    $statement = $this->DB->prepare($sql);
+      $statement = $this->DB->prepare($sql);
 
-    return $statement->execute([':ID' => $ID]);
-
-    } catch(PDOException $error) {
+      return $statement->execute([':ID' => $ID]);
+    } catch (PDOException $error) {
       echo "Erreur de suppression : " . $error->getMessage();
       return FALSE;
     }
+  }
+
+  private function concatenationRequete(string $requete): string
+  {
+    $sql = "SELECT " . PREFIXE . "films.ID, 
+    " . PREFIXE . "films.NOM, 
+    " . PREFIXE . "films.URL_AFFICHE, 
+    " . PREFIXE . "films.LIEN_TRAILER, 
+    " . PREFIXE . "films.RESUME, 
+    " . PREFIXE . "films.DUREE, 
+    " . PREFIXE . "films.DATE_SORTIE, 
+    " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION, 
+    GROUP_CONCAT(" . PREFIXE . "categories.NOM) AS NOMS_CATEGORIES, 
+    GROUP_CONCAT(" . PREFIXE . "categories.ID) AS ID_CATEGORIES, 
+    " . PREFIXE . "classification_age_public.INTITULE as NOM_CLASSIFICATION 
+  FROM " . PREFIXE . "films
+  LEFT JOIN " . PREFIXE . "relations_films_categories ON " . PREFIXE . "films.ID = " . PREFIXE . "relations_films_categories.ID_FILMS 
+  LEFT JOIN " . PREFIXE . "categories ON " . PREFIXE . "relations_films_categories.ID_CATEGORIES = " . PREFIXE . "categories.ID
+  INNER JOIN " . PREFIXE . "classification_age_public ON " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC = " . PREFIXE . "classification_age_public.ID
+  ";
+    $sql .= $requete;
+    $sql .= " GROUP BY " . PREFIXE . "films.ID;";
+
+    return $sql;
   }
 }

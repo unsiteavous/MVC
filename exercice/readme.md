@@ -96,3 +96,8 @@ Si tout n'est pas clair pour vous dans cette arborescence, pas d'inquiétude, no
 - [Partie 2](<partie 2.md>)
 - [Partie 3](<partie 3.md>)
 - [Partie 4](<partie 4.md>)
+- [Partie 5](<partie 5.md>)
+- [Partie 6](<partie 6.md>)
+- [Partie 7](<partie 7.md>)
+- [Partie 8](<partie 8.md>)
+- [Partie 9](<partie 9.md>)

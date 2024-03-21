@@ -69,18 +69,29 @@ class FilmRepository {
   // Bien penser à préfixer vos tables 😉
 
   // Construire la méthode CreateThisFilm()
+  // Cette méthode retournera le film créé, en lui intégrant l'ID (qu'on avait pas jusque là, puisque c'est la base de données qui le fournit).
 
 
   // Construire la méthode updateThisFilm()
-
+  // Retournera true ou false
 
   // Construire la méthode deleteThisFilm()
+  // Retournera true ou false
 
   // Construire une méthode addFilmToCategories(Film $film)
   // Elle permettra d'insérer autant de lignes que nécessaire (un film peut être associé à plusieurs catégories)
   // dans la table relations_films_categories
+  // Retournera true ou false
 
   // Construire une méthode removeFilmToCategories(Film $film)
   // qui permettra de supprimer toutes les catégories associées à un film dans la table relations_films_categories
+  // Retournera true ou false
   
+  // PARTIE 4 : Exercice 2
+  // Construire une méthode concatenationRequete()
+  // Qui prendra en paramètre la seule ligne de sql qui change dans tous vos getters
+  // et qui concatène le code pour le factoriser.
+
+  // Pensez à remplacer avec cette méthode partout où c'est utile.
+
 }

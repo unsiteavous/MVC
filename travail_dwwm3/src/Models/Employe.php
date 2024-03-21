@@ -1,16 +1,10 @@
 <?php
 namespace src\Models;
 
-use DateTime;
 use src\Services\Hydratation;
 
 class Employe {
-  private int $Id;
-	private string $Nom;
-	private string $Prenom;
-	private DateTime $AnneeArrivee;
-	private string $Mail;
-	private string $Telephone;
+  private $Id, $Nom, $Prenom, $AnneeArrivee, $Mail, $Telephone;
 
   use Hydratation;
 
@@ -87,23 +81,19 @@ class Employe {
 	 */
 	public function getAnneeArrivee(): int
 	{
-		return $this->AnneeArrivee->format('Y');
+		return $this->AnneeArrivee;
 	}
   
 	/**
 	 * Set the value of AnneeArrivee
 	 *
-	 * @param   int|string|DateTime  $AnneeArrivee  
+	 * @param   int  $AnneeArrivee  
 	 *
    * @return void
 	 */
-	public function setAnneeArrivee(int|string|DateTime $AnneeArrivee): void
+	public function setAnneeArrivee(int $AnneeArrivee): void
 	{
-		if ($AnneeArrivee instanceof DateTime){
-			$this->AnneeArrivee = $AnneeArrivee;
-		} else {
-			$this->AnneeArrivee = new DateTime($AnneeArrivee);
-		}
+		$this->AnneeArrivee = $AnneeArrivee;
 	}
 
 	/**

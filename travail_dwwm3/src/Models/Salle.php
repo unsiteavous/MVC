@@ -4,10 +4,7 @@ namespace src\Models;
 use src\Services\Hydratation;
 
 class Salle {
-  private int $Id;
-	private int $Places;
-	private bool $Accessibilite;
-	private string $Nom;
+  private $Id, $Places, $Accessibilite, $Nom;
 
   use Hydratation;
 
