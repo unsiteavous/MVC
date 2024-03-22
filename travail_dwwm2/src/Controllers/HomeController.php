@@ -10,7 +10,8 @@ class HomeController
 
   public function index(): void
   {
-    $this->render('accueil', ['erreur'=>'']);
+    $erreur = isset($_GET['erreur']) ? $_GET['erreur'] : '';
+    $this->render('accueil', ['erreur' => $erreur]);
   }
 
   public function auth(string $password): void
@@ -20,7 +21,7 @@ class HomeController
       header('location: ' . HOME_URL . 'dashboard');
       die();
     } else {
-      echo "erreur de connexion";
+      header('location: '.HOME_URL.'?erreur=connexion');
     }
   }
 
@@ -32,7 +33,8 @@ class HomeController
   }
 
   // Faire une méthode qui vérifie si on est connecté ou pas. Renverra true ou false.
-  public function isAuth():bool {
+  public function isAuth(): bool
+  {
     if (isset($_SESSION['connecté'])) {
       return true;
     } else {

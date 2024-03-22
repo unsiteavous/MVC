@@ -40,14 +40,7 @@ switch ($route) {
     // Ajoutez un case pour la route connexion :
     if ($methode === "GET") {
       // Dans ce cas, affichez "page de connexion".
-?>
-      <h1>Connexion</h1>
-      <form action="#" method="post">
-        <label for="password">Mot de passe :</label>
-        <input type="password" id="password" name="password">
-        <input type="submit" value="Envoyer">
-      </form>
-<?php
+      $HomeController->index();
     } else {
       if (isset($_POST['password'])) {
         $HomeController->auth($_POST['password']);
@@ -65,11 +58,8 @@ switch ($route) {
     if ($HomeController->isAuth()) {
       // Ici on est dans le dashboard.
       // Il peut y avoir pleins d'urls qui contiennent dashboard, on va donc les étudier :
-      echo "Je suis dans le dashboard <br>";
       switch ($route) {
         case $routeComposee[1] == "films":
-          echo "Je vois la section films <br>";
-          var_dump($routeComposee);
           switch ($route) {
             case $routeComposee[2] == "details":
               $FilmController->show($routeComposee[3]);
@@ -82,7 +72,7 @@ switch ($route) {
           break;
 
         default:
-          # code...
+          $FilmController->index(); 
           break;
       }
     } else {
