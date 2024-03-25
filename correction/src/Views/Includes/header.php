@@ -20,9 +20,9 @@
     <div class="logo">LOGO.</div>
     <div>
       <?php if (isset($_SESSION['connecté'])) { ?>
-        <a href="deconnexion">Déconnexion</a>
+        <a href="<?= HOME_URL ?>deconnexion">Déconnexion</a>
       <?php } else { ?>
-        <a href="connexion">Connexion</a>
+        <a href="<?= HOME_URL ?>connexion">Connexion</a>
       <?php } ?>
     </div>
   </div>

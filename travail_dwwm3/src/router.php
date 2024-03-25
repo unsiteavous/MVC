@@ -1,31 +1,73 @@
 <?php
 // PARTIE 5 - EXERCICE 2 :
 
-// Pour analyser l'url, on doit la récupérer.
-// Créez une variable $route, qui la stockera.
-// indice, vous aurez besoin de $_SERVER.
+use src\Controllers\FilmController;
+use src\Controllers\HomeController;
+use src\Services\Routing;
 
-// Faites la même chose pour la méthode (get, post, ...)
-// stockez-la dans $methode :
+$route = $_SERVER['REDIRECT_URL'];
+$methode = $_SERVER['REQUEST_METHOD'];
 
+$HomeController = new HomeController;
+$FilmController = new FilmController;
 
+$routeComposee = Routing::routeComposee($route);
 // On va travailler ensuite dans un switch, pour analyser la valeur de route :
 
 switch ($route) {
   case HOME_URL:
-    if (isset($_SESSION['connecté'])) {
-      header('location: '.HOME_URL.'dashboard');
-      die;
-    } else {
-      echo "Bienvenue sur la page d'accueil !";
+    if (!$HomeController->isAuth()) {
+      $HomeController->index();
     }
     break;
-    
-    // Ajoutez un case pour la route connexion :
-      // Dans ce cas, affichez "page de connexion".
 
+    // Ajoutez un case pour la route connexion :
+    // Dans ce cas, affichez "page de connexion".
+  case HOME_URL . 'connexion':
+    if (!$HomeController->isAuth()) {
+      if ($methode == 'POST') {
+        if (isset($_POST['password'])) {
+          $HomeController->auth($_POST['password']);
+        }
+      }
+    }
+    break;
     // Ajoutez une route deconnexion
-      // Dans ce cas, vous redirigez vers la page d'accueil.
+  case HOME_URL . 'deconnexion':
+    $HomeController->quit();
+    break;
+
+  case $routeComposee[0] == "dashboard":
+    switch ($routeComposee[1]) {
+      case 'films':
+        switch ($routeComposee[2]) {
+          case 'new':
+            $FilmController->new();
+            break;
+
+          case 'details':
+            $FilmController->show($routeComposee[3]);
+            break;
+
+          case 'edit':
+            # code...
+            break;
+
+          case 'delete':
+            # code...
+            break;
+
+          default:
+            $FilmController->index();
+            break;
+        }
+        break;
+
+      default:
+        $FilmController->index();
+        break;
+    }
+    break;
 
   default:
     header("HTTP/1.1 404 Not Found");
