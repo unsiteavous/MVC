@@ -36,8 +36,7 @@ class HomeController
   public function isAuth(): bool
   {
     if (isset($_SESSION['connecté'])) {
-      header('location: ' . HOME_URL . 'dashboard');
-      die();
+      return true;
     } else {
       return false;
     }

@@ -18,6 +18,9 @@ switch ($route) {
   case HOME_URL:
     if (!$HomeController->isAuth()) {
       $HomeController->index();
+    } else {
+      header('location: ' . HOME_URL . 'dashboard');
+      die();
     }
     break;
 
@@ -30,6 +33,9 @@ switch ($route) {
           $HomeController->auth($_POST['password']);
         }
       }
+    } else {
+      header('location: ' . HOME_URL . 'dashboard');
+      die();
     }
     break;
     // Ajoutez une route deconnexion
@@ -38,34 +44,39 @@ switch ($route) {
     break;
 
   case $routeComposee[0] == "dashboard":
-    switch ($routeComposee[1]) {
-      case 'films':
-        switch ($routeComposee[2]) {
-          case 'new':
-            $FilmController->new();
-            break;
+    if ($HomeController->isAuth()) {
+      switch ($routeComposee[1]) {
+        case 'films':
+          switch ($routeComposee[2]) {
+            case 'new':
+              $FilmController->new();
+              break;
 
-          case 'details':
-            $FilmController->show($routeComposee[3]);
-            break;
+            case 'details':
+              $FilmController->show($routeComposee[3]);
+              break;
 
-          case 'edit':
-            # code...
-            break;
+            case 'edit':
+              # code...
+              break;
 
-          case 'delete':
-            # code...
-            break;
+            case 'delete':
+              $FilmController->delete($routeComposee[3]);
+              break;
 
-          default:
-            $FilmController->index();
-            break;
-        }
-        break;
+            default:
+              $FilmController->index();
+              break;
+          }
 
-      default:
-        $FilmController->index();
-        break;
+          break;
+
+        default:
+          $FilmController->index();
+          break;
+      }
+    } else {
+      header('location: ' . HOME_URL);
     }
     break;
 

@@ -3,6 +3,7 @@
 namespace src\Repositories;
 
 use PDO;
+use PDOException;
 use src\Models\Database;
 use src\Models\Film;
 
@@ -11,11 +12,11 @@ class FilmRepository
   private $DB;
 
   public function __construct()
-  {
-    $database = new Database;
-    $this->DB = $database->getDB();
+    {
+      $database = new Database;
+      $this->DB = $database->getDB();
 
-    require_once __DIR__ . '/../../config.php';
+      require_once __DIR__ . '/../../config.php';
   }
 
   // Exemple d'une requête avec query :
@@ -85,8 +86,9 @@ class FilmRepository
   }
 
   // Construire la méthode CreateThisFilm()
-  public function CreateThisFilm(Film $film): Film {
-    $sql = "INSERT INTO ". PREFIXE . "films (NOM, URL_AFFICHE, LIEN_TRAILER, RESUME, DUREE, DATE_SORTIE, ID_CLASSIFICATION_AGE_PUBLIC) VALUES (:NOM, :URL_AFFICHE, :LIEN_TRAILER, :RESUME, :DUREE, :DATE_SORTIE, :ID_CLASSIFICATION_AGE_PUBLIC);";
+  public function CreateThisFilm(Film $film): Film
+  {
+    $sql = "INSERT INTO " . PREFIXE . "films (NOM, URL_AFFICHE, LIEN_TRAILER, RESUME, DUREE, DATE_SORTIE, ID_CLASSIFICATION_AGE_PUBLIC) VALUES (:NOM, :URL_AFFICHE, :LIEN_TRAILER, :RESUME, :DUREE, :DATE_SORTIE, :ID_CLASSIFICATION_AGE_PUBLIC);";
     $statement = $this->DB->prepare($sql);
     $statement->execute([
       ':NOM' => $film->getNom(),
@@ -105,8 +107,22 @@ class FilmRepository
 
   // Construire la méthode updateThisFilm()
 
-
   // Construire la méthode deleteThisFilm()
+  public function deleteThisFilm(int $id): bool
+  {
+    try {
+      $sql = 'DELETE FROM ' . PREFIXE . 'relations_films_categories WHERE ID_FILMS = :id;
+    DELETE FROM ' . PREFIXE . 'projections WHERE ID_FILMS = :id;
+    DELETE FROM ' . PREFIXE . 'films WHERE ID = :id;';
+
+      $statement = $this->DB->prepare($sql);
+      $statement->bindParam(':id', $id, PDO::PARAM_INT);
+      $retour = $statement->execute();
+      return $retour;
+    } catch (PDOException $e) {
+      return "erreur de suppression : " . $e->getMessage();
+    }
+  }
 
   private function concatenationRequete(string $requete): string
   {
@@ -125,7 +141,7 @@ class FilmRepository
   LEFT JOIN " . PREFIXE . "relations_films_categories ON " . PREFIXE . "films.ID = " . PREFIXE . "relations_films_categories.ID_FILMS 
   LEFT JOIN " . PREFIXE . "categories ON " . PREFIXE . "relations_films_categories.ID_CATEGORIES = " . PREFIXE . "categories.ID
   INNER JOIN " . PREFIXE . "classification_age_public ON " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC = " . PREFIXE . "classification_age_public.ID
-  ";  
+  ";
     $sql .= $requete;
     $sql .= " GROUP BY " . PREFIXE . "films.ID;";
 

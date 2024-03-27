@@ -21,8 +21,8 @@ class FilmController
   {
     // Instanciez les 3 propriétés avec les repositories concernés.
     $this->FilmRepo = new FilmRepository();
-    // $this->CategoryRepo = new CategoryRepository();
-    // $this->ClassificationRepo = new ClassificationRepository();
+    $this->CategoryRepo = new CategoryRepository();
+    $this->ClassificationRepo = new ClassificationRepository();
   }
 
   public function index()
@@ -47,7 +47,9 @@ class FilmController
 
   public function new()
   {
-    $this->render('dashboard', ['section' => 'films', 'action' => 'new']);
+    $categories = $this->CategoryRepo->getAllCategories();
+    $classifications = $this->ClassificationRepo->getAllClassifications();
+    $this->render('dashboard', ['section' => 'films', 'action' => 'new', 'categories'=> $categories,'classifications'=> $classifications]);
   }
 
 
@@ -112,9 +114,11 @@ class FilmController
   public function delete($id)
   {
     // Supprimez le film avec l'ID
-
-    // Récupérez la liste de tous les films
-
-    // Affichez la vue dashboard, avec la section film et la variable films en paramètres.
+    if($this->FilmRepo->deleteThisFilm($id)) {
+      header('location: '.HOME_URL.'dashboard/films/?message=succes');
+    } else {
+      header('location: '.HOME_URL.'dashboard/films/?message=erreur');
+    }
+    
   }
 }
