@@ -79,6 +79,7 @@ function transformNodelistToArray(nodelist) {
 
 function ouvrirPopupSuppression(id)
 {
+  let urlSuppression = document.getElementById('outil-suppression').dataset.url;
   let popup = document.createElement('div');
   popup.id = 'popup';
   popup.classList.add('popup');
@@ -99,7 +100,7 @@ function ouvrirPopupSuppression(id)
   let bouton = document.createElement('button');
   bouton.classList.add('center');
   bouton.textContent = 'Confirmer la suppression';
-  bouton.onclick = function(){fermerPopupSuppression(location.href='/dashboard/films/delete/'+id)};
+  bouton.onclick = function(){fermerPopupSuppression(location.href=urlSuppression+id)};
   contenuPopup.appendChild(bouton);
 }
 

@@ -27,13 +27,13 @@ class FilmController
   {
     $categories = $this->CategoryRepo->getAllCategories();
     $films = $this->FilmRepo->getAllFilms();
-    $this->render("Dashboard", ['section' => 'films', 'films' => $films, 'categories' => $categories]);
+    $this->render("dashboard", ['section' => 'films', 'films' => $films, 'categories' => $categories]);
   }
 
   public function show($id)
   {
     $film = $this->FilmRepo->getThisFilmById($id);
-    $this->render('Dashboard', ['section' => 'films', 'action' => 'details', 'film' => $film]);
+    $this->render('dashboard', ['section' => 'films', 'action' => 'details', 'film' => $film]);
   }
 
   public function edit($id)
@@ -41,14 +41,14 @@ class FilmController
     $film = $this->FilmRepo->getThisFilmById($id);
     $categories = $this->CategoryRepo->getAllCategories();
     $classifications = $this->ClassificationRepo->getAllClassifications();
-    $this->render('Dashboard', ['section' => 'films', 'action' => 'edit', 'film' => $film, 'categories' => $categories, 'classifications' => $classifications]);
+    $this->render('dashboard', ['section' => 'films', 'action' => 'edit', 'film' => $film, 'categories' => $categories, 'classifications' => $classifications]);
   }
 
   public function new()
   {
     $categories = $this->CategoryRepo->getAllCategories();
     $classifications = $this->ClassificationRepo->getAllClassifications();
-    $this->render('Dashboard', ['section' => 'films', 'action' => 'new', 'categories' => $categories, 'classifications' => $classifications]);
+    $this->render('dashboard', ['section' => 'films', 'action' => 'new', 'categories' => $categories, 'classifications' => $classifications]);
   }
 
   public function save($data, $id = null)
@@ -85,16 +85,16 @@ class FilmController
         $film = $this->FilmRepo->CreateThisFilm($film);
         $this->FilmRepo->addFilmToCategories($film);
       }
-      header('location: /dashboard/films/details/' . $film->getId());
+      header('location: '.HOME_URL.'dashboard/films/details/' . $film->getId());
       die;
     }else {
       $categories = $this->CategoryRepo->getAllCategories();
       $classifications = $this->ClassificationRepo->getAllClassifications();
       if ($id !== null) {
-        $this->render('Dashboard', ['section' => 'films', 'action' => 'edit', 'film' => $film, 'categories' => $categories, 'classifications' => $classifications, 'error' => 'Tous les champs sont requis.']);
+        $this->render('dashboard', ['section' => 'films', 'action' => 'edit', 'film' => $film, 'categories' => $categories, 'classifications' => $classifications, 'error' => 'Tous les champs sont requis.']);
         die;
       } else {
-        $this->render('Dashboard', ['section' => 'films', 'action' => 'new', 'film' => $film, 'categories' => $categories, 'classifications' => $classifications, 'error' => 'Tous les champs sont requis.']);
+        $this->render('dashboard', ['section' => 'films', 'action' => 'new', 'film' => $film, 'categories' => $categories, 'classifications' => $classifications, 'error' => 'Tous les champs sont requis.']);
         die;
       }
     }
@@ -105,6 +105,6 @@ class FilmController
   {
     $this->FilmRepo->deleteThisFilm($id);
     $films = $this->FilmRepo->getAllFilms();
-    $this->render("Dashboard", ['section' => 'films', 'films' => $films]);
+    $this->render("dashboard", ['section' => 'films', 'films' => $films]);
   }
 }

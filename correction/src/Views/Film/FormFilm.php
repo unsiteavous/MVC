@@ -1,6 +1,6 @@
 <?php
 ?>
-<form action="<?= $action == "new" ? "/dashboard/films/new" : "/dashboard/films/update/".$film->getId() ?>" method="post">
+<form action="<?= $action == "new" ? HOME_URL."dashboard/films/new" : HOME_URL."dashboard/films/update/".$film->getId() ?>" method="post">
   <?= $action == "nouveau" ? "<h3>Enregistrer un nouveau film :</h3>" : "<h3>Mettre à jour un film :</h3>" ?>
   
   <label for="nom">Nom du film :</label><br>
