@@ -57,7 +57,7 @@ switch ($route) {
               break;
 
             case 'edit':
-              echo password_hash('_çFE_ç(ib66sfui&56iuà@ze#h186%fs84f', PASSWORD_DEFAULT);
+              
               break;
 
             case 'delete':
