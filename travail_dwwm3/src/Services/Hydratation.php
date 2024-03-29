@@ -38,7 +38,7 @@ trait Hydratation
       $nomMethode = $methode->getName();
       if (strpos($nomMethode, 'get') === 0) {
         // Vérifie si le nom de la méthode commence par 'get'
-        $ObjToArray[$nomMethode] = $this->$nomMethode();
+        $ObjToArray[ltrim('get',$nomMethode)] = $this->$nomMethode();
       }
     }
     return $ObjToArray;
