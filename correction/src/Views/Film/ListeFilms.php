@@ -1,11 +1,11 @@
-<!-- Pour la Partie 9 -->
-<!-- <div id="tri-categories">
+
+<div id="tri-categories">
   <h3>Trier par catégorie :</h3>
-  <?php // foreach ($categories as $categorie) { ?>
-    <span class="categorie"><?php // echo $categorie->getNom() ?></span>
-  <?php // } ?>
-</div> -->
-<!-- Fin partie 9 -->
+  <?php foreach ($categories as $categorie) { ?>
+    <span class="categorie"><?php echo $categorie->getNom() ?></span>
+  <?php } ?>
+</div>
+
 <div class="listeFilms">
   <div class="filmCard pointer" onclick="location.href='<?= HOME_URL ?>dashboard/films/new'" title="Ajouter un film">
     <span class="add-film1">+</span>

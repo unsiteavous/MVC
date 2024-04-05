@@ -28,3 +28,16 @@ Faites un virtualHost qui pointe directement sur le dossier public.
 De cette manière, il est impossible d'accéder à un dossier parent, ce qui rend très sécurisé notre backend.
 
 Cependant, cette méthode n'empêche pas de faire les premières quand même. En effet, lors de l'installation sur un serveur où vous ne maitrisez pas tout (exemple, celui de simplon), il sera utile de quand même faire ce genre de choses.
+
+## Exercice 4 : nginx
+Pour aller un peu plus loin, il est intéressant de savoir qu'il existe deux gestions de serveur différentes : Apache et nginx.
+
+Apache utilise les .htaccess, et c'est ce qu'utilise wampp. C'est pour ça qu'on a mis en place les .htaccess auparavant.
+
+Mais il existe aussi nginx. La grande différence entre les deux est la rapidité d'exécution de nginx, car il ne lit pas les fichiers à chaque appel serveur, mais une seule fois lors du lancement. Ensuite il ne lit plus les changements, jusqu'à la prochaine relance.
+
+Apache à l'inverse lit tous les fichiers à chaque appel serveur. ça peut être très long, mais nous permet plus de souplesse d'apprentissage, puisque vous pouvez modifier les fichiers si vous voulez, apache les relira aussitôt (il est souvent nécessaire de vider le cache et de supprimer les cookies pour ça).
+
+Sur le serveur de Simplon, ce sera avec nginx. 
+Vous pouvez retrouver le fichier nginx. conf, que vous modifierez et adapterez en fonction de vos identifiants. Attention, il y a plusieurs éléments à modifier, prenez votre temps, pour ne pas tout casser ! :)
+
