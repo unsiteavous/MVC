@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="<?= HOME_URL ?>assets/css/form.css">
   <?php if (isset($_SESSION['connecté'])) { ?>
     <link rel="stylesheet" href="<?= HOME_URL ?>assets/css/dashboard.css">
+    <script> const HOME_URL = "<?= HOME_URL ?>"; </script>
     <script src="<?= HOME_URL ?>assets/js/dashboard.js" defer></script>
   <?php } ?>
   <script src="<?= HOME_URL ?>assets/js/script.js" defer></script>

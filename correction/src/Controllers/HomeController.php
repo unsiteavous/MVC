@@ -43,4 +43,8 @@ class HomeController
     header("HTTP/1.1 404 Not Found");
     $this->render('404');
   }
+
+  public function test(){
+    $this->render('test');
+  }
 }
