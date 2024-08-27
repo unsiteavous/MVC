@@ -1,9 +1,9 @@
 @font-face{
   font-family: Azonix;
-  src: url('../fonts/azonix.woff2') format('woff2'),
-       url('../fonts/azonix.woff') format('woff'),
-       url('../fonts/azonix.otf')  format('truetype'),
-       url('../fonts/azonix.eot') format('embedded-opentype');
+  src: url('../fonts/Azonix.woff2') format('woff2'),
+       url('../fonts/Azonix.woff') format('woff'),
+       url('../fonts/Azonix.otf')  format('truetype'),
+       url('../fonts/Azonix.eot') format('embedded-opentype');
 }
 @font-face{
   font-family: Comfortaa;
