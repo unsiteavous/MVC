@@ -32,7 +32,7 @@ Cependant, cette méthode n'empêche pas de faire les premières quand même. En
 ## Exercice 4 : nginx
 Pour aller un peu plus loin, il est intéressant de savoir qu'il existe deux gestions de serveur différentes : Apache et nginx.
 
-Apache utilise les .htaccess, et c'est ce qu'utilise wampp. C'est pour ça qu'on a mis en place les .htaccess auparavant.
+Apache utilise les .htaccess, et c'est ce qu'utilise wamp. C'est pour ça qu'on a mis en place les .htaccess auparavant.
 
 Mais il existe aussi nginx. La grande différence entre les deux est la rapidité d'exécution de nginx, car il ne lit pas les fichiers à chaque appel serveur, mais une seule fois lors du lancement. Ensuite il ne lit plus les changements, jusqu'à la prochaine relance.
 

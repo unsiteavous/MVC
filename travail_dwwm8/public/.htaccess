@@ -1,0 +1,11 @@
+# Nous allons rediriger toutes les urls sur le fichier index.php.
+
+# 1. Vérifier si le module de réécriture d'apache est activé.
+
+  # Si c'est le cas, l'allumer :
+
+  # Tout ce qui se termine par ".quelque chose" est testé directement dans le dossier /public. Si rien ne sort, ça passe en erreur 404.
+  # Toutes les URLs du site sont sans ".quelque chose".
+
+
+  ## Retour d'erreur :

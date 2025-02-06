@@ -1,0 +1,299 @@
+main {
+  display: flex;
+}
+
+#colonne {
+  background-color: teal;
+  width: 250px;
+  height: calc(100vh - 100px);
+  color: white;
+  box-shadow: 3px 0px 5px gray;
+  padding: 20px 20px 20px 30px;
+  position: fixed;
+  z-index: 100;
+}
+
+ul {
+  padding-left: 15px;
+}
+li:hover, .actif {
+  background-color: rgb(0, 99, 95);
+  border-radius: 10px;
+}
+li {
+  list-style: none;
+  transition: 0.3s;
+  padding: 1px 0px 7px 0;
+  margin: 5px 0;
+  cursor: pointer;
+}
+.administration:before {
+  content: '🔧';
+  font-size: 25px;
+}
+.films:before {
+  content: '🎬';
+  font-size: 25px;
+}
+.categories:before {
+  content: '📚';
+  font-size: 25px;
+}
+.employes:before {
+  content: '👪';
+  font-size: 25px;
+}
+.salles:before {
+  content: '🎥';
+  font-size: 25px;
+}
+.retour::before {
+  content: '↩';
+  font-size: 25px;
+  margin-right: 12px;
+  position: relative;
+  top: 5px;
+}
+
+
+
+.content {
+  width: calc(100% - 350px);
+  margin: 20px 50px 50px 320px;
+}
+
+.flex {
+  display: flex;
+}
+
+.column {
+  flex-direction: column;
+  margin: 5px 10px;
+}
+
+.column span {
+  margin: 5px;
+}
+
+
+.tableau-utilisateurs {
+  width: 100%;
+}
+
+button {
+  font-family: inherit;
+  background-color: darkred;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+button:hover {
+  box-shadow: 2px 2px 5px grey;
+}
+
+.infos-compte button {
+  margin-top: 20px;
+  margin-left:15px;
+}
+
+.footer {
+  background-color: lightgray;
+  color: #6f6f6f;
+  text-align: center;
+  padding: 0;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  width: calc(100% - 250px);
+}
+
+/* =============== CARTE FILM ================= */
+#tri-categories {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  align-items: center;
+}
+
+.categorie-selected {
+  background-color: darkblue !important;
+  color: white;
+}
+
+.listeFilms {
+  display: grid;
+  grid-template-columns: 350px repeat(auto-fill, 350px) 300px;
+  justify-content: center;
+}
+
+.filmCard {
+  width: 300px;
+  background-color: aliceblue;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px lightgray;
+  transition: 0.3s;
+  margin-bottom: 50px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.add-film1, .add-film2 {
+  font-size: 200px;
+  border-radius: 100%;
+  color: white;
+  text-align: center;
+  position: relative;
+  left: 12%;
+  top: 30%;
+  padding: 30px 60px 0px;
+  z-index: 10;
+}
+
+.add-film2 {
+  color: gray;
+  left: 13%;
+  top: -19%;
+  z-index: 5;
+  transition:0.3s;
+}
+
+.pointer:hover .add-film2 {
+  left: 14%;
+  top: -18.5%;
+}
+
+.filmCard:hover {
+  box-shadow: 5px 5px 5px gray;
+}
+.filmCard:hover .affiche {
+  filter: saturate(2);
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+
+.affiche {
+  width: inherit;
+  height: 300px;
+  padding-top: 10px;
+  border-radius: 10px 10px 0 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.filmCard h4 {
+  text-align: center;
+  cursor: pointer;
+}
+
+.infos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.infos div {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+  flex-wrap: wrap;
+}
+
+.categorie {
+  background-color: lightblue;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 5px;
+  cursor: pointer;
+  height: fit-content;
+}
+
+.classificationage {
+  background-color: darkviolet;
+  padding: 5px;
+  border-radius: 5px;
+  color: wheat;
+  width: fit-content;
+  cursor: pointer;
+}
+
+/* =============== DETAILS FILMS ================= */
+.outils-action {
+  float: right;
+  display: flex;
+  width: fit-content;
+}
+
+.logo-action {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 0px 5px 5px 5px;
+  transition: 0.3s;
+  background-color: #ffffff45;
+}
+.logo-action:hover {
+  background-color: aliceblue;
+
+}
+
+.infos-flex {
+  display: flex;
+}
+.infos-details {
+  width: 60%;
+}
+
+.medias-details * {
+  width: -moz-available;
+  width: -webkit-fill-available;
+}
+.medias-details {
+  width: 40%;
+}
+
+.visible {
+  display: block;
+}
+
+.invisible {
+  display: none;
+}
+
+/* =========== POPUP ============= */
+
+.popup {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #000000ab;
+  z-index: 100;
+}
+
+.popup div {
+  background-color: white;
+  margin: 38vh auto;
+  border: 10px solid gray;
+  border-radius: 15px;
+  padding: 10px;
+  width: 700px;
+}
+
+.popup span {
+  transform: rotate(45deg);
+  font-size: 30px;
+  float: right;
+  cursor: pointer;
+}
+
+.popup h3 {
+  text-align: center;
+  margin: 40px 0;
+}

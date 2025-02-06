@@ -1,0 +1,74 @@
+@font-face{
+  font-family: Azonix;
+  src: url('../fonts/azonix.woff2') format('woff2'),
+       url('../fonts/azonix.woff') format('woff'),
+       url('../fonts/azonix.otf')  format('truetype'),
+       url('../fonts/azonix.eot') format('embedded-opentype');
+}
+@font-face{
+  font-family: Comfortaa;
+  src: url('../fonts/Comfortaa.woff2') format('woff2'),
+       url('../fonts/Comfortaa.woff') format('woff'),
+       url('../fonts/Comfortaa.eot') format('embedded-opentype'),
+       url('../fonts/Comfortaa.ttf')  format('truetype');
+}
+
+body {
+  font-family: Comfortaa;
+  margin: 0;
+}
+
+#header {
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background-color: black;
+  margin: 0px 0px 0 0;
+  padding: 20px;
+  color: white;
+  z-index: 100;
+}
+
+#header div {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: 50px;
+  font-family: Azonix;
+}
+
+#header a {
+  margin: 10px;
+  padding: 5px 10px;
+  border: 1px solid white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.1s;
+  text-decoration: none;
+  color: white;
+}
+#header a:hover {
+  box-shadow: 2px 2px 5px white;
+}
+
+.footer {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 20px 0 10px;
+}
+
+.error {
+  background-color: rgb(255, 126, 126);
+  padding: 10px;
+  font-weight: 600;
+  border-radius: 5px;
+}
+
+.main {
+  height: calc(100vh - 284px);
+  padding-top: 100px;
+}
