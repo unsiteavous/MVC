@@ -12,4 +12,4 @@
 </IfModule>
 
 ## Retour d'erreur :
-ErrorDocument 404 /page-introuvable
+ErrorDocument 404 /index.php
