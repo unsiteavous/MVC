@@ -1,11 +1,14 @@
 # Nous allons rediriger toutes les urls sur le fichier index.php.
 
 # 1. Vérifier si le module de réécriture d'apache est activé.
-
+<IfModule mod_rewrite.c>
   # Si c'est le cas, l'allumer :
-
+  RewriteEngine On
   # Tout ce qui se termine par ".quelque chose" est testé directement dans le dossier /public. Si rien ne sort, ça passe en erreur 404.
   # Toutes les URLs du site sont sans ".quelque chose".
-
-
+  RewriteCond %{ENV:REDIRECT_STATUS} ^$
+  RewriteCond %{REQUEST_URI} !\.(css|js|jpg|png|jpeg|webp|svg|gif|pdf|eot|otf|woff|woff2|ttf)$ [NC]
+  RewriteRule ^(.*)$  /index.php [L]
+</IfModule>
   ## Retour d'erreur :
+ErrorDocument 404 /page-introuvable
