@@ -2,6 +2,12 @@
 
 // Requérir le fichier init.php
 
+use src\Models\Database;
+
 echo "Nous sommes dans le dossier public.";
 
-var_dump($_SERVER);
+require __DIR__ . "/../src/autoload.php";
+
+
+$database = new Database;
+$database->initializeDB();
