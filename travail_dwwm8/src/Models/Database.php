@@ -52,7 +52,10 @@ final class Database
   // Enfin, on fait appel à la méthode UpdateConfig().
   public function initializeDB()
   {
-    if (!$this->testIfTableFilmsExists() && !DB_INITIALIZED) {
+    if (DB_INITIALIZED) {
+      return;
+    }
+    if (!$this->testIfTableFilmsExists()) {
       $i = 0;
       $MigrationExistante = TRUE;
 

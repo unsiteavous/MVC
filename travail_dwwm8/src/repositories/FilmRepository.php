@@ -1,6 +1,11 @@
 <?php
 // Pensez à définir le namespace du fichier.
+namespace src\Repositories;
 
+use src\Models\Film;
+use src\Models\Database;
+use PDO;
+use PDOException;
 // Pensez également à ajouter tous les use nécessaires !
 
 class FilmRepository {
