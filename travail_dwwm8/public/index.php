@@ -2,12 +2,19 @@
 
 // Requérir le fichier init.php
 
+use src\Models\Film;
 use src\Repositories\FilmRepository;
 
 require_once __DIR__ . "/../src/init.php";
 
 echo "Bonjour, bienvenue sur mon site !";
 
-$filmRepo = new FilmRepository;
+function test(string $param = "par défaut") {
+  echo $param;
+}
 
-var_dump($filmRepo->getThoseFilmsByClassificationAge(1));
+//code de récupération des données du formulaire de création
+
+$film = new Film;
+$film->setNom('nouveau film');
+var_dump($film);
