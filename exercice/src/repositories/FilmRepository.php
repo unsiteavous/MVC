@@ -1,6 +1,8 @@
 <?php
 // Pensez à définir le namespace du fichier.
 
+use src\Models\Database;
+use src\Models\Film;
 // Pensez également à ajouter tous les use nécessaires !
 
 class FilmRepository {
@@ -19,7 +21,7 @@ class FilmRepository {
   public function getAllFilms(){
     $sql = "SELECT * FROM ".PREFIXE."films;";
 
-    $retour = $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, 'Film');
+    $retour = $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, Film::class);
 
     return $retour;
   }
@@ -36,14 +38,14 @@ class FilmRepository {
    * Pour éviter des injections on prépare (on désamorce) la requête.
    */
 
-  public function getThisFilmById($id): Film {
+  public function getThisFilmById(int $id): Film {
     $sql = "SELECT * FROM ".PREFIXE."films WHERE id = :id";
 
     $statement = $this->DB->prepare($sql);
     $statement->bindParam(':id', $id);
     $statement->execute();
-
-    $retour = $statement->fetch(PDO::FETCH_CLASS, 'Film');
+    $statement->setFetchMode(PDO::FETCH_CLASS, Film::class);
+    $retour = $statement->fetch();
 
     return $retour;
   }
@@ -52,14 +54,14 @@ class FilmRepository {
    * Un autre exemple d'une requête préparée, avec prepare et execute :
    * Cette fois-ci on donne les paramètres tout de suite lors du execute, sous forme d'un tableau associatif.
    */
-  public function getThoseFilmsByClassificationAge($Id_Classification): array {
+  public function getThoseFilmsByClassificationAge(int $Id_Classification): array {
     $sql = "SELECT * FROM ".PREFIXE."films WHERE ID_CLASSIFICATION_AGE_PUBLIC = :Id_Classification";
 
     $statement = $this->DB->prepare($sql);
     
     $statement->execute([':Id_Classification'=> $Id_Classification]);
-
-    $retour = $statement->fetchAll(PDO::FETCH_CLASS, 'Film');
+    $statement->setFetchMode(PDO::FETCH_CLASS, Film::class);
+    $retour = $statement->fetchAll();
 
     return $retour;
   }

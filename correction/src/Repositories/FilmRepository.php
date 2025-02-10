@@ -22,7 +22,7 @@ class FilmRepository
   // il n'y a pas de risques, car aucun paramètre venant de l'extérieur n'est demandé dans le sql.
   public function getAllFilms()
   {
-    $sql = $this->concatenationRequete("");
+    $sql = $this->concatenationRequete();
 
     return  $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, Film::class);
   }
@@ -175,7 +175,7 @@ class FilmRepository
     return $statement->execute([":id_film" => $film->getId()]);
   }
 
-  private function concatenationRequete(string $requete): string
+  private function concatenationRequete(string $requete = ""): string
   {
     $sql = "SELECT " . PREFIXE . "films.ID, 
     " . PREFIXE . "films.NOM, 
