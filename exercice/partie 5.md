@@ -1,94 +1,107 @@
-# Partie 5 : Tester son application
-On le fait tous naturellement : Est-ce que ma nouvelle méthode `getAllFilms()` fonctionne ? et hop, on va faire un essai.
+# Partie 5 : Les routes
+Parce qu'on a interdit l'accès à tout notre backend SAUF le dossier public, on se retrouve embêté lorsqu'il s'agit de demander au serveur quelque chose. Actuellement, on ne peut que convoquer le fichier `index.php`, qui est dans le dossier `public`.
 
-En fait, c'est un procédé qui mérite qu'on s'y attarde sérieusement. Faire des tests pour savoir si l'application fonctionne, c'est très important. Et pas juste à un instant T, mais un peu tout le temps.
+On a alors quelques solutions qui s'offrent à nous :
+- **Tout mettre en requête :**
 
-En effet, il n'y a rien de pire que l'ajout d'une feature, qui casse un truc qui marchait avant... et qu'on s'en rend compte que bien plus tard, quand on a à nouveau besoin du truc pété.
-
-On va donc mettre en place des tests qui pourront être faits quand on veut.
-
-## Tests Unitaires
-Il y a deux sortes de tests. Les premiers sont les tests unitaires. Cela veut dire qu'ils permettent de tester un élément. par exemple, est-ce que ma fonction `verifierEmailValide()` fonctionne bien comme attendu ?
-
-On ne s'intéresse ici qu'au bon fonctionnement d'un seul bout de code.
-
-exemple : 
-```php
-public function verifierEmailValide(string $email): bool{
-  if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    return true;
-  } else {
-    return false;
-  }
-}
+Si on ne peut accéder qu'à une seule page, on pourrait tout mettre dans l'url, comme ceci par exemple : \
+```
+https://mon-site.fr/index.php?page=boutique&section=chaussures&filtre=homme&couleur=rouge
 ```
 
-Pour savoir si ma fonction travaille correctement, je dois la tester dans plusieurs cas : avec une bonne et une mauvaise adresse mail.
+Et dans le fichier index.php, on viendrait écouter les différents paramètres, pour appeler ensuite le traitement correspondant. 
 
-## Tests Fonctionnels
-L'autre sorte de tests, ce sont les tests fonctionnels. Ceux-là sont plus complexes, car ils s'occupent de toute la chaîne des répercutions liées à une action utilisateur.
+C'est fonctionnel, mais pas esthétique, et encore moins bien pour le référencement.
+En fait, pour les moteurs de recherche, c'est comme si nous n'avions qu'une page sur notre site : `index.php`.
 
-Par exemple, un utilisateur qui tente de se connecter.
-1. Il va soumettre le formulaire,
-2. le traitement va le vérifier, puis appeler la classe nécessaire,
-3. le repository associé va être convoqué pour lire la BDD,
-4. en fonction du résultat une vue sera renvoyée à l'utilisateur.
+Une adresse qui prend les pages en paramètre ne permet pas différencier les parties de notre site.
 
-Et potentiellement, il peut y avoir des bugs un peu partout le long du parcours de la donnée.
+## Le Routeur
+C'est là qu'intervient le routeur.
 
-On fait donc un test d'ensemble, parce que même si les tests unitaires répondent que tout marche séparément, parfois la mise à la suite de plusieurs actions crée des comportements inattendus.
+En effet, si nous voulons une adresse jolie et référençable (comme `https://mon-site.fr/dashboard/films/details/3` par exemple), on a un problème :
 
-## PHPUNIT
-Pour faire ces tests, on va s'appuyer sur un outil fabuleux : **[PHPUNIT](https://phpunit.de/)**.
+Le serveur va chercher si, dans son arborescence, il existe un dossier dashboard, dans lequel il y a un dossier film, etc.
 
-C'est un outil qui va nous permettre, depuis la ligne de commande, de lire nos fichiers de tests, et nous afficher les erreurs potentielles.
+Hors, non seulement ce n'est pas le cas, mais en plus on ne va pas tenter de recréer cette architecture de routes juste pour pouvoir répondre aux appels depuis l'extérieur !
 
-Grâce à ça, fini le debug avec des var_dump... (Non je plaisante 😇)
+On va donc... rediriger ! 
 
-### Installation
-#### 1. COMPOSER
-Pour l'installer, il vous faudra d'abord installer [composer](https://getcomposer.org/).\
-Composer est un outil qui nous permet d'installer des librairies dans nos projets PHP. On l'utilisera beaucoup par la suite.
+### Second .htaccess
+Dans notre dossier public, on va donc créer un autre .htaccess. Celui aura pour but de rediriger toutes les requêtes vers le fichier `index.php`. 
 
-une fois que composer est installé, on peut tester s'il fonctionne bien. Dans un terminal, faites: 
-```bash
-composer -v
+Dans le fichier `index.php`, nous appelons déjà notre fichier `init.php`. Nous allons juste ajouter dans ce dernier fichier, un require à un nouveau fichier, `router.php`.
+
+À partir de là, il ne nous reste plus qu'à remplir notre fichier `router.php`. C'est lui qui va analyser les urls, et qui va dire quoi faire en fonction de ce qu'il y a dedans.
+
+
+## Exercice 1 : mettre en place l'arborescence
+Remplisser le fichier `.htaccess` qui se situe dans le dossier public, et modifiez le fichier `init.php`.
+
+## Exercice 2 : Remplir le fichier router.php
+Rendez-vous dans le fichier `src/router.php`, et suivez les consignes.\
+Vous devrez voir des messages différents pour la page d'accueil, la page de connexion, de déconnexion et la page d'erreur, dans les autres cas.
+
+## Exercice 3 : Écouter la méthode
+En fonction de la méthode de requête, dites un message différent pour la connexion : en effet, lorsque la méthode est en `GET`, on affiche la page de connexion, quand la méthode est `POST`, on récupère les valeurs passées et on les traite. \
+Pour l'exercice, affichez simplement "traitement des infos" dans le cas de POST.
+
+Ceci va nous permettre de nous adresser à la même url dans les deux cas, mais juste en changeant de méthode, on aura un traitement différent. Astucieux !
+
+## Exercice 4 : Écouter une route composée
+Si on a une route qui ressemble à `https://mon-site.fr/dashboard/films/details/3`, comment va-t-on l'écouter ?
+Si on doit faire des `switch case` pour chaque possibilité d'url, c'est long et pas optimisé. 
+
+En fait, sauf quelques routes dont on connaît parfaitement le chemin (comme l'accueil, la connexion, ...) pour les routes composées on va écouter ce qu'il y a dans la requête.
+
+On va donc faire des `switch case` imbriqués, en utilisant la méthode de PHP `str_contains()`.
+
+en algorithmie, on travaillera ainsi :
 ```
-#### 2. PHPUNIT
-Mettez-vous dans le dossier src de votre projet, puis tapez la commande suivante 
-```bash
-composer require --dev phpunit/phpunit ^11
-```
+Dans le cas où il y a 'dashboard':
+      Dans le cas où il y a 'films :
+            Dans le cas où il y a 'details' :
+                  On récupère l'ID dans l'url
 
-le `--dev` prévient composer que ce ne sera pas une librairie à mettre dans le projet en production à la fin.
+                  On fait quelque chose.
+            Dans un autre cas
+                  ...
+      
+      Dans un autre cas
+            ...
 
-Une fois que cela est fait, on constate qu'un dossier `vendor` est apparu, ainsi que deux fichiers, `composer.json` et `composer.lock`.
-
-à l'intérieur du `composer.json`, venez mettre ceci :
-
-```json
-{
-    "autoload": {
-        "classmap": [
-            "./"
-        ]
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^11"
-    },
-    "scripts": {
-        "tests_unitaires": "./vendor/bin/phpunit --colors=always --testdox ./Tests/Units/",
-        "tests_fonctionnels": "./vendor/bin/phpunit --colors=always --testdox ./Tests/Features/"
-    }
-}
-```
-
-Maintenant que tout est installé, vous pouvez tester votre application. **ATTENTION**, il faudra bien rester dans le dossier src quand vous êtes dans la console, sinon vous n'arriverez pas à lancer les scripts. Voici les commandes : 
-
-```bash 
-composer tests_unitaires
-composer tests_fonctionnels
+Dans un autre cas
+      ...
 ```
 
-## Exercices
-En vous aidant de la [doc](https://docs.phpunit.de/en/11.0/assertions.html), et de l'exemple dans le fichiers de tests unitaires, créez les différents tests pour FilmRepository.
+- Réalisez l'analyse de la route de l'exemple dans le router.
+- à la place de details, il peut y avoir new, delete ou update. Faire les analyses correspondantes.
+
+## Exercice 5 : Perfectionner sa route composée
+Mais notre lecture de la route composée a une limite actuellement : où que soit le mot dashboard, on arrive sur le tableau de bord. \
+Ces deux routes :
+
+```
+monsite.com/dashboard/films/details/4
+monsite.com/details/films/dashboard/4
+```
+Permettent toutes les deux de voir exactement la même chose, alors que l'ordre des éléments dans l'url n'est pas respecté. Pire :
+
+```
+monsite.com/articles/bon
+monsite.com/articles/bonne
+
+```
+Si j'écoute ma route pour savoir si mon URL contient `bon`, les deux urls vont correspondre à mes attentes : dans les deux cas on trouve "bon" dedans !
+
+Pour éviter ça, on va pouvoir utiliser un `Service`. Rassurez-vous il est tout prêt !
+Utilisez en statique la méthode `routeComposee` du fichier `src/Services/Routing.php`.
+
+Et adaptez vos routes pour écouter les différentes lignes du tableau ainsi obtenu. 
+Vous résolvez les deux problèmes d'un coup : l'ordre et l'unicité de chaque élément dans l'url !
+
+Enfin, pour récupérer l'ID, vous avec deux possibilités : écouter la dernière ligne du tableau en donnant le bon numéro d'index, ou utiliser la fonction native de PHP `end()`.
+
+Maintenant qu'on a vu comment récupérer les routes et répondre en fonction de la requête, il va falloir enrichir la réponse ! Comment traiter les données reçues, et répondre une page complète ? 
+
+On voit ça dans la [partie 6](<partie 6.md>) !
