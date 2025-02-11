@@ -15,10 +15,10 @@ class Film
   private string $resume;
   private DateTime $duree;
   private DateTime $dateSortie;
-  private int $idClassificationAgePublic;
-  // Elle aura également des propriétés en plus de ces noms de table : $NomClassification, $NomsCategories et $IdCategories, dont les deux derniers seront des tableaux.
+  private int $idClassification;
+  // Elle aura également des propriétés en plus de ces noms de table : $NomClassification, $NomCategories et $IdCategories, dont les deux derniers seront des tableaux.
   private string $nomClassification;
-  private array $nomsCategories;
+  private array $nomCategories;
   private array $idCategories;
   // Cela nous permettra plus facilement de travailler, sans avoir à refaire des appels à la BDD pour savoir quel est le nom de la classification dont on a l'ID, ...
 
@@ -213,25 +213,25 @@ class Film
 	}
 
 	/**
-	 * Get the value of idClassificationAgePublic
+	 * Get the value of idClassification
 	 *
 	 * @return  int
 	 */
-	public function getIdClassificationAgePublic(): int
+	public function getIdClassification(): int
 	{
-		return $this->idClassificationAgePublic;
+		return $this->idClassification;
 	}
   
 	/**
-	 * Set the value of idClassificationAgePublic
+	 * Set the value of idClassification
 	 *
-	 * @param   int  $idClassificationAgePublic  
+	 * @param   int  $idClassification  
 	 *
    * @return void
 	 */
-	public function setIdClassificationAgePublic(int $idClassificationAgePublic): void
+	public function setIdClassification(int $idClassification): void
 	{
-		$this->idClassificationAgePublic = $idClassificationAgePublic;
+		$this->idClassification = $idClassification;
 	}
 
 	/**
@@ -257,25 +257,28 @@ class Film
 	}
 
 	/**
-	 * Get the value of nomsCategories
+	 * Get the value of nomCategories
 	 *
 	 * @return  array
 	 */
-	public function getNomsCategories(): array
+	public function getNomCategories(): array
 	{
-		return $this->nomsCategories;
+		return $this->nomCategories;
 	}
   
 	/**
-	 * Set the value of nomsCategories
+	 * Set the value of nomCategories
 	 *
-	 * @param   array  $nomsCategories  
+	 * @param   array|string  $nomCategories  
 	 *
    * @return void
 	 */
-	public function setNomsCategories(array $nomsCategories): void
+	public function setNomCategories(array|string $nomCategories): void
 	{
-		$this->nomsCategories = $nomsCategories;
+		if (is_string($nomCategories)) {
+			$nomCategories = explode(",", $nomCategories);
+		}
+		$this->nomCategories = $nomCategories;
 	}
 
 	/**
