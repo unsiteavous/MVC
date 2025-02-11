@@ -15,6 +15,5 @@ function test(string $param = "par défaut") {
 
 //code de récupération des données du formulaire de création
 
-$film = new Film;
-$film->setNom('nouveau film');
-var_dump($film);
+$filmrepo = new FilmRepository();
+var_dump($filmrepo->getAllFilms());

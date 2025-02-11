@@ -291,12 +291,15 @@ class Film
 	/**
 	 * Set the value of idCategories
 	 *
-	 * @param   array  $idCategories  
+	 * @param   array|string  $idCategories  
 	 *
    * @return void
 	 */
-	public function setIdCategories(array $idCategories): void
+	public function setIdCategories(array|string $idCategories): void
 	{
+		if (is_string($idCategories)) {
+			$idCategories = explode(",", $idCategories);
+		}
 		$this->idCategories = $idCategories;
 	}
 }
