@@ -5,12 +5,6 @@ namespace src\Services;
 trait Hydratation
 {
 
-  // copier le constructeur
-
-  // copier votre méthode d'hydratation
-
-  // copier votre méthode magique __set
-
   public function __serialize(): array
   {
     $class = new \ReflectionClass(get_class($this));

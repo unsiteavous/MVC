@@ -21,14 +21,14 @@ class CategorieRepository
 
   public function getAllCategories(): array
   {
-    $sql = "SELECT * FROM categories";
+    $sql = "SELECT * FROM ".PREFIXE."categories";
     $categories = $this->DB->query($sql)->fetchAll(PDO::FETCH_CLASS, Categorie::class);
     return $categories;
   }
 
   public function getThisCategoryById(int $id): ?Categorie
   {
-    $sql = "SELECT * FROM categories WHERE id = :id";
+    $sql = "SELECT * FROM ".PREFIXE."categories WHERE id = :id";
     $statement = $this->DB->prepare($sql);
     $statement->bindParam(':id', $id);
     $statement->execute();
@@ -39,7 +39,7 @@ class CategorieRepository
 
   public function getThoseCategoriesByName(string $nom): array
   {
-    $sql = "SELECT * FROM categories WHERE nom = :nom";
+    $sql = "SELECT * FROM ".PREFIXE."categories WHERE nom = :nom";
     $statement = $this->DB->prepare($sql);
     $statement->bindParam(':nom', '%' . $nom . '%');
     $statement->execute();
