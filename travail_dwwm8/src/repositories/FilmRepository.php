@@ -105,7 +105,7 @@ class FilmRepository
       ":RESUME" => $film->getResume(),
       ":DUREE" => $film->getDuree()->format('H:i:s'),
       ":DATE_SORTIE" => $film->getDateSortie()->format('Y-m-d'),
-      ":ID_CLASSIFICATION_AGE_PUBLIC" => $film->getIdClassificationAgePublic()
+      ":ID_CLASSIFICATION_AGE_PUBLIC" => $film->getIdClassification()
     ]);
 
     $film->setId($this->DB->lastInsertId());
@@ -138,7 +138,7 @@ class FilmRepository
       ":resume" => $film->getResume(),
       ":duree" => $film->getDuree()->format('H:i:s'),
       ":dateSortie" => $film->getDateSortie()->format('Y-m-d'),
-      ":idClassification" => $film->getIdClassificationAgePublic(),
+      ":idClassification" => $film->getIdClassification(),
       ":id" => $film->getId()
     ]);
 
@@ -149,7 +149,8 @@ class FilmRepository
   // Retournera true ou false
   public function deleteThisFilm(Film $film): bool
   {
-    $sql = "DELETE FROM " . PREFIXE . "films WHERE ID=:id;";
+    $sql = "DELETE FROM " . PREFIXE . "relations_films_categories WHERE ID_FILMS=:id;
+    DELETE FROM " . PREFIXE . "films WHERE ID=:id;";
     $statement = $this->DB->prepare($sql);
     $retour = $statement->execute([
       ":id" => $film->getId()
