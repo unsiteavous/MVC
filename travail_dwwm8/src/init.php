@@ -3,7 +3,8 @@ use src\Models\Database;
 
 
 // requérir le fichier autoload.
-require __DIR__ . "/../src/autoload.php";
+require __DIR__ . "/autoload.php";
+require __DIR__ . "/../config.php";
 
 
 // PARTIE 2 - EXERCICE 3 :
@@ -16,3 +17,4 @@ $database->initializeDB();
 
 // PARTIE 5 - EXERCICE 1 :
   // Requérir le fichier router.php
+require __DIR__ . "/router.php";  
