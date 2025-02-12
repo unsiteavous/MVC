@@ -19,9 +19,9 @@ class Film extends AbstractModel
   private DateTime $duree;
   private DateTime $dateSortie;
   private int $idClassification;
-  // Elle aura également des propriétés en plus de ces noms de table : $NomClassification, $NomCategories et $IdCategories, dont les deux derniers seront des tableaux.
+  // Elle aura également des propriétés en plus de ces noms de table : $NomClassification, $NomsCategories et $IdCategories, dont les deux derniers seront des tableaux.
   private string $nomClassification;
-  private array $nomCategories;
+  private array $nomsCategories;
   private array $idCategories;
   // Cela nous permettra plus facilement de travailler, sans avoir à refaire des appels à la BDD pour savoir quel est le nom de la classification dont on a l'ID, ...
 
@@ -230,28 +230,28 @@ class Film extends AbstractModel
 	}
 
 	/**
-	 * Get the value of nomCategories
+	 * Get the value of nomsCategories
 	 *
 	 * @return  array
 	 */
-	public function getNomCategories(): array
+	public function getNomsCategories(): array
 	{
-		return $this->nomCategories;
+		return $this->nomsCategories;
 	}
   
 	/**
-	 * Set the value of nomCategories
+	 * Set the value of nomsCategories
 	 *
-	 * @param   array|string  $nomCategories  
+	 * @param   array|string  $nomsCategories  
 	 *
    * @return void
 	 */
-	public function setNomCategories(array|string $nomCategories): void
+	public function setNomsCategories(array|string $nomsCategories): void
 	{
-		if (is_string($nomCategories)) {
-			$nomCategories = explode(",", $nomCategories);
+		if (is_string($nomsCategories)) {
+			$nomsCategories = explode(",", $nomsCategories);
 		}
-		$this->nomCategories = $nomCategories;
+		$this->nomsCategories = $nomsCategories;
 	}
 
 	/**

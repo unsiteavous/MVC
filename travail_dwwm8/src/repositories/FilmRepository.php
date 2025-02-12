@@ -216,7 +216,7 @@ class FilmRepository
 " . PREFIXE . "films.DATE_SORTIE,
 " . PREFIXE . "films.ID_CLASSIFICATION_AGE_PUBLIC AS ID_CLASSIFICATION,
 " . PREFIXE . "classification_age_public.INTITULE AS NOM_CLASSIFICATION,
-GROUP_CONCAT(" . PREFIXE . "categories.NOM) AS NOM_CATEGORIES,
+GROUP_CONCAT(" . PREFIXE . "categories.NOM) AS NOMS_CATEGORIES,
 GROUP_CONCAT(" . PREFIXE . "categories.ID) AS ID_CATEGORIES
 FROM " . PREFIXE . "films
 LEFT JOIN " . PREFIXE . "relations_films_categories ON " . PREFIXE . "films.ID = " . PREFIXE . "relations_films_categories.ID_FILMS

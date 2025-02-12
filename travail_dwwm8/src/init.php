@@ -13,7 +13,7 @@ require __DIR__ . "/../config.php";
 $database = new Database;
 $database->initializeDB();
 
-
+session_start();
 
 // PARTIE 5 - EXERCICE 1 :
   // Requérir le fichier router.php

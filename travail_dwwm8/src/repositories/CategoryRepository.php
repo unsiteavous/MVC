@@ -7,7 +7,7 @@ use PDOException;
 use src\Models\Categorie;
 use src\Models\Database;
 
-class CategorieRepository
+class CategoryRepository
 {
   private $DB;
 

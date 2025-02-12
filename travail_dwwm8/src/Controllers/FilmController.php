@@ -6,6 +6,7 @@ use src\Models\Film;
 use src\Repositories\CategoryRepository;
 use src\Repositories\ClassificationRepository;
 use src\Repositories\FilmRepository;
+use src\Services\Reponse;
 
 class FilmController
 {
@@ -13,17 +14,25 @@ class FilmController
   private $CategoryRepo;
   private $ClassificationRepo;
 
+  use Reponse;
+
   // PARTIE 7 : EXERCICE 1 :
 
   public function __construct()
   {
     // Instanciez les 3 propriétés avec les repositories concernés.
+    $this->FilmRepo = new FilmRepository();
+    $this->CategoryRepo = new CategoryRepository();
+    $this->ClassificationRepo = new ClassificationRepository();
   }
 
   public function index()
   {
     // Cette méthode va permettre d'afficher tous les films.
     // Récupérez tous les films depuis la base de données, puis affichez-les avec la bonne vue (aidez-vous de section, et de ce qui est attendu dans les fichiers des vues.)
+    $films = $this->FilmRepo->getAllFilms();
+
+    $this->render('dashboard', ['section' => 'films', 'films' => $films]);
   }
 
   public function show($id)
