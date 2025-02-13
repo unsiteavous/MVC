@@ -1,6 +1,8 @@
 <?php
+require_once __DIR__ . "/../../../config.php";
+$homeURL = HOME_URL;
 ?>
-<form action="<?= $action == "new" ? "/dashboard/films/new" : "/dashboard/films/update/".$film->getId() ?>" method="post">
+<form action="<?= $action == "new" ? "{$homeURL}/dashboard/films/new" : "{$homeURL}/dashboard/films/update/".$film->getId() ?>" method="post">
   <?= $action == "nouveau" ? "<h3>Enregistrer un nouveau film :</h3>" : "<h3>Mettre à jour un film :</h3>" ?>
   
   <label for="nom">Nom du film :</label><br>
