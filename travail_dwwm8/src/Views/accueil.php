@@ -1,7 +1,7 @@
 <?php
 
 // Inclure le header
-include __DIR__ . "/includes/header.php";
+include __DIR__ . "/Includes/header.php";
 ?>
 <div class="main">
   <h1>Administration</h1>
@@ -18,4 +18,4 @@ include __DIR__ . "/includes/header.php";
 </div>
 <?php
 // Inclure le footer
-include __DIR__ . "/includes/footer.php";
+include __DIR__ . "/Includes/footer.php";
