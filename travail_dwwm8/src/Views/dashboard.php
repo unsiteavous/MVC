@@ -2,9 +2,9 @@
 
 
 // Inclure le header
-include __DIR__ . "/includes/header.php";
+include __DIR__ . "/Includes/header.php";
 // Inclure la colonne latérale
-include __DIR__ . "/includes/colonne.php";
+include __DIR__ . "/Includes/colonne.php";
 ?>
 <div class="content">
   <?php
@@ -17,4 +17,4 @@ include __DIR__ . "/includes/colonne.php";
 </div>
 <?php
 // Inclure le footer
-include __DIR__ . "/includes/footer.php";
+include __DIR__ . "/Includes/footer.php";
