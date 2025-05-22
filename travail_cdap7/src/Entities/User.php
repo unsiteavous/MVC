@@ -2,6 +2,7 @@
 
 namespace src\Entities;
 
+use DateTime;
 use src\Services\Hydratation;
 
 class User {
@@ -10,13 +11,16 @@ class User {
   private string $prenom;
   private string $email;
   private string $password;
+  private DateTime $createdAt;
 
   use Hydratation;
 
-  public function __construct($data = [])
-  {
-    $this->hydrate($data);
-  }
+  // public function __construct($data = [])
+  // {
+  //   $this->hydrate($data);
+
+  //   echo "constructeur";
+  // }
 
 	/**
 	 * Get the value of id
@@ -138,7 +142,34 @@ class User {
 		return $this;
 	}
 
-  public function __set($key, $value) {
-    $this->hydrate([$key => $value]);
-  }
+  
+	/**
+   * Get the value of createdAt
+	 *
+   * @return  DateTime
+	 */
+  public function getCreatedAt(): DateTime
+	{
+    return $this->createdAt;
+	}
+  
+	/**
+   * Set the value of createdAt
+	 *
+	 * @param   DateTime  $createdAt  
+	 *
+   * @return void
+	 */
+  public function setCreatedAt(DateTime|string $createdAt): self
+	{
+    if(is_string($createdAt)) {
+      $createdAt = new DateTime($createdAt);
+    }
+		$this->createdAt = $createdAt;
+    
+		return $this;
+	}
+
+
+
 }

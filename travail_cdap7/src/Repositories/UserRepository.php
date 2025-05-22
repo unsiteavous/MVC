@@ -13,11 +13,19 @@ class UserRepository extends AbstractRepository{
     $sql = "SELECT * FROM users";
 
     $stmt = $this->DB->query($sql);
-
-    var_dump($stmt);
     
     $users = $stmt->fetchAll(PDO::FETCH_CLASS, User::class);
 
     return $users;
   }
+
+  // findById
+  // findByEMail
+  // findThoseByName
+  // ! $stmt->fetchObject(Object::class)
+  // create
+
+  // update
+
+  // delete
 }
