@@ -66,10 +66,11 @@ Tous les fichiers front vont dans `public`.
         > img/
             - logo.png
             - ...
+    - index.php
+    - .htaccess
 
 > src/
     > Models/
-        - Database.php
         - User.php
         - ...
     > Repositories/
@@ -78,14 +79,20 @@ Tous les fichiers front vont dans `public`.
     > Controllers/
         - UserController.php
         - ...
+    > Services
+        - Database.php
+        - Routing.php
+        - ...
     > Views/
         - header.php
         - footer.php
         - ...
 
     - init.php
+    - autoload.php
+    - router.php
+    - ...
 
-- index.php
 - config.php
 ```
 
