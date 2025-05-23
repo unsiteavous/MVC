@@ -20,6 +20,7 @@ switch ($route) {
 
     switch ($routeComposee[1]) {
       case 'users':
+        
         $userController = new UserController;
 
         switch ($routeComposee[2]) {

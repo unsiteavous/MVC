@@ -17,7 +17,7 @@ abstract class AbstractController
     //   $$key = $value;
     // }
 
-    $displayError = function (string $inputName, array $errors): void
+    $displayError = function (string $inputName, array $errors = []): void
     {
       if (isset($errors[$inputName])) {
         $display = '<ul class="error">';
@@ -28,6 +28,7 @@ abstract class AbstractController
         echo $display;
       }
     };
+
     if (file_exists($file)) {
       include $file;
     } else {

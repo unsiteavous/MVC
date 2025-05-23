@@ -1,19 +1,22 @@
 <div>
-  <h1>Créer un utilisateur :</h1>
-  <form action="/dashboard/users/create" method="post">
+  <h1><?= str_contains($url, 'create') ? "Créer" : "Mettre à jour" ?> un utilisateur :</h1>
+  <form action="<?= $url ?>" method="post">
+    <input type="hidden" id="id" name="id" value="<?= isset($data['id']) ? $data['id'] : '' ?>">
+
     <label for="nom">
       <span>Nom :</span>
-      <input type="text" id="nom" name="nom" value="<?= $data['nom'] ? $data['nom'] : '' ?>">
-      <?php $displayError('nom', $errors) ?>
+      <input type="text" id="nom" name="nom" required value="<?= isset($data['nom']) ? $data['nom'] : '' ?>">
+      <?php $errors = $errors ?? [];
+      $displayError('nom', $errors) ?>
     </label>
     <label for="prenom">
       <span>Prénom :</span>
-      <input type="text" id="prenom" name="prenom" required value="<?= $data['prenom'] ? $data['prenom'] : '' ?>">
+      <input type="text" id="prenom" name="prenom" required value="<?= isset($data['prenom']) ? $data['prenom'] : '' ?>">
       <?php $displayError('prenom', $errors) ?>
     </label>
     <label for="email">
       <span>Email :</span>
-      <input type="email" id="email" name="email" required value="<?= $data['email'] ? $data['email'] : '' ?>">
+      <input type="email" id="email" name="email" required value="<?= isset($data['email']) ? $data['email'] : '' ?>">
       <?php $displayError('email', $errors) ?>
     </label>
     <label for="password">
@@ -26,13 +29,14 @@
       <input type="password" id="passwordConfirm" name="passwordConfirm" required>
       <?php $displayError('passwordConfirm', $errors) ?>
     </label>
-
-    <input type="submit" value="Enregistrer">
+    <?php $displayError('general', $errors) ?>
+    <input type="submit" value="Enregistrer" name="update">
   </form>
 </div>
 
 <style>
-  form, label {
+  form,
+  label {
     display: flex;
     flex-direction: column;
   }
@@ -42,6 +46,7 @@
     margin: 20px auto;
     gap: 0.4rem;
   }
+
   .error {
     background-color: #ffd3d3;
     color: red;
