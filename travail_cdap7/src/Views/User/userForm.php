@@ -1,8 +1,9 @@
 <div>
   <h1><?= str_contains($url, 'create') ? "Créer" : "Mettre à jour" ?> un utilisateur :</h1>
   <form action="<?= $url ?>" method="post">
-    <input type="hidden" id="id" name="id" value="<?= isset($data['id']) ? $data['id'] : '' ?>">
-
+    <?php if (str_contains($url, 'update')) : ?>
+      <input type="hidden" id="id" name="id" value="<?= isset($data['id']) ? $data['id'] : '' ?>">
+    <?php endif; ?>
     <label for="nom">
       <span>Nom :</span>
       <input type="text" id="nom" name="nom" required value="<?= isset($data['nom']) ? $data['nom'] : '' ?>">

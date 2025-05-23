@@ -47,7 +47,6 @@ class UserController extends AbstractController
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $this->render('User/userForm', ['url' => $_SERVER['REDIRECT_URL']]);
     } else {
-      array_shift($_POST);
       $user = $this->validate();
       if (!$user) {
         return;
