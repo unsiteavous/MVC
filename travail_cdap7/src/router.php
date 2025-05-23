@@ -23,23 +23,16 @@ switch ($route) {
         $userController = new UserController;
 
         switch ($routeComposee[2]) {
-          case 'update':
-            $user = new User([
-              'id' => 3,
-              'nom' => 'Moulin',
-              'prenom' => 'Jean',
-              'email' => 'jean@moulindu38.fr',
-              'password' => password_hash("azerty", PASSWORD_DEFAULT),
-              'createdAt' => new DateTime()
-            ]);
+          case 'create':
+            $userController->create();
+            break;
 
-            $UserRepo = new UserRepository;
-            $UserRepo->update($user);
+          case 'update':
+            $userController->update();
             break;
 
           case 'delete':
-            $UserRepo = new UserRepository;
-            $UserRepo->delete(3);
+            $userController->delete();
             break;
 
           case 'show':
