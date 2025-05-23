@@ -1,13 +1,14 @@
 <?php
 
+use src\Controllers\UserController;
 use src\Entities\User;
 use src\Repositories\UserRepository;
 use src\Services\Database;
 use src\Services\Routing;
 
 $route = $_SERVER['REDIRECT_URL'];
-
 $routeComposee = Routing::routeComposee($route);
+$method = $_SERVER['REQUEST_METHOD'];
 
 switch ($route) {
   case '/login':
@@ -17,9 +18,9 @@ switch ($route) {
 
   case $routeComposee[0] === 'dashboard':
 
-    echo 'Dashboard';
     switch ($routeComposee[1]) {
       case 'users':
+        $userController = new UserController;
 
         switch ($routeComposee[2]) {
           case 'update':
@@ -41,11 +42,18 @@ switch ($route) {
             $UserRepo->delete(3);
             break;
 
+          case 'show':
+            if ($method == 'GET') {
+              $userController->getById((int) $routeComposee[3]);
+            } else {
+              $userController->getById();
+            }
+            break;
+
 
 
           default:
-            $UserRepo = new UserRepository;
-            var_dump($UserRepo->getAll('User', User::class));
+            $userController->index();
             break;
         }
         break;

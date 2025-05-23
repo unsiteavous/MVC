@@ -13,7 +13,7 @@ class UserRepository extends AbstractRepository
 
 
   // findById
-  public function getUserById(int $id): User
+  public function getById(int $id): User|false
   {
     $sql = "SELECT * FROM users WHERE id = :id;";
     $stmt = $this->DB->prepare($sql);

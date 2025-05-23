@@ -92,6 +92,16 @@ class User {
 		return $this;
 	}
 
+  /**
+   * Permet de récupérer le prénom et le nom concaténés.
+   *
+   * @return string
+   */
+  public function getFullName(): string
+  {
+    return $this->prenom . ' ' . $this->nom;
+  }
+
 	/**
 	 * Get the value of email
 	 *
@@ -142,12 +152,17 @@ class User {
 
   
 	/**
-   * Get the value of createdAt
-	 *
+   * Get the value of createdAt and if you give a format, get the date to this format
+   * 
+   * @param string $format par défaut vide ('').  ex: 'd/m/Y'
+ 	 *
    * @return  DateTime
 	 */
-  public function getCreatedAt(): DateTime
+  public function getCreatedAt(string $format = ''): DateTime|string
 	{
+    if (!empty($format)) {
+      return $this->createdAt->format($format);
+    }
     return $this->createdAt;
 	}
   

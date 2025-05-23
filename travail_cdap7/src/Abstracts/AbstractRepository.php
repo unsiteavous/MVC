@@ -13,8 +13,8 @@ use src\Services\Database;
 abstract class AbstractRepository
 {
 
-  protected $DB;
-  private $model, $class, $table;
+  protected PDO $DB;
+  private string $model, $class, $table;
 
   public function __construct()
   {
