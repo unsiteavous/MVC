@@ -15,11 +15,6 @@ class User {
 
   use Hydratation;
 
-  public function __construct($data = [])
-  {
-    $this->hydrate($data);
-  }
-
 	/**
 	 * Get the value of id
 	 *

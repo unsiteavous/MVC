@@ -7,8 +7,7 @@
     <label for="nom">
       <span>Nom :</span>
       <input type="text" id="nom" name="nom" required value="<?= isset($data['nom']) ? $data['nom'] : '' ?>">
-      <?php $errors = $errors ?? [];
-      $displayError('nom', $errors) ?>
+      <?php $displayError('nom', $errors) ?>
     </label>
     <label for="prenom">
       <span>Prénom :</span>

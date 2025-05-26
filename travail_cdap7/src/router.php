@@ -1,5 +1,6 @@
 <?php
 
+use src\Controllers\FilmController;
 use src\Controllers\UserController;
 use src\Entities\User;
 use src\Repositories\UserRepository;
@@ -14,13 +15,16 @@ switch ($route) {
   case '/login':
     echo "login";
     break;
+  case '/logout':
+    echo "logout";
+    break;
 
 
   case $routeComposee[0] === 'dashboard':
 
     switch ($routeComposee[1]) {
       case 'users':
-        
+
         $userController = new UserController;
 
         switch ($routeComposee[2]) {
@@ -52,6 +56,25 @@ switch ($route) {
         }
         break;
 
+      case 'films': 
+        $filmController = new FilmController;
+        switch ($routeComposee[2]) {
+          case 'create':
+            if ($method == "GET") {
+              $filmController->displayCreateForm();
+            } else {
+              $filmController->handleCreateRequest();
+            }
+            break;
+          
+          case 'details':
+            echo 'détails du film, id = ' . $routeComposee[3];
+            break;
+
+          default:
+            # code...
+            break;
+        }
       default:
         # code...
         break;

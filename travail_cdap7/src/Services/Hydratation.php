@@ -25,6 +25,11 @@ trait Hydratation
     }
   }
 
+  public function __construct($data = [])
+  {
+    $this->hydrate($data);
+  }
+
   public function __set($key, $value)
   {
     $this->hydrate([$key => $value]);
