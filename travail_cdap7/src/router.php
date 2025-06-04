@@ -1,17 +1,17 @@
 <?php
-
 use src\Controllers\FilmController;
 use src\Controllers\UserController;
-use src\Entities\User;
-use src\Repositories\UserRepository;
-use src\Services\Database;
 use src\Services\Routing;
 
-$route = $_SERVER['REDIRECT_URL'];
+$route = str_replace(HOME_URL, '', $_SERVER['REDIRECT_URL']);
 $routeComposee = Routing::routeComposee($route);
 $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($route) {
+  case '/':
+    echo "accueil";
+    break;
+    
   case '/login':
     echo "login";
     break;

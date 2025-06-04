@@ -1,0 +1,96 @@
+image: php:8.3-cli
+
+stages:
+  - build
+  - test
+  - push
+  - deploy
+
+variables:
+  PHP_VERSION: "8.3"
+
+before_script:
+  # Installe PHP et les dépendances requises
+  - apt-get update && apt-get install -y curl git unzip zip libzip-dev zlib1g-dev
+  - docker-php-ext-install zip
+  - pecl install xdebug && docker-php-ext-enable xdebug
+  - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+  - php -m | grep -E 'xml|mbstring'
+  - apt-get install -y lftp
+
+cache:
+  paths:
+    - vendor/
+    - ~/.composer/cache
+
+build:
+  stage: build
+  script:
+    - echo "Build en cours..."
+    - echo "La version de PHP est " . $PHP_VERSION
+    - composer install --prefer-dist --no-progress --no-suggest --no-interaction
+  
+  only:
+    - main
+
+test:
+  stage: test
+  script:
+    - echo "Tests en cours..."
+    - composer grumphp
+    - composer coverage
+    
+  coverage: '/Lines:\s*(\d+(\.\d+)?%?)/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: ./var/log/coverage/cobertura.xml
+  dependencies:
+    - build
+  only:
+    - main
+
+push:
+  image: alpine:latest
+  stage: push
+  before_script: 
+    - apk add --no-cache git
+  script:
+    - echo "On pousse sur la branche dev..."
+    - git config --global user.email "robot@cicd.gitlab"
+    - git config --global user.name "robot CICD"
+    - git push --force "https://gitlab-ci-token:${CICD_ROBOT_PWD}@gitlab.com/unsiteavous/cicd-2025.git" HEAD:refs/heads/dev
+  only:
+    - main
+
+
+deploy:
+  image: alpine:latest
+  stage: deploy
+  before_script:
+    - apk add --no-cache lftp openssh-client sshpass
+
+  script:
+    - echo "Déploiement en cours..."
+
+    - WORKDIR=$(pwd)
+    - echo "l'envirenment de travail est $WORKDIR"
+    
+    - |
+      lftp sftp://${FTP_USER}:${FTP_PWD}@${FTP_HOST} -e "
+      set sftp:auto-confirm yes;
+      set net:timeout 300;
+      set net:max-retries 3;
+      cd ./www/cicd/;
+      mirror -R -v --only-newer --delete --exclude .git/ --exclude .gitignore --exclude-glob '*.yml' --exclude-glob '*.disabled' --exclude vendor/ --exclude composer.lock --exclude .editorconfig --exclude rector.php --exclude tests/ --exclude-glob '*.xml' --exclude src/Tests $WORKDIR/ ./;
+      quit"
+    
+    - |
+      sshpass -p ${SSH_PWD} ssh ${SSH_USER}@${FTP_HOST} "
+      cd /var/www/${FTP_USER}/www/cicd &&
+      composer install --no-dev --prefer-dist --no-progress --no-suggest --no-interaction &&
+      composer dump-autoload
+      "
+  only:
+    - dev

@@ -1,0 +1,45 @@
+<phpunit
+  bootstrap="vendor/autoload.php"
+  colors="true"
+  stopOnFailure="false"
+  testdox="true"
+  cacheDirectory="./var/cache/coverage/"
+>
+
+  <testsuites>
+    <testsuite name="Tests fonctionnels">
+      <directory>./src/Tests/Fonctionnels</directory>
+    </testsuite>
+    <testsuite name="Tests unitaires">
+      <directory>./src/Tests/Unitaires</directory>
+    </testsuite>
+  </testsuites>
+
+  <source>
+    <include>
+      <directory suffix=".php">./src</directory>
+    </include>
+    <exclude>
+      <directory>./src/Tests</directory>
+    </exclude>
+  </source>
+
+  <coverage
+    ignoreDeprecatedCodeUnits="true"
+    includeUncoveredFiles="true">
+
+    <report>
+      <clover outputFile="./var/log/coverage/clover.xml" />
+      <cobertura outputFile="./var/log/coverage/cobertura.xml" />
+      <html outputDirectory="./var/log/coverage/html-coverage" lowUpperBound="50" highLowerBound="90" />
+      <text outputFile="./var/log/coverage/coverage.txt" showUncoveredFiles="false" showOnlySummary="true" />
+      <xml outputDirectory="./var/log/coverage/xml-coverage" />
+    </report>
+  </coverage>
+
+  <logging>
+    <testdoxHtml outputFile="./var/log/coverage/testdox.html" />
+    <testdoxText outputFile="./var/log/coverage/testdox.txt" />
+  </logging>
+
+</phpunit>

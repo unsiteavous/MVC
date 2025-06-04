@@ -1,0 +1,18 @@
+grumphp:
+    tasks: 
+        phpunit:
+            config_file: phpunit.xml
+            always_execute: true
+        
+        clover_coverage:
+            clover_file: ./var/log/coverage/clover.xml
+            minimum_level: 40
+            target_level: 80
+
+    environment:
+        variables:
+            XDEBUG_MODE: coverage
+
+    ascii:
+        failed: grumphp-grumpy.txt
+        succeeded: grumphp-happy.txt

@@ -24,7 +24,7 @@ class UserRepository extends AbstractRepository
   }
 
   // findByEMail
-  public function findByEmail(string $email): User
+  public function findByEmail(string $email): User|false
   {
     $sql = "SELECT * FROM users WHERE email = :email;";
 
