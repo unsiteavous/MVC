@@ -7,7 +7,7 @@ use Error;
 abstract class AbstractController
 {
 
-  public function render(string $view, array $data = []): void
+  public static function render(string $view, array $data = []): void
   {
     $file = __DIR__ . '/../Views/' . $view . '.php';
 

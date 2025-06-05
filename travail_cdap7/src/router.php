@@ -1,5 +1,6 @@
 <?php
 use src\Controllers\FilmController;
+use src\Controllers\HomeController;
 use src\Controllers\UserController;
 use src\Services\Routing;
 
@@ -9,7 +10,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($route) {
   case '/':
-    echo "accueil";
+    HomeController::index();
     break;
     
   case '/login':
@@ -17,6 +18,10 @@ switch ($route) {
     break;
   case '/logout':
     echo "logout";
+    break;
+
+  case '/api/counter':
+    HomeController::counter();
     break;
 
 
@@ -82,6 +87,8 @@ switch ($route) {
     break;
 
   default:
+    // header('HTTP/1.1 404 Not Found');
+    http_response_code(404);
     echo "page d'erreur";
     break;
 }
